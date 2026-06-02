@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EnCoDe: Energy Estimation of Source Code At Design-Time</title>
+
+  <!-- Bulma CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600;700&family=Source+Code+Pro&display=swap" rel="stylesheet" />
+
+  <style>
+    body { font-family: 'Noto Sans', sans-serif; }
+
+    /* ── Hero ── */
+    .hero { background: #1a1a2e; }
+    .hero .title { color: #ffffff; font-size: 2.2rem; font-weight: 700; line-height: 1.25; }
+    .hero .subtitle { color: #aab4c8; }
+
+    .publication-authors { margin-top: 0.75rem; }
+    .author-block { display: inline-block; margin: 0 0.4rem; }
+    .author-block a { color: #90cdf4; font-weight: 600; text-decoration: none; }
+    .author-block a:hover { text-decoration: underline; }
+    .author-block sup { color: #f6ad55; font-size: 0.7rem; margin-left: 1px; }
+    .affiliation { color: #8aa4bf; font-size: 0.9rem; margin-top: 0.4rem; }
+    .affiliation sup { color: #f6ad55; font-size: 0.7rem; margin-right: 2px; }
+    .venue-badge {
+      display: inline-block; margin-top: 0.6rem;
+      background: rgba(144,205,244,0.12); border: 1px solid rgba(144,205,244,0.3);
+      color: #90cdf4; padding: 0.25rem 0.8rem; border-radius: 20px; font-size: 0.85rem;
+    }
+
+    /* ── Link buttons ── */
+    .link-block { margin: 0.3rem; }
+    .link-block .button {
+      border-radius: 6px; font-weight: 600; font-size: 0.9rem;
+      border: 2px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08); color: #fff;
+      transition: all 0.2s;
+    }
+    .link-block .button:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.5); color: #fff; }
+    .link-block .button .icon { margin-right: 4px; }
+
+    /* ── Teaser ── */
+    .teaser { background: #f4f7fb; border-bottom: 1px solid #e2e8f0; }
+    .teaser img { border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.12); max-height: 500px; object-fit: contain; }
+    .teaser-caption { color: #64748b; font-size: 0.9rem; margin-top: 1rem; }
+
+    /* ── Sections ── */
+    .section-title { font-size: 1.75rem; font-weight: 700; color: #1a202c; margin-bottom: 1.25rem; }
+    .section-title::after { content: ''; display: block; width: 50px; height: 3px; background: #4299e1; margin-top: 8px; border-radius: 2px; }
+
+    /* ── Abstract ── */
+    .abstract-text { font-size: 1rem; line-height: 1.8; color: #374151; }
+
+    /* ── Contribution cards ── */
+    .contribution-card {
+      background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+      padding: 1.5rem; height: 100%; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: box-shadow 0.2s;
+    }
+    .contribution-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.10); }
+    .contribution-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .contribution-card h3 { font-weight: 700; color: #1a202c; margin-bottom: 0.5rem; }
+    .contribution-card p { color: #4b5563; font-size: 0.92rem; line-height: 1.65; }
+
+    /* ── Figures ── */
+    .figure-container { text-align: center; margin: 1.5rem 0; }
+    .figure-container img {
+      border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      max-width: 100%; cursor: zoom-in;
+    }
+    .figure-caption {
+      font-size: 0.88rem; color: #64748b; margin-top: 0.75rem;
+      max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.55;
+    }
+
+    /* ── Results ── */
+    .result-box {
+      background: linear-gradient(135deg, #ebf8ff 0%, #e6fffa 100%);
+      border: 1px solid #bee3f8; border-radius: 12px; padding: 1.5rem; text-align: center;
+    }
+    .result-box .metric-value { font-size: 2.4rem; font-weight: 700; color: #2b6cb0; }
+    .result-box .metric-label { font-size: 0.85rem; color: #4a5568; margin-top: 0.25rem; }
+    .result-box .metric-sub { font-size: 0.8rem; color: #718096; }
+
+    /* ── Pipeline steps ── */
+    .pipeline-step {
+      display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.25rem;
+    }
+    .step-num {
+      flex-shrink: 0; width: 2rem; height: 2rem; border-radius: 50%;
+      background: #4299e1; color: #fff; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+    }
+    .step-content h4 { font-weight: 700; color: #1a202c; margin-bottom: 0.2rem; }
+    .step-content p { color: #4b5563; font-size: 0.92rem; line-height: 1.6; }
+
+    /* ── Feature badges ── */
+    .feature-group { margin-bottom: 1rem; }
+    .feature-group-title { font-weight: 700; font-size: 0.85rem; color: #2d3748; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .feature-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .feature-tag {
+      font-size: 0.78rem; padding: 0.2rem 0.6rem; border-radius: 4px;
+      font-family: 'Source Code Pro', monospace;
+    }
+
+    /* ── BibTeX ── */
+    .bibtex-block {
+      background: #1e2433; border-radius: 10px; padding: 1.5rem;
+      font-family: 'Source Code Pro', monospace; font-size: 0.82rem;
+      color: #a8b3cf; line-height: 1.7; white-space: pre; overflow-x: auto;
+    }
+    .bibtex-key { color: #90cdf4; }
+    .bibtex-field { color: #f6ad55; }
+    .bibtex-value { color: #9ae6b4; }
+
+    /* ── Footer ── */
+    footer { background: #1a1a2e; color: #8aa4bf; padding: 2rem 1rem; text-align: center; font-size: 0.85rem; }
+    footer a { color: #90cdf4; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .hero .title { font-size: 1.5rem; }
+    }
+
+    /* ── Lightbox ── */
+    #lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center; }
+    #lightbox.open { display:flex; }
+    #lightbox img { max-width:90vw; max-height:90vh; border-radius:8px; box-shadow:0 16px 64px rgba(0,0,0,0.5); }
+    #lightbox-close { position:absolute; top:1rem; right:1.5rem; color:#fff; font-size:2rem; cursor:pointer; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════ HERO ══════ -->
+<section class="hero is-fullheight-with-navbar" style="min-height:unset; padding: 3rem 1.5rem 2.5rem;">
+  <div class="hero-body" style="align-items:flex-start; padding:0;">
+    <div class="container has-text-centered" style="max-width:860px; margin:0 auto;">
+
+      <div class="venue-badge">
+        <i class="fas fa-graduation-cap" style="margin-right:5px;"></i>
+        EASE 2026 &mdash; Glasgow, United Kingdom
+      </div>
+
+      <h1 class="title" style="margin-top:1.2rem;">
+        EnCoDe: Energy Estimation of<br/>Source Code At Design-Time
+      </h1>
+
+      <div class="publication-authors">
+        <span class="author-block">
+          <a href="mailto:shailender.goyal@research.iiit.ac.in">Shailender Goyal</a><sup>1</sup>,
+        </span>
+        <span class="author-block">
+          <a href="mailto:akhila.matathammal@research.iiit.ac.in">Akhila Matathammal</a><sup>1</sup>,
+        </span>
+        <span class="author-block">
+          <a href="https://faculty.iiit.ac.in/~karthik.vaidhyanathan/">Karthik Vaidhyanathan</a><sup>1</sup>
+        </span>
+      </div>
+
+      <div class="affiliation">
+        <sup>1</sup> Software Engineering Research Centre, IIIT Hyderabad
+      </div>
+
+      <!-- Link buttons -->
+      <div class="buttons is-centered" style="margin-top:1.5rem; flex-wrap:wrap;">
+        <span class="link-block">
+          <a href="https://camps.aptaracorp.com/ACM_PMS/PMS/ACM/EASE26/49/4ff498d9-568f-11f1-b513-16ffd757ba29/OUT/ease26-49.html"
+             class="button" target="_blank">
+            <span class="icon"><i class="fas fa-file-alt"></i></span>
+            <span>Paper</span>
+          </a>
+        </span>
+        <span class="link-block">
+          <a href="https://arxiv.org/abs/2605.00504" class="button" target="_blank">
+            <span class="icon"><i class="ai ai-arxiv" style="font-family:sans-serif;">arXiv</i></span>
+            <span>arXiv</span>
+          </a>
+        </span>
+        <span class="link-block">
+          <a href="https://github.com/sa4s-serc/encode" class="button" target="_blank">
+            <span class="icon"><i class="fab fa-github"></i></span>
+            <span>Code</span>
+          </a>
+        </span>
+        <span class="link-block">
+          <a href="https://doi.org/10.5281/zenodo.18366913" class="button" target="_blank">
+            <span class="icon"><i class="fas fa-database"></i></span>
+            <span>Dataset</span>
+          </a>
+        </span>
+        <span class="link-block">
+          <a href="https://doi.org/10.1145/3816483.3816532" class="button" target="_blank">
+            <span class="icon"><i class="fas fa-link"></i></span>
+            <span>DOI</span>
+          </a>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ TEASER ══════ -->
+<section class="teaser section" style="padding: 2.5rem 1.5rem;">
+  <div class="container" style="max-width:900px; margin:0 auto; text-align:center;">
+    <img src="static/images/wattwise_screenshot.png" alt="WattWise VS Code Extension showing inline energy estimates"
+         onclick="openLightbox(this.src)" />
+    <p class="teaser-caption">
+      <strong>WattWise</strong> — the VS Code extension built on EnCoDe — shows inline energy estimates
+      (⚡ Low / Medium / High) for Python code blocks without running the code.
+      AI-powered suggestions via Gemini 2.5 Flash help developers fix high-energy hotspots at design time.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ ABSTRACT ══════ -->
+<section class="section" style="background:#fff; padding:3rem 1.5rem;">
+  <div class="container" style="max-width:800px; margin:0 auto;">
+    <h2 class="section-title has-text-centered">Abstract</h2>
+    <p class="abstract-text">
+      Energy consumption of software has become a first-class engineering concern, yet existing profiling
+      tools operate only at runtime, reporting coarse process- or method-level metrics. Individual constructs
+      such as loops, conditionals, and functions — which execute in microseconds — remain invisible to
+      standard profilers.
+    </p>
+    <p class="abstract-text" style="margin-top:1rem;">
+      We present <strong>EnCoDe</strong>, a methodology for fine-grained, <em>design-time</em> energy estimation
+      of Python code blocks — no execution required. Our contributions are threefold: (1) <strong>PowerLens</strong>,
+      a novel measurement infrastructure that achieves reliable sub-millisecond energy readings by combining
+      execution amplification, RAPL temporal synchronization, and IQR-based statistical aggregation;
+      (2) an empirical study of over 18,000 Python programs producing a dataset of 14,000+ block-level
+      energy measurements spanning six orders of magnitude; and (3) ML-based predictive models achieving
+      <strong>R² = 0.755</strong> for energy regression and <strong>80.6% accuracy</strong> for
+      Low / Medium / High tier classification using 33 static AST features.
+    </p>
+    <p class="abstract-text" style="margin-top:1rem;">
+      The resulting IDE integration — <strong>WattWise</strong> — brings energy awareness to developers
+      as a lint-like design-time signal, enabling proactive optimization before code ever runs.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ CONTRIBUTIONS ══════ -->
+<section class="section" style="background:#f4f7fb; padding:3rem 1.5rem;">
+  <div class="container" style="max-width:960px; margin:0 auto;">
+    <h2 class="section-title has-text-centered">Key Contributions</h2>
+    <div class="columns is-multiline">
+
+      <div class="column is-one-third">
+        <div class="contribution-card">
+          <div class="contribution-icon">🔬</div>
+          <h3>PowerLens</h3>
+          <p>
+            A novel sub-millisecond energy measurement methodology overcoming RAPL's 1 ms granularity
+            limit through five coordinated mechanisms: environmental stabilization, execution amplification,
+            temporal synchronization, calibrated subtraction, and IQR-based statistical aggregation.
+            Achieves &lt;10% variation on 90%+ of blocks.
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-one-third">
+        <div class="contribution-card">
+          <div class="contribution-icon">📊</div>
+          <h3>EnCoDe Dataset</h3>
+          <p>
+            8,358 Python code blocks (6,686 train / 1,672 test) extracted from 18,612 real-world programs,
+            each with ground-truth energy measurements spanning <strong>six orders of magnitude</strong>
+            (2.37×10⁻⁵ J – 7.48×10² J). Annotated with 33 static AST features across 7 categories.
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-one-third">
+        <div class="contribution-card">
+          <div class="contribution-icon">⚡</div>
+          <h3>WattWise</h3>
+          <p>
+            A VS Code extension for design-time energy linting. Uses Gradient Boosting (regression) and
+            XGBoost (classification) to show inline energy estimates as developers write code — no execution
+            needed. Includes AI-powered optimization suggestions via Gemini 2.5 Flash and a repo-wide
+            energy dashboard.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ KEY RESULTS ══════ -->
+<section class="section" style="background:#fff; padding:3rem 1.5rem;">
+  <div class="container" style="max-width:860px; margin:0 auto;">
+    <h2 class="section-title has-text-centered">Results at a Glance</h2>
+    <div class="columns is-multiline has-text-centered">
+
+      <div class="column is-one-quarter">
+        <div class="result-box">
+          <div class="metric-value">0.755</div>
+          <div class="metric-label">Regression R²</div>
+          <div class="metric-sub">XGBoost, test set</div>
+        </div>
+      </div>
+
+      <div class="column is-one-quarter">
+        <div class="result-box">
+          <div class="metric-value">80.6%</div>
+          <div class="metric-label">Classification Accuracy</div>
+          <div class="metric-sub">XGBoost, Low/Med/High</div>
+        </div>
+      </div>
+
+      <div class="column is-one-quarter">
+        <div class="result-box">
+          <div class="metric-value">0.805</div>
+          <div class="metric-label">F1 Score</div>
+          <div class="metric-sub">Weighted, test set</div>
+        </div>
+      </div>
+
+      <div class="column is-one-quarter">
+        <div class="result-box">
+          <div class="metric-value">14k+</div>
+          <div class="metric-label">Code Blocks Measured</div>
+          <div class="metric-sub">from 18,612 programs</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Feature importance figure -->
+    <div class="figure-container" style="margin-top:2.5rem;">
+      <img src="static/images/feature_importance.png" alt="Feature importance across models"
+           onclick="openLightbox(this.src)" />
+      <p class="figure-caption">
+        <strong>Figure:</strong> Feature importance across Gradient Boosting, Random Forest, and Extra Trees models.
+        Operator density, loops count, and Halstead effort metrics consistently rank highest.
+        No single feature dominates — energy emerges from compositional interactions.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ METHODOLOGY ══════ -->
+<section class="section" style="background:#f4f7fb; padding:3rem 1.5rem;">
+  <div class="container" style="max-width:960px; margin:0 auto;">
+    <h2 class="section-title has-text-centered">Methodology</h2>
+
+    <!-- Framework figure -->
+    <div class="figure-container">
+      <img src="static/images/EnCoDe.png" alt="EnCoDe framework overview"
+           onclick="openLightbox(this.src)" style="max-height:380px;" />
+      <p class="figure-caption">
+        <strong>Figure:</strong> The EnCoDe framework. Python source files are parsed into ASTs to extract
+        code blocks; PowerLens measures ground-truth energy; 33 static features are extracted and used
+        to train regression and classification models; at inference time, new code is analysed without execution.
+      </p>
+    </div>
+
+    <div class="columns" style="margin-top:2rem;">
+      <div class="column">
+        <h3 style="font-weight:700; font-size:1.15rem; color:#1a202c; margin-bottom:1rem;">Pipeline Steps</h3>
+
+        <div class="pipeline-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Block Identification</h4>
+            <p>Python ASTs are parsed; <code>def</code>, <code>for</code>, <code>while</code>,
+            <code>if</code>, <code>try</code>, and <code>with</code> nodes are extracted as independent blocks.</p>
+          </div>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>PowerLens Measurement</h4>
+            <p>Each block is executed N×, aligned to RAPL update boundaries, calibrated for loop overhead,
+            and aggregated across 10 IQR-filtered trials to produce a stable energy signature.</p>
+          </div>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Feature Extraction</h4>
+            <p>33 static AST metrics per block — complexity, density, Halstead, structural, and pattern counts
+            — without executing the code.</p>
+          </div>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>ML Training</h4>
+            <p>Gradient Boosting (regression, sqrt-transformed target) and XGBoost (Low/Med/High classification)
+            trained with stratified k-fold cross-validation.</p>
+          </div>
+        </div>
+
+        <div class="pipeline-step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Design-Time Inference</h4>
+            <p>New code is parsed, features extracted, and models applied inline in VS Code — energy estimated
+            in under 1 second with no code execution.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <h3 style="font-weight:700; font-size:1.15rem; color:#1a202c; margin-bottom:1rem;">33 Static Features</h3>
+
+        <div class="feature-group">
+          <div class="feature-group-title">Structural (5)</div>
+          <div class="feature-tags">
+            <span class="feature-tag" style="background:#ebf8ff; color:#2b6cb0;">total_nodes</span>
+            <span class="feature-tag" style="background:#ebf8ff; color:#2b6cb0;">unique_node_types</span>
+            <span class="feature-tag" style="background:#ebf8ff; color:#2b6cb0;">max_depth</span>
+            <span class="feature-tag" style="background:#ebf8ff; color:#2b6cb0;">avg_depth</span>
+            <span class="feature-tag" style="background:#ebf8ff; color:#2b6cb0;">depth_variance</span>
+          </div>
+        </div>
+
+        <div class="feature-group">
+          <div class="feature-group-title">Complexity (4)</div>
+          <div class="feature-tags">
+            <span class="feature-tag" style="background:#fff5f5; color:#c53030;">cyclomatic</span>
+            <span class="feature-tag" style="background:#fff5f5; color:#c53030;">cognitive</span>
+            <span class="feature-tag" style="background:#fff5f5; color:#c53030;">nesting</span>
+            <span class="feature-tag" style="background:#fff5f5; color:#c53030;">control_flow</span>
+          </div>
+        </div>
+
+        <div class="feature-group">
+          <div class="feature-group-title">Density (5)</div>
+          <div class="feature-tags">
+            <span class="feature-tag" style="background:#fffff0; color:#744210;">operator_density</span>
+            <span class="feature-tag" style="background:#fffff0; color:#744210;">literal_density</span>
+            <span class="feature-tag" style="background:#fffff0; color:#744210;">call_density</span>
+            <span class="feature-tag" style="background:#fffff0; color:#744210;">variable_density</span>
+            <span class="feature-tag" style="background:#fffff0; color:#744210;">attribute_density</span>
+          </div>
+        </div>
+
+        <div class="feature-group">
+          <div class="feature-group-title">Halstead (5)</div>
+          <div class="feature-tags">
+            <span class="feature-tag" style="background:#f0fff4; color:#22543d;">vocabulary_size</span>
+            <span class="feature-tag" style="background:#f0fff4; color:#22543d;">program_length</span>
+            <span class="feature-tag" style="background:#f0fff4; color:#22543d;">program_volume</span>
+            <span class="feature-tag" style="background:#f0fff4; color:#22543d;">program_difficulty</span>
+            <span class="feature-tag" style="background:#f0fff4; color:#22543d;">program_effort</span>
+          </div>
+        </div>
+
+        <div class="feature-group">
+          <div class="feature-group-title">Pattern Counts (5)</div>
+          <div class="feature-tags">
+            <span class="feature-tag" style="background:#faf5ff; color:#553c9a;">loops_count</span>
+            <span class="feature-tag" style="background:#faf5ff; color:#553c9a;">conditionals_count</span>
+            <span class="feature-tag" style="background:#faf5ff; color:#553c9a;">functions_count</span>
+            <span class="feature-tag" style="background:#faf5ff; color:#553c9a;">classes_count</span>
+            <span class="feature-tag" style="background:#faf5ff; color:#553c9a;">try_blocks_count</span>
+          </div>
+        </div>
+
+        <div class="feature-group">
+          <div class="feature-group-title">Entropy (3) &amp; Structural Ratios (3) &amp; Unique Counts (3)</div>
+          <div class="feature-tags">
+            <span class="feature-tag" style="background:#fff0f3; color:#702459;">node_entropy</span>
+            <span class="feature-tag" style="background:#fff0f3; color:#702459;">operator_entropy</span>
+            <span class="feature-tag" style="background:#fff0f3; color:#702459;">variable_entropy</span>
+            <span class="feature-tag" style="background:#fff0f3; color:#702459;">branching_factor</span>
+            <span class="feature-tag" style="background:#fff0f3; color:#702459;">leaf_ratio</span>
+            <span class="feature-tag" style="background:#fff0f3; color:#702459;">unique_vars</span>
+            <span class="feature-tag" style="background:#fff0f3; color:#702459;">unique_ops</span>
+            <span class="feature-tag" style="background:#fff0f3; color:#702459;">unique_fns</span>
+            <span class="feature-tag" style="background:#fff0f3; color:#702459;">avg_children</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ POWERLENS ══════ -->
+<section class="section" style="background:#fff; padding:3rem 1.5rem;">
+  <div class="container" style="max-width:960px; margin:0 auto;">
+    <h2 class="section-title has-text-centered">PowerLens: Sub-Millisecond Energy Measurement</h2>
+
+    <div class="columns is-vcentered">
+      <div class="column is-half">
+        <p style="color:#374151; line-height:1.8; margin-bottom:1rem;">
+          RAPL (Intel's Running Average Power Limit) updates at ~1 ms intervals, but individual code
+          blocks execute in microseconds — causing &gt;110% coefficient of variation and frequent
+          zero readings. <strong>PowerLens</strong> solves this through five coordinated mechanisms:
+        </p>
+        <ul style="color:#374151; line-height:2; list-style:none; padding:0;">
+          <li><span style="color:#4299e1; font-weight:700; margin-right:8px;">①</span> <strong>Environmental Stabilization</strong> — lock CPU frequency, disable Turbo Boost, pin to single core</li>
+          <li><span style="color:#4299e1; font-weight:700; margin-right:8px;">②</span> <strong>Execution Amplification</strong> — repeat block N× to push cumulative energy above RAPL threshold</li>
+          <li><span style="color:#4299e1; font-weight:700; margin-right:8px;">③</span> <strong>Temporal Synchronization</strong> — align execution start with RAPL counter update boundary</li>
+          <li><span style="color:#4299e1; font-weight:700; margin-right:8px;">④</span> <strong>Calibrated Subtraction</strong> — remove pre-measured loop overhead via linear calibration</li>
+          <li><span style="color:#4299e1; font-weight:700; margin-right:8px;">⑤</span> <strong>Statistical Aggregation</strong> — 10 trials with IQR outlier removal; mean of stable observations</li>
+        </ul>
+        <p style="color:#4b5563; margin-top:1rem; font-size:0.92rem;">
+          Result: &gt;90% of blocks achieve &lt;10% coefficient of variation.
+          Aggregated PowerLens measurements closely match coarse-grained PyRAPL readings at substantially lower variance.
+        </p>
+      </div>
+      <div class="column is-half">
+        <div class="figure-container">
+          <img src="static/images/measurement.png" alt="PowerLens measurement methodology"
+               onclick="openLightbox(this.src)" />
+          <p class="figure-caption">PowerLens measurement mechanism: synchronization, amplification, and calibrated subtraction working together to extract reliable sub-millisecond energy signals.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PowerLens vs PyRAPL -->
+    <div class="figure-container" style="margin-top:2rem;">
+      <img src="static/images/powerlens_vs_pyrapl.png" alt="PowerLens vs PyRAPL comparison"
+           onclick="openLightbox(this.src)" style="max-height:320px;" />
+      <p class="figure-caption">
+        <strong>Validation:</strong> PowerLens aggregated block measurements align with coarse-grained
+        PyRAPL readings while showing substantially lower variance — confirming accuracy at microsecond granularity.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ DATASET ══════ -->
+<section class="section" style="background:#f4f7fb; padding:3rem 1.5rem;">
+  <div class="container" style="max-width:960px; margin:0 auto;">
+    <h2 class="section-title has-text-centered">Dataset</h2>
+
+    <div class="columns is-vcentered">
+      <div class="column is-half">
+        <div class="figure-container">
+          <img src="static/images/energy_distribution_by_block_type.png"
+               alt="Energy distribution by block type" onclick="openLightbox(this.src)" />
+          <p class="figure-caption">Energy distribution across block types. Values span six orders of magnitude; distributions are heavily right-skewed, motivating log-transform preprocessing.</p>
+        </div>
+      </div>
+      <div class="column is-half">
+        <table class="table is-bordered is-striped is-fullwidth" style="font-size:0.9rem;">
+          <thead>
+            <tr style="background:#e2e8f0;">
+              <th>Property</th><th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Total blocks</td><td><strong>8,358</strong></td></tr>
+            <tr><td>Training set</td><td>6,686 blocks</td></tr>
+            <tr><td>Test set</td><td>1,672 blocks</td></tr>
+            <tr><td>Source programs</td><td>18,612 Python files</td></tr>
+            <tr><td>Features per block</td><td>33 static AST metrics</td></tr>
+            <tr><td>Energy range</td><td>2.37×10⁻⁵ – 7.48×10² J</td></tr>
+            <tr><td>Block types</td><td>def, for, while, if, try, with</td></tr>
+            <tr><td>Measurement hardware</td><td>Intel i7-6700K, Linux</td></tr>
+          </tbody>
+        </table>
+        <div style="margin-top:1rem; display:flex; gap:0.75rem; flex-wrap:wrap;">
+          <a href="https://doi.org/10.5281/zenodo.18366913"
+             class="button is-info is-small" target="_blank" style="border-radius:6px;">
+            <span class="icon"><i class="fas fa-download"></i></span>
+            <span>Download Dataset (Zenodo)</span>
+          </a>
+          <a href="https://github.com/sa4s-serc/encode"
+             class="button is-dark is-small" target="_blank" style="border-radius:6px;">
+            <span class="icon"><i class="fab fa-github"></i></span>
+            <span>View on GitHub</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ ABLATION ══════ -->
+<section class="section" style="background:#fff; padding:3rem 1.5rem;">
+  <div class="container" style="max-width:860px; margin:0 auto;">
+    <h2 class="section-title has-text-centered">Ablation Study</h2>
+    <p style="color:#4b5563; text-align:center; margin-bottom:1.5rem; max-width:660px; margin-left:auto; margin-right:auto;">
+      We systematically removed each of the 7 feature groups to assess their individual contribution.
+      No single group is critical — energy behaviour emerges from <em>feature interactions</em>.
+    </p>
+
+    <table class="table is-bordered is-striped is-fullwidth" style="font-size:0.88rem; max-width:680px; margin:0 auto;">
+      <thead>
+        <tr style="background:#e2e8f0;">
+          <th>Configuration</th><th>Regression R²</th><th>Classification Accuracy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="font-weight:700; background:#ebf8ff;">
+          <td>Full model (33 features)</td><td>0.757</td><td>80.56%</td>
+        </tr>
+        <tr><td>Size only (2 features)</td><td>0.204</td><td>57.24%</td></tr>
+        <tr><td>Complexity + Size (9 features)</td><td>0.698</td><td>65.91%</td></tr>
+        <tr><td>Without Density metrics</td><td>0.740</td><td>77.75% (−2.81 pp)</td></tr>
+        <tr><td>Without Halstead metrics</td><td>0.748</td><td>79.10%</td></tr>
+        <tr><td>Without Pattern counts</td><td>0.745</td><td>79.22%</td></tr>
+        <tr><td>Without Complexity metrics</td><td>0.751</td><td>79.70%</td></tr>
+      </tbody>
+    </table>
+    <p style="text-align:center; color:#718096; font-size:0.82rem; margin-top:0.75rem;">
+      Full model outperforms size-only baseline by <strong>+23.3 pp</strong> in accuracy.
+      Density metrics show the largest individual impact when removed.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ BIBTEX ══════ -->
+<section class="section" style="background:#f4f7fb; padding:3rem 1.5rem;">
+  <div class="container" style="max-width:800px; margin:0 auto;">
+    <h2 class="section-title has-text-centered">BibTeX</h2>
+    <div class="bibtex-block"><span class="bibtex-key">@misc{</span>goyal2026encodeenergyestimationsource,
+  <span class="bibtex-field">title</span>     = {<span class="bibtex-value">EnCoDe: Energy Estimation of Source Code At Design-Time</span>},
+  <span class="bibtex-field">author</span>    = {<span class="bibtex-value">Shailender Goyal and Akhila Matathammal and Karthik Vaidhyanathan</span>},
+  <span class="bibtex-field">year</span>      = {<span class="bibtex-value">2026</span>},
+  <span class="bibtex-field">eprint</span>    = {<span class="bibtex-value">2605.00504</span>},
+  <span class="bibtex-field">archivePrefix</span> = {<span class="bibtex-value">arXiv</span>},
+  <span class="bibtex-field">primaryClass</span>  = {<span class="bibtex-value">cs.SE</span>},
+  <span class="bibtex-field">url</span>       = {<span class="bibtex-value">https://arxiv.org/abs/2605.00504</span>},
+  <span class="bibtex-field">doi</span>       = {<span class="bibtex-value">10.1145/3816483.3816532</span>}
+}</div>
+    <div style="text-align:center; margin-top:1rem;">
+      <button onclick="copyBibtex()" class="button is-small is-light" style="border-radius:6px;">
+        <span class="icon"><i class="fas fa-copy"></i></span>
+        <span>Copy BibTeX</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ FOOTER ══════ -->
+<footer>
+  <div>
+    This work is licensed under a
+    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons Attribution 4.0 International License</a>.
+  </div>
+  <div style="margin-top:0.5rem;">
+    Website template inspired by <a href="https://nerfies.github.io" target="_blank">Nerfies</a>.
+    Source code on <a href="https://github.com/sa4s-serc/encode" target="_blank">GitHub</a>.
+  </div>
+  <div style="margin-top:0.5rem;">
+    Contact: <a href="mailto:shailender.goyal@research.iiit.ac.in">shailender.goyal@research.iiit.ac.in</a>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════ LIGHTBOX ══════ -->
+<div id="lightbox" onclick="closeLightbox()">
+  <span id="lightbox-close">&times;</span>
+  <img id="lightbox-img" src="" alt="" />
+</div>
+
+<script>
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  function copyBibtex() {
+    const bib = `@misc{goyal2026encodeenergyestimationsource,
+  title     = {EnCoDe: Energy Estimation of Source Code At Design-Time},
+  author    = {Shailender Goyal and Akhila Matathammal and Karthik Vaidhyanathan},
+  year      = {2026},
+  eprint    = {2605.00504},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.SE},
+  url       = {https://arxiv.org/abs/2605.00504},
+  doi       = {10.1145/3816483.3816532}
+}`;
+    navigator.clipboard.writeText(bib).then(() => {
+      const btn = event.target.closest('button');
+      btn.innerHTML = '<span class="icon"><i class="fas fa-check"></i></span><span>Copied!</span>';
+      setTimeout(() => {
+        btn.innerHTML = '<span class="icon"><i class="fas fa-copy"></i></span><span>Copy BibTeX</span>';
+      }, 2000);
+    });
+  }
+</script>
+
+</body>
+</html>
