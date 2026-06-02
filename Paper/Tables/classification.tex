@@ -1,0 +1,51 @@
+\begin{table}[h]
+\centering
+\caption{Energy Tier Classification Models}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{llcllll}
+\hline
+Model               & \multicolumn{1}{c}{Accuracy} & CV Accuracy       & \multicolumn{1}{c}{Precision} & \multicolumn{1}{c}{Recall} & \multicolumn{1}{c}{F1} & Energy(J) \\ \hline
+XGBoost             & \cellcolor{gray!45}0.806                        & \cellcolor{gray!30}0.793 $\pm$ 0.007 & \cellcolor{gray!45}0.804                         & \cellcolor{gray!45}0.806                      &\cellcolor{gray!45} 0.805                  & 0.022     \\
+Random Forest       &\cellcolor{gray!30} 0.792                        & \cellcolor{gray!15}0.780 $\pm$ 0.007 & \cellcolor{gray!30}0.789                         & \cellcolor{gray!30}0.792                      & 0.789                  & 0.373     \\
+Gradient Boosting   & \cellcolor{gray!15}0.788                        & \cellcolor{gray!45}0.794 $\pm$ 0.008 & \cellcolor{gray!15}0.788                         & \cellcolor{gray!15}0.788                      & \cellcolor{gray!30}0.788                  &\cellcolor{gray!30} 0.015     \\
+K-NN                & 0.783                        & 0.771 $\pm$ 0.005 & 0.780                         & 0.783                      & 0.780                  & 0.027     \\
+SVM                 & 0.781                        & 0.771 $\pm$ 0.009 & 0.780                         & 0.781                      & 0.778                  & 0.022     \\
+Extra Trees         & 0.769                        & 0.765 $\pm$ 0.003 & 0.768                         & 0.769                      & 0.765                  & 0.315     \\
+Decision Tree       & 0.749                        & 0.736 $\pm$ 0.009 & 0.744                         & 0.749                      & 0.745                  & \cellcolor{gray!45}0.014     \\
+Logistic Regression & 0.735                        & 0.726 $\pm$ 0.003 & 0.729                         & 0.735                      & 0.731                  & \cellcolor{gray!15}0.017     \\
+SGD Classifier      & 0.729                        & 0.713 $\pm$ 0.005 & 0.722                         & 0.729                      & 0.721                  & 0.022     \\
+% QDA                 & 0.720                        & 0.709 $\pm$ 0.010 & 0.745                         & 0.720                      & 0.711                  & 0.052     \\
+% LDA                 & 0.717                        & 0.712 $\pm$ 0.005 & 0.710                         & 0.717                      & 0.708                  & 0.017     \\
+% Ridge Classifier    & 0.712                        & 0.706 $\pm$ 0.006 & 0.708                         & 0.712                      & 0.700                  & 0.016     \\
+% Gaussian NB         & 0.678                        & 0.653 $\pm$ 0.002 & 0.680                         & 0.678                      & 0.669                  & 0.022     \\
+\hline
+\end{tabular}
+}\footnotesize{ Shading indicates top two models by each metric.}
+\label{tab:classification}
+\end{table}
+% \begin{table}[h]
+% \centering
+% \caption{Energy Tier Classification Models}
+% \resizebox{\columnwidth}{!}{%
+% \begin{tabular}{l c c c c c}
+% \hline
+% Model & Accuracy & CV Accuracy  & Precision  & Recall  & F1  \\
+% \hline
+% XGBoost & \cellcolor{gray!45}0.686 & \cellcolor{gray!40}0.687 $\pm$ 0.005 & \cellcolor{gray!40}0.684 & \cellcolor{gray!40}0.686 & \cellcolor{gray!40}0.685 \\
+% Random Forest & \cellcolor{gray!30}0.679 & \cellcolor{gray!25}0.682 $\pm$ 0.007 & \cellcolor{gray!25}0.677 & \cellcolor{gray!25}0.679 & \cellcolor{gray!25}0.677 \\
+% Gradient Boosting & \cellcolor{gray!12}0.679 & \cellcolor{gray!15}0.679 $\pm$ 0.010 & \cellcolor{gray!12}0.678 & \cellcolor{gray!12}0.679 & \cellcolor{gray!12}0.678 \\
+% K-NN & 0.677 & 0.674 $\pm$ 0.008 & 0.676 & 0.677 & 0.676 \\
+% Extra Trees & 0.668 & 0.663 $\pm$ 0.001 & 0.665 & 0.668 & 0.666 \\
+% SVM & 0.664 & 0.658 $\pm$ 0.001 & 0.662 & 0.664 & 0.663 \\
+% Decision Tree & 0.624 & 0.616 $\pm$ 0.000 & 0.619 & 0.624 & 0.619 \\
+% LDA & 0.582 & 0.580 $\pm$ 0.007 & 0.583 & 0.582 & 0.582 \\
+% Ridge Classifier & 0.576 & 0.572 $\pm$ 0.009 & 0.569 & 0.576 & 0.567 \\
+% SGD Classifier & 0.573 & 0.570 $\pm$ 0.001 & 0.571 & 0.573 & 0.571 \\
+% Logistic Regression & 0.568 & 0.580 $\pm$ 0.004 & 0.566 & 0.568 & 0.567 \\
+% QDA & 0.537 & 0.542 $\pm$ 0.004 & 0.590 & 0.537 & 0.517 \\
+% Gaussian NB & 0.475 & 0.465 $\pm$ 0.003 & 0.482 & 0.475 & 0.456 \\
+% \hline
+% \end{tabular}%
+% }
+% \label{tab:classification}
+% \end{table}

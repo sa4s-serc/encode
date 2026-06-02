@@ -1,0 +1,44 @@
+name: WattWise Energy Gate
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - '**.py'
+
+jobs:
+  energy-gate:
+    name: Energy Analysis
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      statuses: write
+      issues: write
+
+    steps:
+      - name: Checkout (full history for git show)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip --quiet
+          pip install numpy pandas scikit-learn xgboost joblib pyyaml requests --quiet
+
+      - name: Run WattWise energy analysis
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_EVENT_NAME: pull_request
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO_PATH: ${{ github.workspace }}
+          PYTHON_DIR: ${{ github.workspace }}/python
+        run: python wattwise-bot/src/main.py

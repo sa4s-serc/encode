@@ -1,0 +1,123 @@
+{
+  "name": "wattwise",
+  "displayName": "WattWise — Energy Linter for Code",
+  "description": "WattWise is an AI-powered energy linter that detects high-energy Python code blocks, predicts energy consumption using ML models, and suggests optimizations via Gemini 2.5 Flash.",
+  "version": "1.0.0",
+  "publisher": "wattwise",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters",
+    "Other"
+  ],
+  "keywords": [
+    "python",
+    "energy",
+    "performance",
+    "green coding",
+    "sustainability",
+    "wattwise",
+    "energy linter",
+    "AI suggestions"
+  ],
+  "activationEvents": [
+    "onLanguage:python"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "wattwise.analyzeFile",
+        "title": "Analyze Energy Consumption",
+        "category": "WattWise",
+        "icon": "$(zap)"
+      },
+      {
+        "command": "wattwise.clearAnalysis",
+        "title": "Clear Energy Analysis",
+        "category": "WattWise",
+        "icon": "$(circle-slash)"
+      },
+      {
+        "command": "wattwise.trainModels",
+        "title": "Train Energy Prediction Models",
+        "category": "WattWise"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "when": "resourceLangId == python",
+          "command": "wattwise.analyzeFile",
+          "group": "navigation@1"
+        },
+        {
+          "when": "resourceLangId == python",
+          "command": "wattwise.clearAnalysis",
+          "group": "navigation@2"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "resourceLangId == python",
+          "command": "wattwise.analyzeFile",
+          "group": "wattwise@1"
+        },
+        {
+          "when": "resourceLangId == python",
+          "command": "wattwise.clearAnalysis",
+          "group": "wattwise@2"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "WattWise",
+      "properties": {
+        "wattwise.pythonPath": {
+          "type": "string",
+          "default": "python3",
+          "description": "Path to the Python interpreter used by WattWise."
+        },
+        "wattwise.showInlineDecorations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show inline energy estimates alongside each code block."
+        },
+        "wattwise.showHoverInfo": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show detailed energy info and AI suggestions on hover."
+        },
+        "wattwise.decorationFormat": {
+          "type": "string",
+          "default": "⚡ {energy}J · {tier}",
+          "description": "Format for WattWise inline decorations. Available placeholders: {energy}, {tier}."
+        },
+        "wattwise.geminiApiKey": {
+          "type": "string",
+          "default": "",
+          "description": "Google Gemini API key for WattWise AI-powered improvement suggestions on high-energy blocks. Get a free key at https://aistudio.google.com/app/apikey"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.75.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "@vscode/vsce": "^2.22.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.0.0",
+    "vsce": "^2.15.0"
+  }
+}

@@ -1,0 +1,84 @@
+This is BibTeX, Version 0.99e
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: novel_approach_draft.aux
+Reallocating 'name_of_file' (item size: 1) to 21 items.
+The style file: ACM-Reference-Format.bst
+Reallocating 'name_of_file' (item size: 1) to 7 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+Database file #1: acmart.bib
+Warning--string name "june" is undefined
+--line 403 of file acmart.bib
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 9000 items.
+Reallocating 'glb_str_end' (item size: 4) to 20 items.
+Reallocating 'glb_str_ptr' (item size: 4) to 20 items.
+Reallocating 'global_strs' (item size: 1) to 4000000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Warning--empty publisher in Aho1986CompilersPT
+Warning--empty address in Aho1986CompilersPT
+Warning--page numbers missing in both pages and numpages fields in Aho1986CompilersPT
+Warning--empty address in AlOmar2023SEET_PMD
+Warning--page numbers missing in both pages and numpages fields in Botchkarev2018PerformanceM
+Warning--page numbers missing in both pages and numpages fields in Chicco2021TheCO
+Warning--empty publisher in 11023955
+Warning--empty address in 11023955
+Warning--empty publisher in DiCosmo2017
+Warning--empty address in DiCosmo2017
+Warning--empty publisher in Keong2015MetricsPower
+Warning--empty address in Keong2015MetricsPower
+Warning--empty publisher in 7429297
+Warning--empty address in 7429297
+Warning--page numbers missing in both pages and numpages fields in su14148596
+Warning--no number and no volume in Reya2023GreenPyEA
+Warning--page numbers missing in both pages and numpages fields in Reya2023GreenPyEA
+Warning--empty publisher in Ribeiro2021EcoAndroid
+Warning--empty address in Ribeiro2021EcoAndroid
+Warning--empty address in Verdecchia2022DataCentricGreenAI
+Warning--empty publisher in 10329262
+Warning--empty address in 10329262
+Warning--empty address in 10.5555/2349018
+Warning--page numbers missing in both pages and numpages fields in electronics14071331
+You've used 40 entries,
+            6273 wiz_defined-function locations,
+            1844 strings with 28493 characters,
+and the built_in function-call counts, 46244 in all, are:
+= -- 6410
+> -- 1382
+< -- 0
++ -- 470
+- -- 584
+* -- 3235
+:= -- 4313
+add.period$ -- 199
+call.type$ -- 40
+change.case$ -- 295
+chr.to.int$ -- 40
+cite$ -- 64
+duplicate$ -- 3939
+empty$ -- 2747
+format.name$ -- 580
+if$ -- 11553
+int.to.chr$ -- 2
+int.to.str$ -- 1
+missing$ -- 150
+newline$ -- 425
+num.names$ -- 280
+pop$ -- 1493
+preamble$ -- 1
+purify$ -- 612
+quote$ -- 0
+skip$ -- 1434
+stack$ -- 0
+substring$ -- 3418
+swap$ -- 414
+text.length$ -- 228
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 819
+warning$ -- 24
+while$ -- 233
+width$ -- 0
+write$ -- 859
+(There were 25 warnings)

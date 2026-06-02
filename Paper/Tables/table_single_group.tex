@@ -1,0 +1,20 @@
+% \begin{table}[t]
+% \centering
+% \caption{Single-group-only ablation. Each row trains XGBoost using only
+%          that feature group. Gap is relative to the full 33-feature model
+%          (Acc~$= 80.6\%$, $R^2 = 0.757$).}
+% \label{tab:ablation_single}
+% \small
+% \begin{tabular}{lrrrr}
+% \toprule
+% \textbf{Group Only} & \textbf{\#Feat} & \textbf{Test $R^2$} & \textbf{Test Acc} & \textbf{Gap vs.\ Full} \\
+% \midrule
+% Counts           & 8 & 0.720 & 74.2\% & $-$6.4~pp \\
+% Density          & 5 & 0.700 & 71.1\% & $-$9.5~pp \\
+% Entropy          & 3 & 0.691 & 68.3\% & $-$12.3~pp \\
+% AST Structural   & 8 & 0.650 & 69.4\% & $-$11.2~pp \\
+% Halstead         & 5 & 0.688 & 59.7\% & $-$20.9~pp \\
+% Complexity       & 4 & 0.067 & 51.2\% & $-$29.4~pp \\
+% \bottomrule
+% \end{tabular}
+% \end{table}

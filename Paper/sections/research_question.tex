@@ -1,0 +1,28 @@
+\section{Research Questions}
+\label{sec:research-questions}
+
+% Our work addresses the overarching problem of how energy efficiency can be made a design time concern for software developers.
+To guide our investigation, we formulate the following three research questions. These questions are answered through the analyses presented in Section~\ref{sec:results}.
+
+\textbf{RQ1: How can energy consumption of small code blocks be measured accurately and reproducibly?}  
+We evaluate the proposed methodology's measurement granularity, stability and effectiveness for small code blocks.
+
+\textbf{RQ2: What statistical relationships exist between static code features and block-level energy consumption?}  
+We investigate whether code structure and metrics are statistically related to energy consumption. This leads to two sub-questions:
+\begin{itemize}
+  \item \textbf{RQ2a}: Which static code features exhibit associations with block's energy consumption?  
+  \item \textbf{RQ2b}: What is the nature of these associations between energy consumption and code features?
+  %   \item \textbf{RQ2a}: What kind of code aspects have high impact on block's energy consumption?  
+  % \item \textbf{RQ2b}: How do structural and contextual features derived from Abstract Syntax Trees correlate to energy?
+\end{itemize}
+% These are answered through correlation analyses (Pearson, Spearman, Kendall) and feature importance rankings across features.
+
+\textbf{RQ3: How reliably can code features predict block-level energy consumption?}  
+Beyond correlation, we ask whether predictive models trained on static features can predict energy consumption and generalize to unseen code. This leads to two sub-questions:
+\begin{itemize}
+  \item \textbf{RQ3a:} How accurately can regression models predict absolute block-level energy values?  
+  \item \textbf{RQ3b:} How effectively can classification models assign blocks to energy tiers (low, medium, high)?  
+\end{itemize}
+% These are answered through regression and classification performance metrics, cross-validation stability, and analysis of generalization gaps between training and test sets.
+
+% These questions are answered through the implementation of our Visual Studio Code extension, which highlights energy-intensive blocks inline with source code, enabling targeted refactoring at design time.

@@ -1,0 +1,51 @@
+{
+  "top_features": [
+    "feature_program_effort",
+    "feature_program_volume",
+    "feature_total_nodes",
+    "feature_program_length",
+    "feature_unique_node_types",
+    "feature_vocabulary_size",
+    "feature_program_difficulty",
+    "feature_cognitive_complexity"
+  ],
+  "energy_quantiles": [
+    4.650729454254614e-05,
+    0.00020520683906989187
+  ],
+  "skewness": {
+    "feature_total_nodes": 3.613268254347342,
+    "feature_unique_node_types": 0.5838018102211862,
+    "feature_max_depth": 0.8702083001626302,
+    "feature_avg_depth": 0.8995563836467858,
+    "feature_depth_variance": 2.528664270873467,
+    "feature_cyclomatic_complexity": 1.4006761509842618,
+    "feature_cognitive_complexity": 8.370094929430739,
+    "feature_nesting_complexity": 0.720555146271739,
+    "feature_control_flow_complexity": 0.9462864120614798,
+    "feature_operator_density": 0.9737819655813839,
+    "feature_literal_density": 1.2326705663476234,
+    "feature_call_density": 0.4687359417076942,
+    "feature_variable_density": -0.5687288533544955,
+    "feature_attribute_density": 1.8947473748252341,
+    "feature_node_type_entropy": -0.36281076979143373,
+    "feature_operator_entropy": 0.941403174334742,
+    "feature_variable_entropy": -0.5498786303349376,
+    "feature_unique_variables": 1.138017689207496,
+    "feature_unique_operators": 1.1634781619499797,
+    "feature_unique_functions": 0.9787210453522254,
+    "feature_avg_branching_factor": -1.7229173161930977,
+    "feature_max_branching_factor": 6.847597423227561,
+    "feature_leaves_to_nodes_ratio": 0.2949568277115138,
+    "feature_loops_count": 1.175758245682554,
+    "feature_conditionals_count": 2.1381212147441278,
+    "feature_functions_count": -0.1276956996930543,
+    "feature_classes_count": NaN,
+    "feature_try_blocks_count": 20.53015043985271,
+    "feature_vocabulary_size": 1.488987590459746,
+    "feature_program_length": 3.4641722291635406,
+    "feature_program_volume": 4.393535070363079,
+    "feature_program_difficulty": 3.0059881573415774,
+    "feature_program_effort": 14.306885554426168
+  }
+}

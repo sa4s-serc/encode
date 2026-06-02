@@ -1,0 +1,12 @@
+{
+  "classes": [
+    "High",
+    "Low",
+    "Medium"
+  ],
+  "encoding": {
+    "High": 0,
+    "Low": 1,
+    "Medium": 2
+  }
+}

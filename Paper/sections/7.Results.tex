@@ -1,0 +1,114 @@
+
+\section{Results}
+\label{sec:results}
+
+
+We present the results according to the research questions defined in Section ~\ref{sec:research-questions}.
+
+\subsection{RQ1: How can energy consumption of small code blocks be measured accurately and reproducibly?}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=1\linewidth]{figures/example_measurement.pdf}
+  \caption{Block Level Energy Measurement of the score computation function}
+  \label{fig:example-measurement}
+\end{figure}
+Our first research question examines whether energy consumption of microsecond-scale code blocks can be measured accurately and reproducibly.  Each block was measured ten times, and across the dataset \textbf{more than 90\%} of the blocks exhibited \textbf{less than 10\% variation} between repeated trials after IQR outlier removal, indicating strong measurement stability and effective suppression of environmental noise. The results demonstrate that the proposed measurement infrastructure provides stable and reliable energy values at block granularity. This is a result of system stabilization and calibrated padding loops.
+
+The measurement protocol also achieves both high sensitivity and broad coverage. The observed energy values spans six orders of magnitude, ranging from $2.37 \times 10^{-5}$ joules for trivial blocks to $7.48 \times 10^{2}$ joules for complex functions. This wide dynamic range confirms that the methodology is capable of capturing energy signatures of extremely short-lived constructs while remaining reliable. Without the amplification and synchronization mechanisms, many of these fine-grained blocks would register highly unstable or zero readings using conventional software-profilers.
+
+Figure~\ref{fig:example-measurement} illustrates block-level energy measurements for the \texttt{score\_function.py} example, where annotated values indicate per-block energy consumption in joules as measured by PowerLens in Nested Blocks.
+Figure~\ref{fig:powerlens-pyrapl} compares the sum of block-level energy measurements obtained with PowerLens against coarse-grained measurements from PyRAPL\footnote{\url{https://github.com/powerapi-ng/pyRAPL}}, grouped by construct type. To \textbf{validate} the correctness of the fine-grained measurements, we compared the aggregate energy obtained by summing block-level measurements from PowerLens with the total program-level energy reported by PyRAPL for the same codes, across 40 instances of each block type (see Figure~\ref{fig:powerlens-pyrapl}). For all block categories, the aggregated PowerLens measurements closely match the corresponding coarse-grained energy reported by PyRAPL. In addition, PowerLens exhibits \textbf{substantially lower variance} across repeated measurements, as it stabilizes the execution environment and applies calibration loops to isolate block execution energy.
+% These results confirm that \textbf{PowerLens} provides \textbf{reliable, high-resolution} energy measurements across diverse code constructs while remaining consistent with established coarse-grained profiling tools.
+
+
+\begin{rqbox}{Answer to RQ1}Together, these results confirm that PowerLens enables accurate, stable, and reproducible energy measurement at the level of individual small code blocks, overcoming the temporal limitations of existing software-based profilers.
+\end{rqbox}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=1\linewidth]{figures/validation_plot_hq.pdf}
+  \caption{Sum of Blocks measured by Powerlens compared with Overall measurement by Pyrapl}
+  \label{fig:powerlens-pyrapl}
+\end{figure}
+% \textbf{\textit{PLACEHOLDER: Boxplot of measurement variance across blocks; histogram of block-level energy distribution.}}
+
+\subsection{RQ2: What statistical relationships exist between static code features and block-level energy consumption?}
+
+\input{Tables/top20_correlation_feature_importance}
+
+We next examine whether code metrics of source code provide meaningful explanatory signals for energy consumption and the nature of these signals.
+
+\noindent
+We present the top 20 features from the correlation analysis, ranked by absolute correlation values (Pearson, Spearman, and Kendall) and feature importance scores (Extra Trees, Random Forest, and Gradient Boosting), in Table~\ref{tab:feature_ranking}.
+
+The feature importance results in Table~\ref{tab:feature_ranking} indicate that energy consumption does not strongly depend on any single feature. While several metrics exhibit statistically meaningful correlations with energy, most Pearson correlation coefficients are moderate in magnitude. In contrast, Spearman and Kendall coefficients are substantially higher for many features, suggesting that the relation between code features and energy consumption is largely \textbf{non-linear}.
+
+Features such as \texttt{operator\_density}, \texttt{operator\_entropy}, and \texttt{loops\_count} demonstrate linear associations and consistent predictive power across models. Notably, \texttt{operator\_density} ranks first in all three models. Other features, including \texttt{call\_density}, \texttt{conditionals\_count}, \texttt{literal\_density}, and \texttt{unique\_node\_types}, exhibit non-linear relationships with energy while maintaining stable predictive importance across models. The convergence of correlation analysis and predictive performance suggests that the models capture genuine underlying relationships.
+Although some features achieve high rank-based correlations primarily because they act as categorical indicators, \texttt{functions\_count} exhibits high Spearman and Kendall coefficients but contributes little to prediction. Such features carry block specific knowledge and hence, effectively distinguish block types but can't predict energy consumption.
+\begin{rqbox}{Answer to RQ2}
+Taken together, these findings demonstrate that energy consumption is encoded in the compositional structure of code. Most feature-energy relationships are non-linear, as evidenced by the gap between Pearson and Spearman coefficients. Control flow shape, operator composition, functional decomposition, and nesting patterns jointly determine energy behavior. As a result, features that attempt to explain energy using isolated characteristics are inherently limited. Effective energy modeling requires holistic representations of code capturing feature 
+interactions.
+\end{rqbox}
+
+
+\subsection{RQ3: How reliably can code features predict block-level energy consumption?}
+
+\input{Tables/regression}
+\input{Tables/classification}
+
+% We evaluated both regression and classification tasks to assess the predictive power of static features.
+
+% \paragraph{Regression.}  
+% Tree-based ensemble regressors consistently delivered the best performance, capturing the non-linear and interaction-heavy nature of feature–energy relationships. Gradient Boosting Regressor achieved an $R^2$ of 0.81, explaining 81\% of the variance in block-level energy. The mean absolute percentage error (MAPE) averaged 35\%, while RMSE and MAE remained low relative to the scale of energy values. Decision Trees provided a strong baseline, though ensembles substantially improved accuracy by reducing variance. Residual plots showed no strong heteroscedasticity, with errors evenly distributed across low- and high-energy blocks.
+
+% \paragraph{Classification.}  
+% We categorized blocks into three energy tiers: low, medium, and high. Gradient Boosting achieved the highest accuracy (81.0\%), followed by Random Forest (78.2\%) and Extra Trees (77.4\%). Confusion matrices revealed that misclassifications occurred mostly between adjacent tiers, while high-energy blocks were rarely misclassified. This is a crucial insight for developers, as reliably identifying energy-intensive blocks enables targeted optimization. Linear classifiers such as Ridge and LDA achieved respectable accuracy (75.5\% and 75.3\%), but kernel-based and probabilistic methods underperformed.
+
+% % \textbf{\textit{PLACEHOLDER: Confusion matrix of classification predictions; table of regression and classification metrics.}}
+
+% \paragraph{Generalization and robustness.}  
+% Across stratified 5-fold cross-validation, fold-to-fold performance variation was minimal ($< 3\%$ standard deviation in $R^2$ and accuracy). The generalization gap between cross-validation and held-out test sets was negligible, indicating no overfitting despite the use of 166 features. This confirms that our models are both stable and generalizable across diverse Python codebases.
+
+% \medskip
+% Overall, our results show that fine-grained block-level energy measurement is accurate, static features encode significant predictive signals, and machine learning models—particularly tree-based ensembles—can deliver reliable regression and classification predictions with strong generalization performance.
+
+We assess prediction accuracy of static features on unseen code blocks and identify effective modeling choices.
+
+As shown in Table ~\ref{tab:regression_log}, ensemble and tree-based regression models achieve strong predictive performance, with the XGBoost regressor attaining the highest test performance ($R^2$ of 0.755). SVR and Gradient Boosting follow closely, exhibiting similarly high accuracy and stable cross-validation results. These models outperform linear models, which struggle to capture the complex feature interactions present in the data. The energy distribution in our dataset is highly skewed, spanning several orders of magnitude. To mitigate this skewness and stabilize learning, we apply square root and logarithm transformations to the target values. These transformations significantly improves model convergence and generalization.
+
+In addition to absolute error metrics, we evaluate relative prediction quality using MAPE. While absolute errors remain small, they are less informative given that the dataset spans several orders of magnitude. MAPE is therefore more appropriate; however, it overstates relative error for extremely low-energy blocks, where even minor absolute deviations result in large relative differences. Among the evaluated models, Random Forest and KNN achieve the lowest MAPE values, whereas Gradient Boosting and XGBoost exhibit higher MAPE values exceeding 1.7. This behavior reflects the intrinsic difficulty of accurately modeling micro-scale energy values and highlights the importance of reporting both absolute and relative error when evaluating fine-grained energy predictors.
+
+The superior performance of ensemble and tree-based models is directly explained by the findings of RQ2. Since energy behavior arises from non-linear interactions among multiple code features, models capable of learning hierarchical decision boundaries and feature compositions are fundamentally better suited for this task. Tree ensembles naturally capture such interactions through recursive partitioning, whereas linear models cannot express these relationships without extensive manual feature engineering.
+While ensemble models deliver the highest accuracy, they also need higher modeling energy for inference. This requires a practical energy–accuracy tradeoff: the most accurate predictors might consume more energy themselves. However, this overhead remains negligible compared to the energy savings enabled by design-time optimization. Some models might offer minimal gains in accuracy with huge difference in energy consumption (for e.g. Gradient Boosting over XGBoost) and since the estimation is only supposed to be a guiding direction to identify hotspots, modeling energy to accuracy tradeoff is considerable. 
+
+Beyond regression, we evaluate the ability of models to categorize code blocks into energy tiers (low, medium, high) in Table ~\ref{tab:classification}. The XGBoost classifier achieves the best performance, with 80.6\% accuracy and very stable cross-validation results. These classification results demonstrate that static features support reliable qualitative assessment of energy behavior, which is particularly valuable for developer-facing tools where actionable guidance matters.
+
+
+\begin{rqbox}{Answer to RQ3}
+Overall, the results demonstrate that block-level energy can be predicted accurately and robustly from static code features.  Ensemble models are effective as they capture the non-linear feature interactions inherent in energy behavior, and small
+generalization gaps across folds confirm model stability. Lightweight Ensembles would be ideal in balancing modeling energy and performance.
+\end{rqbox}
+
+
+    
+\subsection{Feature Group Ablation}
+\label{sec:ablation}
+\input{Tables/table_leave_one_group}
+% \input{Tables/table_single_group}
+% \begin{bluepar}
+To assess the contribution of each feature category, we conducted a
+systematic ablation (Table~\ref{tab:ablation}) using XGBoost under two complementary settings:
+(a)~\textit{leave-one-group-out}, removing each of the groups
+individually, and (b)~\textit{single-group-only}, training on each
+group in isolation.
+No single removal causes a dramatic performance collapse, confirming
+that feature groups contribute complementary signals (Table~\ref{tab:ablation}). The largest drops occur without \textit{Density} ($-$2.8~pp) and \textit{Counts} ($-$2.6~pp).
+\textit{Counts} achieves the highest standalone performance ($R^2 =
+0.720$, Acc~$= 74.2\%$), yet no individual group approaches full-model
+performance (Table~\ref{tab:ablation}). Most notably, \textit{Complexity} metrics alone yield $R^2 = 0.067$ and $51.2\%$ accuracy barely above random directly
+confirming that conventional complexity proxies are insufficient energy
+predictors.
+
+
+% \end{bluepar}

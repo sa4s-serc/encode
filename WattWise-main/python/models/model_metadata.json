@@ -1,0 +1,61 @@
+{
+  "feature_names": [
+    "feature_total_nodes",
+    "feature_unique_node_types",
+    "feature_max_depth",
+    "feature_avg_depth",
+    "feature_depth_variance",
+    "feature_cyclomatic_complexity",
+    "feature_cognitive_complexity",
+    "feature_nesting_complexity",
+    "feature_control_flow_complexity",
+    "feature_operator_density",
+    "feature_literal_density",
+    "feature_call_density",
+    "feature_variable_density",
+    "feature_attribute_density",
+    "feature_node_type_entropy",
+    "feature_operator_entropy",
+    "feature_variable_entropy",
+    "feature_unique_variables",
+    "feature_unique_operators",
+    "feature_unique_functions",
+    "feature_avg_branching_factor",
+    "feature_max_branching_factor",
+    "feature_leaves_to_nodes_ratio",
+    "feature_loops_count",
+    "feature_conditionals_count",
+    "feature_functions_count",
+    "feature_classes_count",
+    "feature_try_blocks_count",
+    "feature_vocabulary_size",
+    "feature_program_length",
+    "feature_program_volume",
+    "feature_program_difficulty",
+    "feature_program_effort"
+  ],
+  "n_features": 33,
+  "energy_boundaries": {
+    "q33": 3.2702333089611096e-05,
+    "q67": 6.9650051870182e-05
+  },
+  "class_labels": [
+    "High",
+    "Low",
+    "Medium"
+  ],
+  "regression_metrics": {
+    "train_r2": 0.7779302414968222,
+    "test_r2": 0.7585928568222109
+  },
+  "classification_metrics": {
+    "train_acc": 0.8390177353342428,
+    "test_acc": 0.6790393013100436,
+    "test_f1": 0.678169778502368
+  },
+  "regression_uses_sqrt_transform": true,
+  "model_info": {
+    "regression": "GradientBoostingRegressor",
+    "classification": "XGBoostClassifier"
+  }
+}

@@ -1,0 +1,39 @@
+\begin{table*}[t]
+\centering
+\caption{Ablation study using XGBoost (best-performing model). \textit{Regression}: log-transformed energy ($\mu$J), evaluated on held-out test set. \textit{Classification}: 3-class hotspot tier (Low / Medium / High). $\Delta$ columns show change relative to the full model. CV = 5-fold cross-validation mean $\pm$ std.}
+\label{tab:ablation}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lc|cc|cc}
+\toprule
+& & \multicolumn{2}{c|}{\textbf{Regression} ($R^2$)} & \multicolumn{2}{c}{\textbf{Classification} (Acc)} \\
+\textbf{Configuration} & \textbf{\#Feat} & \textbf{Test} & \textbf{CV} & \textbf{Test} & \textbf{CV} \\
+\midrule
+\multicolumn{6}{l}{\textit{(a) Simple proxy baselines}} \\
+\midrule
+\quad Size-only & 2 & 0.204 (-0.553) & 0.282 $\pm$ 0.046 & 57.2\% (-23.3pp) & 56.9 $\pm$ 1.3\% \\
+\quad Complexity+Size & 9 & 0.698 (-0.059) & 0.754 $\pm$ 0.053 & 65.9\% (-14.6pp) & 65.6 $\pm$ 0.5\% \\
+\midrule
+\multicolumn{6}{l}{\textit{(b) Full model}} \\
+\midrule
+\quad 	extbf{Full model (all 6 groups)} & 	extbf{33} & 	extbf{0.757} & 0.809 $\pm$ 0.040 & 	extbf{80.6\%} & 79.5 $\pm$ 0.3\% \\
+\midrule
+\multicolumn{6}{l}{\textit{(c) Leave-one-group-out ablation (effect of removing each feature group)}} \\
+\midrule
+\quad w/o AST Structural & 25 & 0.757 (\textemdash) & 0.808 $\pm$ 0.039 & 80.4\% (-0.1pp) & 79.0 $\pm$ 0.5\% \\
+\quad w/o Complexity & 29 & 0.755 (-0.002) & 0.810 $\pm$ 0.038 & 80.1\% (-0.4pp) & 79.3 $\pm$ 0.4\% \\
+\quad w/o Density & 28 & 0.755 (-0.002) & 0.806 $\pm$ 0.037 & 77.8\% (-2.8pp) & 77.7 $\pm$ 0.7\% \\
+\quad w/o Entropy & 30 & 0.758 (++0.001) & 0.808 $\pm$ 0.042 & 80.5\% (-0.1pp) & 79.3 $\pm$ 0.5\% \\
+\quad w/o Counts & 25 & 0.746 (-0.011) & 0.799 $\pm$ 0.041 & 78.0\% (-2.6pp) & 77.7 $\pm$ 0.5\% \\
+\quad w/o Halstead & 28 & 0.751 (-0.006) & 0.809 $\pm$ 0.038 & 80.4\% (-0.1pp) & 79.3 $\pm$ 0.5\% \\
+\midrule
+\multicolumn{6}{l}{\textit{(d) Single-group-only (standalone predictive power)}} \\
+\midrule
+\quad Only AST Structural & 8 & 0.650 (-0.107) & 0.749 $\pm$ 0.051 & 69.4\% (-11.2pp) & 69.1 $\pm$ 0.6\% \\
+\quad Only Complexity & 4 & 0.067 (-0.690) & 0.103 $\pm$ 0.055 & 51.2\% (-29.4pp) & 50.6 $\pm$ 1.4\% \\
+\quad Only Density & 5 & 0.700 (-0.057) & 0.752 $\pm$ 0.048 & 71.1\% (-9.5pp) & 69.4 $\pm$ 0.9\% \\
+\quad Only Entropy & 3 & 0.691 (-0.066) & 0.768 $\pm$ 0.058 & 68.3\% (-12.3pp) & 66.7 $\pm$ 0.5\% \\
+\quad Only Counts & 8 & 0.720 (-0.037) & 0.764 $\pm$ 0.054 & 74.2\% (-6.4pp) & 74.1 $\pm$ 0.6\% \\
+\quad Only Halstead & 5 & 0.688 (-0.069) & 0.752 $\pm$ 0.053 & 59.7\% (-20.9pp) & 59.0 $\pm$ 0.9\% \\
+\bottomrule
+\end{tabular}
+\end{table*}

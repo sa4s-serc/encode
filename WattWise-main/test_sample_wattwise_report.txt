@@ -1,0 +1,141 @@
+WattWise — Energy Linter for Code
+============================================================
+File    : test_sample.py
+Generated: 4/17/2026, 12:47:30 PM
+
+Total blocks analyzed : 14
+Total estimated energy: 2.370e+0 J
+Average energy / block: 1.693e-1 J
+
+Energy Tier Distribution:
+  🟢 Low    : 4 block(s)
+  🟡 Medium : 1 block(s)
+  🔴 High   : 9 block(s)
+
+Block Details  (sorted highest → lowest energy):
+------------------------------------------------------------
+1. 🔴 If (lines 41–42)
+   Energy: 1.008e+0 J  |  Tier: High  |  Confidence: 82%
+
+2. 🔴 FunctionDef (lines 39–57)
+   Energy: 9.892e-1 J  |  Tier: High  |  Confidence: 65%
+
+3. 🔴 If (lines 73–74)
+   Energy: 2.365e-1 J  |  Tier: High  |  Confidence: 46%
+
+4. 🟢 FunctionDef (lines 7–11)
+   Energy: 7.240e-2 J  |  Tier: Low  |  Confidence: 72%
+
+5. 🔴 FunctionDef (lines 60–78)
+   Energy: 5.017e-2 J  |  Tier: High  |  Confidence: 94%
+
+6. 🔴 With (lines 27–30)
+   Energy: 4.337e-3 J  |  Tier: High  |  Confidence: 89%
+
+7. 🔴 If (lines 81–82)
+   Energy: 2.702e-3 J  |  Tier: High  |  Confidence: 58%
+
+8. 🔴 Try (lines 26–36)
+   Energy: 2.465e-3 J  |  Tier: High  |  Confidence: 94%
+
+9. 🟢 If (lines 9–10)
+   Energy: 2.209e-3 J  |  Tier: Low  |  Confidence: 71%
+
+10. 🟡 FunctionDef (lines 14–21)
+   Energy: 9.205e-4 J  |  Tier: Medium  |  Confidence: 58%
+
+11. 🔴 FunctionDef (lines 24–36)
+   Energy: 7.209e-4 J  |  Tier: High  |  Confidence: 92%
+
+12. 🟢 If (lines 19–20)
+   Energy: 7.566e-5 J  |  Tier: Low  |  Confidence: 86%
+
+13. 🟢 For (lines 18–20)
+   Energy: 5.228e-5 J  |  Tier: Low  |  Confidence: 85%
+
+14. 🔴 For (lines 17–20)
+   Energy: 2.025e-6 J  |  Tier: High  |  Confidence: 66%
+
+⚠️  RECOMMENDATIONS:
+------------------------------------------------------------
+Found 9 high-energy block(s). Consider optimizing:
+  • For at lines 17–20
+  • FunctionDef at lines 24–36
+  • Try at lines 26–36
+  • With at lines 27–30
+  • FunctionDef at lines 39–57
+  • If at lines 41–42
+  • FunctionDef at lines 60–78
+  • If at lines 73–74
+  • If at lines 81–82
+
+🤖 WATTWISE AI SUGGESTIONS  (powered by Gemini 2.5 Flash):
+============================================================
+
+▶ Try  (lines 26–36)
+  Why it's expensive: The original code reads the entire file into memory as a single large string (`f.read()`) before splitting and processing, creating significant intermediate memory allocations. This can lead to higher memory bus activity and increased garbage collection overhead, especially for larger files.
+  Suggested changes:
+    - Instead of reading the entire file into memory with `f.read()`, iterate directly over the file object (`for line in f:`). This processes the file line by line, drastically reducing peak memory usage.
+    - Combine the line-by-line iteration with stripping and filtering into a single list comprehension. This avoids creating intermediate lists and minimizes object creation.
+  Improved code:
+  --------------------------------------------------------
+      try:
+          with open(filename, 'r') as f:
+              # Iterate directly over the file object to read line by line,
+              # reducing peak memory consumption and intermediate object creation.
+              return [line.strip() for line in f if line.strip()]
+      except FileNotFoundError:
+          print(f"File not found: {filename}")
+          return []
+      except Exception as e:
+          print(f"Error reading file: {e}")
+          return []
+  --------------------------------------------------------
+
+▶ FunctionDef  (lines 39–57)
+  Why it's expensive: The original code makes multiple full passes over the `numbers` list (for sum, variance list creation, variance sum, min, and max) and creates an intermediate list for variance, leading to redundant memory accesses, CPU cycles, and memory allocation overhead.
+  Suggested changes:
+    - **Combine computations into a single pass:** Iterate over the `numbers` list only once to calculate `sum`, `sum_of_squares`, `min`, and `max` concurrently. This drastically reduces memory access and CPU cycles compared to multiple separate iterations.
+    - **Eliminate intermediate list creation:** Compute the sum of squared differences (for variance) directly within the single loop using a running total, thereby avoiding the memory allocation, population, and eventual garbage collection overhead of the `squared_diffs` list.
+    - **Leverage vectorized operations with NumPy (if applicable):** For very large numerical datasets, consider converting the input list to a NumPy array (`np.array(numbers)`) and using NumPy's optimized functions (`np.mean`, `np.var`, `np.min`, `np.max`). This offers significant performance and energy efficiency benefits due to highly optimized C implementations and contiguous memory layouts.
+  Improved code:
+  --------------------------------------------------------
+  def calculate_statistics(numbers):
+      """Calculate basic statistics with improved energy efficiency"""
+      if not numbers:
+          return None
+  
+      count = len(numbers)
+      total = 0.0
+      total_sq = 0.0
+      min_val = float('inf') # Initialize for tracking minimum
+      max_val = float('-inf') # Initialize for tracking maximum
+  
+      # Single pass to calculate sum, sum_of_squares, min, and max
+      for x in numbers:
+          total += x
+          total_sq += x * x  # or x**2
+          if x < min_val:
+              min_val = x
+          if x > max_val:
+              max_val = x
+  
+      mean = total / count
+      # Population variance formula: E[X^2] - (E[X])^2
+      # This avoids a second pass and the intermediate list of squared differences.
+      variance = (total_sq / count) - (mean ** 2)
+  
+      return {
+          'mean': mean,
+          'variance': variance,
+          'min': min_val,
+          'max': max_val
+      }
+  --------------------------------------------------------
+  ⚠ Could not get suggestion for For (lines 17–20): 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+  ⚠ Could not get suggestion for FunctionDef (lines 24–36): 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+  ⚠ Could not get suggestion for With (lines 27–30): 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+  ⚠ Could not get suggestion for If (lines 41–42): 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+  ⚠ Could not get suggestion for FunctionDef (lines 60–78): 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+  ⚠ Could not get suggestion for If (lines 73–74): 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}
+  ⚠ Could not get suggestion for If (lines 81–82): 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}

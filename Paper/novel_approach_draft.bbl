@@ -1,0 +1,589 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{40}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{} and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showURL}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showURL #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[Aho et~al\mbox{.}(1986)]%
+        {Aho1986CompilersPT}
+\bibfield{author}{\bibinfo{person}{Alfred~V. Aho}, \bibinfo{person}{Ravi
+  Sethi}, {and} \bibinfo{person}{Jeffrey~D. Ullman}.}
+  \bibinfo{year}{1986}\natexlab{}.
+\newblock \showarticletitle{Compilers: Principles, Techniques, and Tools}. In
+  \bibinfo{booktitle}{\emph{Addison-Wesley series in computer science / World
+  student series edition}}.
+\newblock
+\urldef\tempurl%
+\url{https://api.semanticscholar.org/CorpusID:278028060}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Allamanis et~al\mbox{.}(2018)]%
+        {10.1145/3212695}
+\bibfield{author}{\bibinfo{person}{Miltiadis Allamanis},
+  \bibinfo{person}{Earl~T. Barr}, \bibinfo{person}{Premkumar Devanbu}, {and}
+  \bibinfo{person}{Charles Sutton}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{A Survey of Machine Learning for Big Code and
+  Naturalness}.
+\newblock \bibinfo{journal}{\emph{ACM Comput. Surv.}} \bibinfo{volume}{51},
+  \bibinfo{number}{4}, Article \bibinfo{articleno}{81} (\bibinfo{date}{July}
+  \bibinfo{year}{2018}), \bibinfo{numpages}{37}~pages.
+\newblock
+\showISSN{0360-0300}
+\href{https://doi.org/10.1145/3212695}{doi:\nolinkurl{10.1145/3212695}}
+
+
+\bibitem[AlOmar et~al\mbox{.}(2023)]%
+        {AlOmar2023SEET_PMD}
+\bibfield{author}{\bibinfo{person}{Eman~Abdullah AlOmar},
+  \bibinfo{person}{Salma~Abdullah AlOmar}, {and} \bibinfo{person}{Mohamed~Wiem
+  Mkaouer}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{On the Use of Static Analysis to Engage Students
+  with Software Quality Improvement: An Experience with PMD}. In
+  \bibinfo{booktitle}{\emph{2023 IEEE/ACM 45th International Conference on
+  Software Engineering: Software Engineering Education and Training
+  (ICSE-SEET)}}. \bibinfo{publisher}{IEEE/ACM}, \bibinfo{pages}{179--191}.
+\newblock
+\href{https://doi.org/10.1109/ICSE-SEET58685.2023.00023}{doi:\nolinkurl{10.1109/ICSE-SEET58685.2023.00023}}
+
+
+\bibitem[Alvi et~al\mbox{.}(2021)]%
+        {ALVI2021100594}
+\bibfield{author}{\bibinfo{person}{Hamza~Mustafa Alvi}, \bibinfo{person}{Hammad
+  Majeed}, \bibinfo{person}{Hasan Mujtaba}, {and} \bibinfo{person}{Mirza~Omer
+  Beg}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{MLEE: Method Level Energy Estimation — A machine
+  learning approach}.
+\newblock \bibinfo{journal}{\emph{Sustainable Computing: Informatics and
+  Systems}}  \bibinfo{volume}{32} (\bibinfo{year}{2021}),
+  \bibinfo{pages}{100594}.
+\newblock
+\showISSN{2210-5379}
+\href{https://doi.org/10.1016/j.suscom.2021.100594}{doi:\nolinkurl{10.1016/j.suscom.2021.100594}}
+
+
+\bibitem[Belkhir and Elmeligi(2018)]%
+        {Belkhir2018}
+\bibfield{author}{\bibinfo{person}{Lotfi Belkhir} {and} \bibinfo{person}{Ahmed
+  Elmeligi}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Assessing ICT global emissions footprint: Trends to
+  2040 \& recommendations}.
+\newblock \bibinfo{journal}{\emph{Journal of Cleaner Production}}
+  \bibinfo{volume}{177} (\bibinfo{year}{2018}), \bibinfo{pages}{448--463}.
+\newblock
+\showISSN{0959-6526}
+\href{https://doi.org/10.1016/j.jclepro.2017.12.239}{doi:\nolinkurl{10.1016/j.jclepro.2017.12.239}}
+
+
+\bibitem[Botchkarev(2018)]%
+        {Botchkarev2018PerformanceM}
+\bibfield{author}{\bibinfo{person}{Alexei Botchkarev}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Performance Metrics (Error Measures) in Machine
+  Learning Regression, Forecasting and Prognostics: Properties and Typology}.
+\newblock \bibinfo{journal}{\emph{ArXiv}}  \bibinfo{volume}{abs/1809.03006}
+  (\bibinfo{year}{2018}).
+\newblock
+\urldef\tempurl%
+\url{https://api.semanticscholar.org/CorpusID:52182534}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Chicco et~al\mbox{.}(2021)]%
+        {Chicco2021TheCO}
+\bibfield{author}{\bibinfo{person}{Davide Chicco}, \bibinfo{person}{Matthijs~J.
+  Warrens}, {and} \bibinfo{person}{Giuseppe Jurman}.}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{The coefficient of determination R-squared is more
+  informative than SMAPE, MAE, MAPE, MSE and RMSE in regression analysis
+  evaluation}.
+\newblock \bibinfo{journal}{\emph{PeerJ Computer Science}}  \bibinfo{volume}{7}
+  (\bibinfo{year}{2021}).
+\newblock
+\urldef\tempurl%
+\url{https://api.semanticscholar.org/CorpusID:236196832}
+\showURL{%
+\tempurl}
+
+
+\bibitem[David(2025)]%
+        {11023955}
+\bibfield{author}{\bibinfo{person}{Istvan David}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{SusDevOps: Promoting Sustainability to a First
+  Principle in Software Delivery}. In \bibinfo{booktitle}{\emph{2025 IEEE/ACM
+  47th International Conference on Software Engineering: New Ideas and Emerging
+  Results (ICSE-NIER)}}. \bibinfo{pages}{106--110}.
+\newblock
+\href{https://doi.org/10.1109/ICSE-NIER66352.2025.00027}{doi:\nolinkurl{10.1109/ICSE-NIER66352.2025.00027}}
+
+
+\bibitem[Di~Cosmo(2018)]%
+        {DiCosmo2017}
+\bibfield{author}{\bibinfo{person}{Roberto Di~Cosmo}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{Software Heritage: Why and How We Collect, Preserve
+  and Share All the Software Source Code}. In \bibinfo{booktitle}{\emph{2018
+  IEEE/ACM 40th International Conference on Software Engineering: Software
+  Engineering in Society (ICSE-SEIS)}}. \bibinfo{pages}{2--2}.
+\newblock
+
+
+\bibitem[Freitag et~al\mbox{.}(2021)]%
+        {Freitag2021}
+\bibfield{author}{\bibinfo{person}{Charlotte Freitag}, \bibinfo{person}{Mike
+  Berners-Lee}, \bibinfo{person}{Kelly Widdicks}, \bibinfo{person}{Bran
+  Knowles}, \bibinfo{person}{Gordon~S. Blair}, {and} \bibinfo{person}{Adrian
+  Friday}.} \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{The real climate and transformative impact of ICT:
+  A critique of estimates, trends, and regulations}.
+\newblock \bibinfo{journal}{\emph{Patterns}} \bibinfo{volume}{2},
+  \bibinfo{number}{9} (\bibinfo{year}{2021}), \bibinfo{pages}{100340}.
+\newblock
+\showISSN{2666-3899}
+\href{https://doi.org/10.1016/j.patter.2021.100340}{doi:\nolinkurl{10.1016/j.patter.2021.100340}}
+
+
+\bibitem[H\"{a}hnel et~al\mbox{.}(2012)]%
+        {10.1145/2425248.2425252}
+\bibfield{author}{\bibinfo{person}{Marcus H\"{a}hnel},
+  \bibinfo{person}{Bj\"{o}rn D\"{o}bel}, \bibinfo{person}{Marcus V\"{o}lp},
+  {and} \bibinfo{person}{Hermann H\"{a}rtig}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Measuring energy consumption for short code paths
+  using RAPL}.
+\newblock \bibinfo{journal}{\emph{SIGMETRICS Perform. Eval. Rev.}}
+  \bibinfo{volume}{40}, \bibinfo{number}{3} (\bibinfo{date}{Jan.}
+  \bibinfo{year}{2012}), \bibinfo{pages}{13–17}.
+\newblock
+\showISSN{0163-5999}
+\href{https://doi.org/10.1145/2425248.2425252}{doi:\nolinkurl{10.1145/2425248.2425252}}
+
+
+\bibitem[Halstead(1977)]%
+        {10.5555/540137}
+\bibfield{author}{\bibinfo{person}{Maurice~H. Halstead}.}
+  \bibinfo{year}{1977}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Elements of Software Science (Operating and
+  programming systems series)}}.
+\newblock \bibinfo{publisher}{Elsevier Science Inc.}, \bibinfo{address}{USA}.
+\newblock
+\showISBNx{0444002057}
+
+
+\bibitem[Hindle(2015)]%
+        {Hindle2014GreenMining}
+\bibfield{author}{\bibinfo{person}{Abram Hindle}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Green mining: a methodology of relating software
+  change and configuration to power consumption}.
+\newblock \bibinfo{journal}{\emph{Empirical Softw. Engg.}}
+  \bibinfo{volume}{20}, \bibinfo{number}{2} (\bibinfo{date}{April}
+  \bibinfo{year}{2015}), \bibinfo{pages}{374–409}.
+\newblock
+\showISSN{1382-3256}
+\href{https://doi.org/10.1007/s10664-013-9276-6}{doi:\nolinkurl{10.1007/s10664-013-9276-6}}
+
+
+\bibitem[Kendall(1938)]%
+        {665905b2-6123-3642-832e-05dbc1f48979}
+\bibfield{author}{\bibinfo{person}{M.~G. Kendall}.}
+  \bibinfo{year}{1938}\natexlab{}.
+\newblock \showarticletitle{A New Measure of Rank Correlation}.
+\newblock \bibinfo{journal}{\emph{Biometrika}} \bibinfo{volume}{30},
+  \bibinfo{number}{1/2} (\bibinfo{year}{1938}), \bibinfo{pages}{81--93}.
+\newblock
+\showISSN{00063444}
+\urldef\tempurl%
+\url{http://www.jstor.org/stable/2332226}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Khan et~al\mbox{.}(2018)]%
+        {Khan2018RAPLinAction}
+\bibfield{author}{\bibinfo{person}{K.~N. Khan}, \bibinfo{person}{M. Hirki},
+  \bibinfo{person}{T. Niemi}, \bibinfo{person}{J.~K. Nurminen}, {and}
+  \bibinfo{person}{Z. Ou}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{RAPL in Action: Experiences in Using RAPL for Power
+  Measurements}.
+\newblock \bibinfo{journal}{\emph{ACM Transactions on Modeling and Performance
+  Evaluation of Computing Systems}} \bibinfo{volume}{3}, \bibinfo{number}{2}
+  (\bibinfo{year}{2018}), \bibinfo{pages}{1--26}.
+\newblock
+\href{https://doi.org/10.1145/3177754}{doi:\nolinkurl{10.1145/3177754}}
+
+
+\bibitem[Kin~Keong et~al\mbox{.}(2015)]%
+        {Keong2015MetricsPower}
+\bibfield{author}{\bibinfo{person}{Ching Kin~Keong}, \bibinfo{person}{Koh
+  Tieng~Wei}, \bibinfo{person}{Abdul~Azim Abd.~Ghani}, {and}
+  \bibinfo{person}{Khaironi~Yatim Sharif}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{Toward using software metrics as indicator to
+  measure power consumption of mobile application: A case study}. In
+  \bibinfo{booktitle}{\emph{2015 9th Malaysian Software Engineering Conference
+  (MySEC)}}. \bibinfo{pages}{172--177}.
+\newblock
+\href{https://doi.org/10.1109/MySEC.2015.7475216}{doi:\nolinkurl{10.1109/MySEC.2015.7475216}}
+
+
+\bibitem[Lee et~al\mbox{.}(2024)]%
+        {LEE2024111944}
+\bibfield{author}{\bibinfo{person}{Sung~Une Lee}, \bibinfo{person}{Niroshinie
+  Fernando}, \bibinfo{person}{Kevin Lee}, {and} \bibinfo{person}{Jean-Guy
+  Schneider}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{A survey of energy concerns for software
+  engineering}.
+\newblock \bibinfo{journal}{\emph{Journal of Systems and Software}}
+  \bibinfo{volume}{210} (\bibinfo{year}{2024}), \bibinfo{pages}{111944}.
+\newblock
+\showISSN{0164-1212}
+\href{https://doi.org/10.1016/j.jss.2023.111944}{doi:\nolinkurl{10.1016/j.jss.2023.111944}}
+
+
+\bibitem[Lenarduzzi et~al\mbox{.}(2020)]%
+        {Lenarduzzi2020JSS}
+\bibfield{author}{\bibinfo{person}{Valentina Lenarduzzi},
+  \bibinfo{person}{Nyyti Saarim{\"a}ki}, {and} \bibinfo{person}{Davide Taibi}.}
+  \bibinfo{year}{2020}\natexlab{}.
+\newblock \showarticletitle{Some SonarQube issues have a significant but small
+  effect on faults and changes. A large-scale empirical study}.
+\newblock \bibinfo{journal}{\emph{Journal of Systems and Software}}
+  \bibinfo{volume}{170} (\bibinfo{year}{2020}), \bibinfo{pages}{110750}.
+\newblock
+\href{https://doi.org/10.1016/j.jss.2020.110750}{doi:\nolinkurl{10.1016/j.jss.2020.110750}}
+
+
+\bibitem[McCabe(1976)]%
+        {1702388}
+\bibfield{author}{\bibinfo{person}{T.J. McCabe}.}
+  \bibinfo{year}{1976}\natexlab{}.
+\newblock \showarticletitle{A Complexity Measure}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Software Engineering}}
+  \bibinfo{volume}{SE-2}, \bibinfo{number}{4} (\bibinfo{year}{1976}),
+  \bibinfo{pages}{308--320}.
+\newblock
+\href{https://doi.org/10.1109/TSE.1976.233837}{doi:\nolinkurl{10.1109/TSE.1976.233837}}
+
+
+\bibitem[Mukhanov et~al\mbox{.}(2015)]%
+        {7429297}
+\bibfield{author}{\bibinfo{person}{Lev Mukhanov}, \bibinfo{person}{Dimitrios~S.
+  Nikolopoulos}, {and} \bibinfo{person}{Bronis~R. De~Supinski}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{ALEA: Fine-Grain Energy Profiling with Basic Block
+  Sampling}. In \bibinfo{booktitle}{\emph{2015 International Conference on
+  Parallel Architecture and Compilation (PACT)}}. \bibinfo{pages}{87--98}.
+\newblock
+\href{https://doi.org/10.1109/PACT.2015.16}{doi:\nolinkurl{10.1109/PACT.2015.16}}
+
+
+\bibitem[Noman et~al\mbox{.}(2022)]%
+        {su14148596}
+\bibfield{author}{\bibinfo{person}{Hira Noman}, \bibinfo{person}{Naeem~Ahmed
+  Mahoto}, \bibinfo{person}{Sania Bhatti}, \bibinfo{person}{Hamad~Ali Abosaq},
+  \bibinfo{person}{Mana~Saleh Al~Reshan}, {and} \bibinfo{person}{Asadullah
+  Shaikh}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{An Exploratory Study of Software Sustainability at
+  Early Stages of Software Development}.
+\newblock \bibinfo{journal}{\emph{Sustainability}} \bibinfo{volume}{14},
+  \bibinfo{number}{14} (\bibinfo{year}{2022}).
+\newblock
+\showISSN{2071-1050}
+\href{https://doi.org/10.3390/su14148596}{doi:\nolinkurl{10.3390/su14148596}}
+
+
+\bibitem[Pang et~al\mbox{.}(2016)]%
+        {Pang2016}
+\bibfield{author}{\bibinfo{person}{Candy Pang}, \bibinfo{person}{Abram Hindle},
+  \bibinfo{person}{Bram Adams}, {and} \bibinfo{person}{Ahmed~E. Hassan}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{What Do Programmers Know about Software Energy
+  Consumption?}
+\newblock \bibinfo{journal}{\emph{IEEE Software}} \bibinfo{volume}{33},
+  \bibinfo{number}{3} (\bibinfo{year}{2016}), \bibinfo{pages}{83--89}.
+\newblock
+\href{https://doi.org/10.1109/MS.2015.83}{doi:\nolinkurl{10.1109/MS.2015.83}}
+
+
+\bibitem[{Pearson}(1896)]%
+        {1896RSPTA.187..253P}
+\bibfield{author}{\bibinfo{person}{Karl {Pearson}}.}
+  \bibinfo{year}{1896}\natexlab{}.
+\newblock \showarticletitle{{Mathematical Contributions to the Theory of
+  Evolution. III. Regression, Heredity, and Panmixia}}.
+\newblock \bibinfo{journal}{\emph{Philosophical Transactions of the Royal
+  Society of London Series A}}  \bibinfo{volume}{187} (\bibinfo{date}{Jan.}
+  \bibinfo{year}{1896}), \bibinfo{pages}{253--318}.
+\newblock
+\href{https://doi.org/10.1098/rsta.1896.0007}{doi:\nolinkurl{10.1098/rsta.1896.0007}}
+
+
+\bibitem[Pinto and Castor(2017)]%
+        {Pinto2017}
+\bibfield{author}{\bibinfo{person}{Gustavo Pinto} {and}
+  \bibinfo{person}{Fernando Castor}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Energy efficiency: A new concern for application
+  software developers}.
+\newblock \bibinfo{journal}{\emph{Commun. ACM}}  \bibinfo{volume}{60}
+  (\bibinfo{date}{11} \bibinfo{year}{2017}), \bibinfo{pages}{68--75}.
+\newblock
+\href{https://doi.org/10.1145/3154384}{doi:\nolinkurl{10.1145/3154384}}
+
+
+\bibitem[Rajput et~al\mbox{.}(2026)]%
+        {Sharma2024FlipFlop}
+\bibfield{author}{\bibinfo{person}{Saurabhsingh Rajput},
+  \bibinfo{person}{Alexander Brandt}, \bibinfo{person}{Vadim Elisseev}, {and}
+  \bibinfo{person}{Tushar Sharma}.} \bibinfo{year}{2026}\natexlab{}.
+\newblock \bibinfo{title}{FlipFlop: A Static Analysis-based Energy Optimization
+  Framework for GPU Kernels}.
+\newblock
+\showeprint[arxiv]{2601.13345}~[cs.SE]
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2601.13345}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Rajput et~al\mbox{.}(2024)]%
+        {10.1145/3680470}
+\bibfield{author}{\bibinfo{person}{Saurabhsingh Rajput}, \bibinfo{person}{Tim
+  Widmayer}, \bibinfo{person}{Ziyuan Shang}, \bibinfo{person}{Maria Kechagia},
+  \bibinfo{person}{Federica Sarro}, {and} \bibinfo{person}{Tushar Sharma}.}
+  \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Enhancing Energy-Awareness in Deep Learning through
+  Fine-Grained Energy Measurement}.
+\newblock \bibinfo{journal}{\emph{ACM Trans. Softw. Eng. Methodol.}}
+  \bibinfo{volume}{33}, \bibinfo{number}{8}, Article \bibinfo{articleno}{211}
+  (\bibinfo{date}{Dec.} \bibinfo{year}{2024}), \bibinfo{numpages}{34}~pages.
+\newblock
+\showISSN{1049-331X}
+\href{https://doi.org/10.1145/3680470}{doi:\nolinkurl{10.1145/3680470}}
+
+
+\bibitem[Rani et~al\mbox{.}(2024)]%
+        {10.1145/3639475.3640110}
+\bibfield{author}{\bibinfo{person}{Pooja Rani}, \bibinfo{person}{Jonas
+  Zellweger}, \bibinfo{person}{Veronika Kousadianos}, \bibinfo{person}{Luis
+  Cruz}, \bibinfo{person}{Timo Kehrer}, {and} \bibinfo{person}{Alberto
+  Bacchelli}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \showarticletitle{Energy Patterns for Web: An Exploratory Study}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 46th International Conference on
+  Software Engineering: Software Engineering in Society}} (Lisbon, Portugal)
+  \emph{(\bibinfo{series}{ICSE-SEIS'24})}. \bibinfo{publisher}{Association for
+  Computing Machinery}, \bibinfo{address}{New York, NY, USA},
+  \bibinfo{pages}{12–22}.
+\newblock
+\showISBNx{9798400704994}
+\href{https://doi.org/10.1145/3639475.3640110}{doi:\nolinkurl{10.1145/3639475.3640110}}
+
+
+\bibitem[Reya et~al\mbox{.}(2023)]%
+        {Reya2023GreenPyEA}
+\bibfield{author}{\bibinfo{person}{Nurzihan~Fatema Reya},
+  \bibinfo{person}{Abtahi Ahmed}, \bibinfo{person}{Tashfia~Rifa Zaman}, {and}
+  \bibinfo{person}{Md.~Motaharul Islam}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{GreenPy: Evaluating Application-Level Energy
+  Efficiency in Python for Green Computing}.
+\newblock \bibinfo{journal}{\emph{Annals of Emerging Technologies in
+  Computing}} (\bibinfo{year}{2023}).
+\newblock
+\urldef\tempurl%
+\url{https://api.semanticscholar.org/CorpusID:259509821}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Ribeiro et~al\mbox{.}(2021)]%
+        {Ribeiro2021EcoAndroid}
+\bibfield{author}{\bibinfo{person}{Ana Ribeiro}, \bibinfo{person}{João~F.
+  Ferreira}, {and} \bibinfo{person}{Alexandra Mendes}.}
+  \bibinfo{year}{2021}\natexlab{}.
+\newblock \showarticletitle{EcoAndroid: An Android Studio Plugin for Developing
+  Energy-Efficient Java Mobile Applications}. In \bibinfo{booktitle}{\emph{2021
+  IEEE 21st International Conference on Software Quality, Reliability and
+  Security (QRS)}}. \bibinfo{pages}{62--69}.
+\newblock
+\href{https://doi.org/10.1109/QRS54544.2021.00017}{doi:\nolinkurl{10.1109/QRS54544.2021.00017}}
+
+
+\bibitem[S et~al\mbox{.}(2024)]%
+        {Shivadharshan2024CPPJoules}
+\bibfield{author}{\bibinfo{person}{Shivadharshan S}, \bibinfo{person}{Akilesh
+  P}, \bibinfo{person}{Rajrupa Chattaraj}, {and} \bibinfo{person}{Sridhar
+  Chimalakonda}.} \bibinfo{year}{2024}\natexlab{}.
+\newblock \bibinfo{title}{CPPJoules: An Energy Measurement Tool for C++}.
+\newblock
+\showeprint[arxiv]{2412.13555}~[cs.SE]
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2412.13555}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Sokolova and Lapalme(2009)]%
+        {SOKOLOVA2009427}
+\bibfield{author}{\bibinfo{person}{Marina Sokolova} {and} \bibinfo{person}{Guy
+  Lapalme}.} \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{A systematic analysis of performance measures for
+  classification tasks}.
+\newblock \bibinfo{journal}{\emph{Information Processing \& Management}}
+  \bibinfo{volume}{45}, \bibinfo{number}{4} (\bibinfo{year}{2009}),
+  \bibinfo{pages}{427--437}.
+\newblock
+\showISSN{0306-4573}
+\href{https://doi.org/10.1016/j.ipm.2009.03.002}{doi:\nolinkurl{10.1016/j.ipm.2009.03.002}}
+
+
+\bibitem[Spearman(1904)]%
+        {spearman04}
+\bibfield{author}{\bibinfo{person}{C. Spearman}.}
+  \bibinfo{year}{1904}\natexlab{}.
+\newblock \showarticletitle{The Proof and Measurement of Association Between
+  Two Things}.
+\newblock \bibinfo{journal}{\emph{American Journal of Psychology}}
+  \bibinfo{volume}{15} (\bibinfo{year}{1904}), \bibinfo{pages}{88--103}.
+\newblock
+
+
+\bibitem[Sun et~al\mbox{.}(2023)]%
+        {sun2023abstractsyntaxtreeprogramming}
+\bibfield{author}{\bibinfo{person}{Weisong Sun}, \bibinfo{person}{Chunrong
+  Fang}, \bibinfo{person}{Yun Miao}, \bibinfo{person}{Yudu You},
+  \bibinfo{person}{Mengzhe Yuan}, \bibinfo{person}{Yuchen Chen},
+  \bibinfo{person}{Quanjun Zhang}, \bibinfo{person}{An Guo},
+  \bibinfo{person}{Xiang Chen}, \bibinfo{person}{Yang Liu}, {and}
+  \bibinfo{person}{Zhenyu Chen}.} \bibinfo{year}{2023}\natexlab{}.
+\newblock \bibinfo{title}{Abstract Syntax Tree for Programming Language
+  Understanding and Representation: How Far Are We?}
+\newblock
+\showeprint[arxiv]{2312.00413}~[cs.SE]
+\urldef\tempurl%
+\url{https://arxiv.org/abs/2312.00413}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Tukey(1977)]%
+        {alma9995263502466}
+\bibfield{author}{\bibinfo{person}{John~W. Tukey}.}
+  \bibinfo{year}{1977}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Exploratory data analysis}}.
+\newblock \bibinfo{publisher}{Addison-Wesley Pub. Co.},
+  \bibinfo{address}{Reading, Mass}.
+\newblock
+\showISBNx{0201076160}
+
+
+\bibitem[Verdecchia et~al\mbox{.}(2022)]%
+        {Verdecchia2022DataCentricGreenAI}
+\bibfield{author}{\bibinfo{person}{Roberto Verdecchia}, \bibinfo{person}{Luis
+  Cruz}, \bibinfo{person}{June Sallou}, \bibinfo{person}{Michelle Lin},
+  \bibinfo{person}{James Wickenden}, {and} \bibinfo{person}{Estelle
+  Hotellier}.} \bibinfo{year}{2022}\natexlab{}.
+\newblock \showarticletitle{Data-Centric Green AI An Exploratory Empirical
+  Study}. In \bibinfo{booktitle}{\emph{2022 International Conference on ICT for
+  Sustainability (ICT4S)}}. \bibinfo{publisher}{IEEE},
+  \bibinfo{pages}{35–45}.
+\newblock
+\href{https://doi.org/10.1109/ict4s55073.2022.00015}{doi:\nolinkurl{10.1109/ict4s55073.2022.00015}}
+
+
+\bibitem[Wedyan et~al\mbox{.}(2023)]%
+        {10329262}
+\bibfield{author}{\bibinfo{person}{Fadi Wedyan}, \bibinfo{person}{Rachael
+  Morrison}, {and} \bibinfo{person}{Osama~Sam Abuomar}.}
+  \bibinfo{year}{2023}\natexlab{}.
+\newblock \showarticletitle{Integration and Unit Testing of Software Energy
+  Consumption}. In \bibinfo{booktitle}{\emph{2023 Tenth International
+  Conference on Software Defined Systems (SDS)}}. \bibinfo{pages}{60--64}.
+\newblock
+\href{https://doi.org/10.1109/SDS59856.2023.10329262}{doi:\nolinkurl{10.1109/SDS59856.2023.10329262}}
+
+
+\bibitem[Wirth(1995)]%
+        {Wirth1995}
+\bibfield{author}{\bibinfo{person}{N. Wirth}.} \bibinfo{year}{1995}\natexlab{}.
+\newblock \showarticletitle{A plea for lean software}.
+\newblock \bibinfo{journal}{\emph{Computer}} \bibinfo{volume}{28},
+  \bibinfo{number}{2} (\bibinfo{year}{1995}), \bibinfo{pages}{64--68}.
+\newblock
+\href{https://doi.org/10.1109/2.348001}{doi:\nolinkurl{10.1109/2.348001}}
+
+
+\bibitem[Wohlin et~al\mbox{.}(2012)]%
+        {10.5555/2349018}
+\bibfield{author}{\bibinfo{person}{Claes Wohlin}, \bibinfo{person}{Per
+  Runeson}, \bibinfo{person}{Martin Hst}, \bibinfo{person}{Magnus~C. Ohlsson},
+  \bibinfo{person}{Bjrn Regnell}, {and} \bibinfo{person}{Anders Wessln}.}
+  \bibinfo{year}{2012}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Experimentation in Software Engineering}}.
+\newblock \bibinfo{publisher}{Springer Publishing Company, Incorporated}.
+\newblock
+\showISBNx{3642290434}
+
+
+\bibitem[Wysocki et~al\mbox{.}(2025)]%
+        {electronics14071331}
+\bibfield{author}{\bibinfo{person}{Włodzimierz Wysocki},
+  \bibinfo{person}{Ireneusz Miciuła}, {and} \bibinfo{person}{Przemysław
+  Plecka}.} \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{Methods of Improving Software Energy Efficiency: A
+  Systematic Literature Review and the Current State of Applied Methods in
+  Practice}.
+\newblock \bibinfo{journal}{\emph{Electronics}} \bibinfo{volume}{14},
+  \bibinfo{number}{7} (\bibinfo{year}{2025}).
+\newblock
+\showISSN{2079-9292}
+\href{https://doi.org/10.3390/electronics14071331}{doi:\nolinkurl{10.3390/electronics14071331}}
+
+
+\bibitem[Zaragoza et~al\mbox{.}(2025)]%
+        {ZARAGOZA2025115889}
+\bibfield{author}{\bibinfo{person}{Thomas Zaragoza}, \bibinfo{person}{Adel
+  Noureddine}, {and} \bibinfo{person}{Ernesto Exposito}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \showarticletitle{A systematic mapping study on software-based
+  feedback for energy consumption}.
+\newblock \bibinfo{journal}{\emph{Renewable and Sustainable Energy Reviews}}
+  \bibinfo{volume}{222} (\bibinfo{year}{2025}), \bibinfo{pages}{115889}.
+\newblock
+\showISSN{1364-0321}
+\href{https://doi.org/10.1016/j.rser.2025.115889}{doi:\nolinkurl{10.1016/j.rser.2025.115889}}
+
+
+\end{thebibliography}

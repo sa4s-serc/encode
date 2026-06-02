@@ -1,0 +1,29 @@
+# ── Node / frontend ──────────────────────────────────────────────────────────
+node_modules/
+dist/
+out/
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+*.egg-info/
+.venv/
+venv/
+
+# ── Raw measurement data (large JSON files, not needed for reproducibility) ───
+Misc/powerlens_pyrapl_raw_data/
+
+# ── Dashboard runtime data (SQLite DB, generated at runtime) ──────────────────
+WattWise-main/dashboard/data/
+
+# ── Paper source zip (PDF already committed) ──────────────────────────────────
+Paper.zip
+
+# ── OS / editor ──────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/settings.json
+*.swp

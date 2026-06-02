@@ -1,0 +1,38 @@
+name: 'WattWise Energy Gate'
+description: 'Analyses energy impact of Python code changes in pull requests'
+author: 'WattWise'
+
+branding:
+  icon: 'zap'
+  color: 'yellow'
+
+inputs:
+  token:
+    description: 'GitHub token for posting comments and setting status checks'
+    required: true
+    default: ${{ github.token }}
+  python-dir:
+    description: 'Path to the WattWise python/ directory containing models and scripts'
+    required: false
+    default: '${{ github.workspace }}/python'
+  repo-path:
+    description: 'Path to the repository root'
+    required: false
+    default: '${{ github.workspace }}'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install dependencies
+      shell: bash
+      run: |
+        pip install --upgrade pip
+        pip install numpy pandas scikit-learn xgboost joblib pyyaml requests
+
+    - name: Run WattWise bot
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
+        REPO_PATH: ${{ inputs.repo-path }}
+        PYTHON_DIR: ${{ inputs.python-dir }}
+      run: python ${{ github.action_path }}/src/main.py

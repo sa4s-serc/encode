@@ -1,0 +1,9 @@
+pandas>=1.5.0
+numpy>=1.23.0
+scikit-learn>=1.1.0
+xgboost>=1.7.0
+joblib>=1.2.0
+
+# Optional: required only for AI-powered optimization suggestions (Gemini 2.5 Flash)
+# Get a free API key at https://aistudio.google.com/app/apikey
+google-genai>=0.3.0

@@ -1,0 +1,100 @@
+{
+  "name": "energy-estimator",
+  "displayName": "Python Energy Estimator",
+  "description": "Estimates energy consumption and tier for Python code blocks using ML models",
+  "version": "1.0.0",
+  "publisher": "energy-research",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Linters",
+    "Other"
+  ],
+  "keywords": [
+    "python",
+    "energy",
+    "performance",
+    "green coding",
+    "sustainability"
+  ],
+  "activationEvents": [
+    "onLanguage:python"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "energyEstimator.analyzeFile",
+        "title": "Analyze Energy Consumption",
+        "category": "Energy"
+      },
+      {
+        "command": "energyEstimator.clearAnalysis",
+        "title": "Clear Energy Analysis",
+        "category": "Energy"
+      },
+      {
+        "command": "energyEstimator.trainModels",
+        "title": "Train Energy Prediction Models",
+        "category": "Energy"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceLangId == python",
+          "command": "energyEstimator.analyzeFile",
+          "group": "energy@1"
+        },
+        {
+          "when": "resourceLangId == python",
+          "command": "energyEstimator.clearAnalysis",
+          "group": "energy@2"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Energy Estimator",
+      "properties": {
+        "energyEstimator.pythonPath": {
+          "type": "string",
+          "default": "python3",
+          "description": "Path to Python interpreter"
+        },
+        "energyEstimator.showInlineDecorations": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show inline energy estimates"
+        },
+        "energyEstimator.showHoverInfo": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show detailed info on hover"
+        },
+        "energyEstimator.decorationFormat": {
+          "type": "string",
+          "default": "[Est: {energy}J | Tier: {tier}]",
+          "description": "Format for inline decorations. Available: {energy}, {tier}"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/vscode": "^1.75.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,16 @@
+section,configuration,n_features,reg_test_r2,reg_cv_r2_mean,reg_cv_r2_std,reg_delta_r2,clf_test_acc,clf_cv_acc_mean,clf_cv_acc_std,clf_delta_acc_pp,clf_test_f1_macro
+a_baseline,Size-only,2,0.2039,0.2825,0.0461,-0.5532,0.5724,0.5691,0.0131,-23.32,0.5725
+a_baseline,Complexity+Size,9,0.6983,0.7536,0.0534,-0.0588,0.6591,0.6557,0.0052,-14.65,0.6585
+b_full_model,Full Model (all groups),33,0.7571,0.8094,0.0403,0.0,0.8056,0.7954,0.0033,0.0,0.8053
+c_leave_one_out,w/o AST Structural,25,0.7567,0.8079,0.0391,-0.0004,0.8044,0.7896,0.0047,-0.12,0.8033
+c_leave_one_out,w/o Complexity,29,0.7555,0.8104,0.038,-0.0016,0.8014,0.7927,0.0037,-0.42,0.8012
+c_leave_one_out,w/o Density,28,0.7553,0.8057,0.0369,-0.0018,0.7775,0.777,0.0073,-2.81,0.7763
+c_leave_one_out,w/o Entropy,30,0.7583,0.8084,0.0415,0.0012,0.805,0.793,0.0053,-0.06,0.8045
+c_leave_one_out,w/o Counts,25,0.7458,0.7988,0.0406,-0.0113,0.7799,0.7767,0.0053,-2.57,0.7797
+c_leave_one_out,w/o Halstead,28,0.7515,0.8094,0.038,-0.0056,0.8044,0.7927,0.0051,-0.12,0.8039
+d_single_group,Only AST Structural,8,0.6504,0.7491,0.0513,-0.1067,0.6938,0.6911,0.0061,-11.18,0.6932
+d_single_group,Only Complexity,4,0.0674,0.1029,0.0553,-0.6897,0.512,0.5057,0.0136,-29.36,0.4775
+d_single_group,Only Density,5,0.6999,0.7519,0.0478,-0.0572,0.7111,0.6937,0.0085,-9.45,0.7112
+d_single_group,Only Entropy,3,0.6907,0.7676,0.0576,-0.0664,0.683,0.6668,0.005,-12.26,0.6815
+d_single_group,Only Counts,8,0.7199,0.7644,0.0536,-0.0372,0.7416,0.7407,0.0057,-6.4,0.7383
+d_single_group,Only Halstead,5,0.6883,0.7521,0.0531,-0.0688,0.5969,0.5897,0.0091,-20.87,0.596

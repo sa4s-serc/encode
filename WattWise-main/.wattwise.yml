@@ -1,0 +1,21 @@
+# .wattwise.yml — WattWise Energy Gate configuration
+# Place this file in the root of your repository.
+
+energy:
+  require_manager_approval: true
+  max_new_high_blocks: 0          # any new High block triggers approval
+  regression_threshold_cost: 500  # OR: net cost increase > ₹500/yr triggers approval
+  block_on_gate_failure: true     # false = warn-only mode
+
+managers:
+  - ShailenderGoyal
+
+cost:
+  rate_kwh: 8.0                   # ₹/kWh — India average electricity rate
+  default_calls_per_day:
+    FunctionDef: 10000
+    For: 50000
+    While: 20000
+    If: 100000
+    Try: 5000
+    With: 10000

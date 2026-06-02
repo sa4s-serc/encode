@@ -1,0 +1,106 @@
+-------------------------  METAREVIEW  ------------------------
+We had an extensive discussion about this paper. On the positive side, it is well-written and easy to follow, and the core idea is interesting. However, we felt that the paper lacks in-depth analysis—specifically, an ablation study and a motivating example that clearly demonstrate the importance of the work. After thorough deliberation, we decided to accept the paper. For the final version, we encourage the authors to consider adding the missing ablation study or strengthening the motivation for the study.
+
+
+----------------------- REVIEW 1 ---------------------
+
+SUBMISSION: 225
+TITLE: EnCoDe: Energy Estimation of Source Code At Design-Time
+
+----------- Paper Summary -----------
+This paper tries to estimate code energy usage already at design time. The idea is to measure energy for lots of small Python code blocks, extract static code metrics/features, then train a model that can predict energy (or at least put blocks into low/med/high buckets). The measurement protocol, PowerLens, is a core part of the work.
+----------- Overall Comments for Authors -----------
+I read this wiuth interest, but I’m honestly struggling a bit to see the paper’s contribution as it stands.
+
+The strongest part is the measurement protocol. Measuring energy at the level of small code blocks is messy, and you clearly put real work into getting something stable/repeatable. That part feels like the “meat” of the paper.
+
+But the EnCoDe/ML part isn’t convincing yet. The main problem is I don’t see evidence that this is meaningfully better than just using basic static proxies (size, cyclomatic complexity, AST node count, Halstead, etc). The authors discuss these metrics, but don’t actually show a solid baseline like “predict energy using only simple complexity/size metrics” and then demonstrate that richer feature set/model adds real value. Without that, it reads a bit like “complexity analysis, but with more features and a model”.
+
+Second issue: the practical use is underdeveloped. You suggest “lint-like warnings” via low/medium/high tiers, but the tiers are made by equal-frequency binning, i.e. you force 1/3 of all blocks to be “high” no matter what. If I get a warning, I need to know that it’s high in some meaningful sense (costly enough to act on, or unusual compared to similar code), not just “top third by construction”.
+
+Third: generalization. Right now this is one machine + RAPL (CPU/DRAM). That’s fine for a first step, but it makes the “design-time energy estimator” framing feel a bit oversold. Energy depends heavily on runtime context, inputs, platform, IO, etc. The threats section acknowledges a lot of this, which is good, but then I’m left wondering what users should trust this tool to do.
+
+What would move the paper upward (and feels ambitious but feasible for a revision):
+- Add clear baselines: simple complexity/size-only models, and show what you gain beyond those.
+- Add ablations: what feature groups matter? (Otherwise it’s hard to believe the “beyond proxy metrics” claim.)
+- Tighten the story for practice: are you aiming for absolute Joules, or just hotspot ranking inside a codebase? If “lint-like”, define tiers/thresholds in a way that makes sense for action.
+----------- Strengths -----------
+- The measurement side is the most compelling part. It tackles a real, annoying problem and offer a concrete protocol.
+- Large-ish dataset and a systematic pipeline.
+- Paper is readable and the motivation (energy-aware dev) is reasonable and timely.
+----------- Weaknesses -----------
+- Missing key baselines vs simple complexity/size metrics, so the “smarter than O-notation/complexity” claim isn’t supported.
+- “High/med/low” buckets are defined in a way that isn’t actionable (equal-frequency bins).
+- Limited external validity: single setup, RAPL scope, no IO/network, unclear how this behaves with different inputs and real workloads.
+- The “how should this be used in practice?” part is still vague.
+----------- Comments on Rigor -----------
+Moderate. The measurement protocol seems carefully thought through, and the ML evaluation is standard. But the lack of baselines/ablations makes it hard to judge whether the model is doing something non-trivial, and I’d like more clarity on dataset splitting to avoid correlated samples.
+----------- Comments on Significance -----------
+Potentially useful, but right now it feels more like a feasibility/prototype study. I can imagine this becoming a helpful heuristic tool, but the paper doesn’t yet show enough to justify strong claims about “design-time” estimation in real settings.
+----------- Comments on Novelty -----------
+PowerLens has the most potential in terms of novelty. The ML predictor is fairly standard and not shown to beat simpler proxy approaches in a convincing way.
+----------- Comments on Verifiability and Transparency -----------
+Reasonable intent (you mention releasing artifacts), but please be very explicit what exactly is released (data, extracted blocks, features, raw traces, scripts) and how to reproduce the full pipeline.
+----------- Comments on Presentation -----------
+Generally ok, but I’d like a clearer “this is what a developer would actually do with it” section. Also: fewer scattered equations, more of a single end-to-end description/pseudocode would help.
+
+
+----------------------- REVIEW 2 ---------------------
+
+SUBMISSION: 225
+TITLE: EnCoDe: Energy Estimation of Source Code At Design-Time
+
+----------- Paper Summary -----------
+The paper proposes to learn an AI model via simple feature extractions to predict energy consumption of code at block level. Experiment results show the effectiveness of the model.
+----------- Overall Comments for Authors -----------
+This paper is very well written and motivated. Experiments are done in good details.
+----------- Strengths -----------
+- Well written and motivated
+- Methodology are clearly explained to help reproduce the research
+- Experiment results are promising
+----------- Weaknesses -----------
+- Not much to add for weakness here. I like this paper in terms of its contribution and the problems that it addresses.
+- Perhaps, one minor comment is that the estimation of energy consumption of a block by executing it multiple times via a loop may not be very reliable. One reason could be that the repeated execution may consume memory and thus could also lead to non-linear increases of energy consumption.
+- One small question is that I can see from the approach that it tries to predict the exact energy consumption. I wonder how a simple AI model can produce that exact number? Perhaps it would be more realistic to predict the consumption to be within some certain ranges, rather than just an exact number.
+----------- Comments on Rigor -----------
+- Well done on experiments and clear explanations of the methodology.
+----------- Comments on Significance -----------
+- The paper has good novelty and significance.
+----------- Comments on Novelty -----------
+- The paper has good novelty and significance.
+----------- Comments on Verifiability and Transparency -----------
+The paper has a reproduce package.
+----------- Comments on Presentation -----------
+- Well done.
+
+
+----------------------- REVIEW 3 ---------------------
+
+SUBMISSION: 225
+TITLE: EnCoDe: Energy Estimation of Source Code At Design-Time
+
+----------- Paper Summary -----------
+The paper proposes EnCoDe, a design time method to estimate the energy of small Python code blocks without running them. It first builds a ground truth dataset using PowerLens, which measures micro blocks by repeating execution and correcting hardware counter noise. It then extracts static code features and trains machine learning models to predict energy or classify blocks into energy tiers. Results on blocks from over 18,000 programs show about R2 0.75 for regression and 80.6 percent accuracy for hotspot classification.
+----------- Overall Comments for Authors -----------
+This paper tackles an important problem: providing fine grained energy feedback at design time rather than after execution. The proposed approach combines a measurement pipeline (PowerLens) to obtain block level energy ground truth with a static prediction model (EnCoDe) that estimates energy from code features. The problem is well motivated, and the effort to build a large labeled dataset is substantial. The approach shows promising results, especially for identifying energy hotspots, and could be useful for developer tools.
+
+The main novelty lies in the measurement methodology for micro scale code blocks. The prediction component itself is relatively standard, relying on conventional features and machine learning models. The evaluation is solid but limited to one language, platform, and dataset source, which raises concerns about generalizability. Baseline comparisons and ablation studies are incomplete, and the paper does not yet demonstrate clear real world developer impact.
+
+Overall, despite these limitations, the work is meaningful and timely, and the core idea has clear potential. With additional validation, stronger comparisons, and clearer demonstration of practical usefulness, the contribution would be significantly strengthened.
+----------- Strengths -----------
++ Clear motivation
++ Well design approach
++ well-written paper and easy to follow
+----------- Weaknesses -----------
+- Moderate novelty
+- Weak or missing baselines against prior predictors
+----------- Comments on Rigor -----------
+Evaluation is reasonable but incomplete. Only one platform is tested. More baselines, cross project splits, and ablations are needed. Validation of measurement accuracy could be stronger.
+----------- Comments on Significance -----------
+Energy awareness is important for sustainable software. Potential impact is moderate, but practical usefulness is not fully validated in real development scenarios.
+----------- Comments on Novelty -----------
+Main novelty is the measurement pipeline for micro blocks. The prediction approach is conventional. The paper should compare more clearly with prior static energy estimation work.
+----------- Comments on Verifiability and Transparency -----------
+Artifact is available.
+----------- Comments on Presentation -----------
+Generally clear and structured. Minor clarity and editing issues remain. More qualitative examples would help understanding.

@@ -1,0 +1,52 @@
+============================================================
+ENERGY PREDICTION MODEL TRAINING
+============================================================
+Loading training data...
+Loaded - Train: 10995, Test: 2749
+Energy range - Train: 2.37e-05 to 6.53e+02
+After outlier removal - Train: 10995, Test: 2748
+
+Total features: 33
+
+============================================================
+Training Regression Model (Gradient Boosting)
+============================================================
+Training...
+Training R²: 0.7779
+Test R²: 0.7586
+Overfitting Gap: 0.0193
+
+Creating energy categories...
+  Low: ≤ 3.27e-05
+  Medium: 3.27e-05 to 6.97e-05
+  High: > 6.97e-05
+
+============================================================
+Training Classification Model (XGBoost)
+============================================================
+Classes: ['High' 'Low' 'Medium']
+Training...
+Training Accuracy: 0.8390
+Test Accuracy: 0.6790
+Test F1 Score: 0.6782
+Overfitting Gap: 0.1600
+
+============================================================
+Saving Models and Metadata
+============================================================
+✓ Saved regression model: models/gradient_boosting_regressor.joblib
+✓ Saved classification model: models/xgboost_classifier.joblib
+✓ Saved label encoder: models/label_encoder.joblib
+✓ Saved metadata: models/model_metadata.json
+
+✅ All models and metadata saved successfully!
+
+Model Performance Summary:
+  Regression - Test R²: 0.7586
+  Classification - Test Accuracy: 0.6790
+
+============================================================
+TRAINING COMPLETE!
+============================================================
+
+You can now use these models in the VS Code extension.

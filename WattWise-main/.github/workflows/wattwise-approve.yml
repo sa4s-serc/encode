@@ -1,0 +1,41 @@
+name: WattWise Approval Handler
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  handle-approval:
+    name: Handle /wattwise command
+    # Only run if the comment is on a PR and starts with /wattwise
+    if: |
+      github.event.issue.pull_request != null &&
+      startsWith(github.event.comment.body, '/wattwise')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      statuses: write
+      issues: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r wattwise-bot/requirements.txt
+
+      - name: Handle approval command
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_EVENT_NAME: issue_comment
+          REPO_PATH: ${{ github.workspace }}
+          PYTHON_DIR: ${{ github.workspace }}/python
+        run: python wattwise-bot/src/main.py

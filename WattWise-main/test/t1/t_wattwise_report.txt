@@ -1,0 +1,102 @@
+WattWise — Energy Linter for Code
+============================================================
+File    : t.py
+Generated: 4/6/2026, 1:50:12 AM
+
+Total blocks analyzed : 19
+Total estimated energy: 1.026e+0 J
+Average energy / block: 5.402e-2 J
+
+Energy Tier Distribution:
+  🟢 Low    : 2 block(s)
+  🟡 Medium : 4 block(s)
+  🔴 High   : 13 block(s)
+
+Block Details  (sorted highest → lowest energy):
+------------------------------------------------------------
+1. 🔴 For (lines 119–131)
+   Energy: 5.601e-1 J  |  Tier: High  |  Confidence: 74%
+
+2. 🔴 If (lines 139–141)
+   Energy: 2.762e-1 J  |  Tier: High  |  Confidence: 42%
+
+3. 🔴 FunctionDef (lines 136–166)
+   Energy: 1.021e-1 J  |  Tier: High  |  Confidence: 92%
+
+4. 🔴 FunctionDef (lines 115–133)
+   Energy: 3.243e-2 J  |  Tier: High  |  Confidence: 82%
+
+5. 🔴 If (lines 94–98)
+   Energy: 2.471e-2 J  |  Tier: High  |  Confidence: 84%
+
+6. 🔴 With (lines 31–32)
+   Energy: 1.223e-2 J  |  Tier: High  |  Confidence: 54%
+
+7. 🔴 Try (lines 28–50)
+   Energy: 3.766e-3 J  |  Tier: High  |  Confidence: 90%
+
+8. 🔴 If (lines 169–170)
+   Energy: 2.702e-3 J  |  Tier: High  |  Confidence: 58%
+
+9. 🟡 If (lines 154–160)
+   Energy: 2.238e-3 J  |  Tier: Medium  |  Confidence: 39%
+
+10. 🔴 FunctionDef (lines 74–113)
+   Energy: 2.166e-3 J  |  Tier: High  |  Confidence: 84%
+
+11. 🔴 Try (lines 76–113)
+   Energy: 1.986e-3 J  |  Tier: High  |  Confidence: 61%
+
+12. 🟡 FunctionDef (lines 52–72)
+   Energy: 1.729e-3 J  |  Tier: Medium  |  Confidence: 75%
+
+13. 🔴 FunctionDef (lines 26–50)
+   Energy: 1.322e-3 J  |  Tier: High  |  Confidence: 97%
+
+14. 🟡 If (lines 84–87)
+   Energy: 8.802e-4 J  |  Tier: Medium  |  Confidence: 47%
+
+15. 🔴 FunctionDef (lines 18–24)
+   Energy: 8.317e-4 J  |  Tier: High  |  Confidence: 68%
+
+16. 🟡 If (lines 156–160)
+   Energy: 6.365e-4 J  |  Tier: Medium  |  Confidence: 49%
+
+17. 🟢 If (lines 63–67)
+   Energy: 2.516e-4 J  |  Tier: Low  |  Confidence: 88%
+
+18. 🟢 For (lines 62–67)
+   Energy: 1.334e-4 J  |  Tier: Low  |  Confidence: 52%
+
+19. 🔴 Try (lines 147–151)
+   Energy: 4.676e-6 J  |  Tier: High  |  Confidence: 97%
+
+⚠️  RECOMMENDATIONS:
+------------------------------------------------------------
+Found 13 high-energy block(s). Consider optimizing:
+  • FunctionDef at lines 18–24
+  • FunctionDef at lines 26–50
+  • Try at lines 28–50
+  • With at lines 31–32
+  • FunctionDef at lines 74–113
+  • Try at lines 76–113
+  • If at lines 94–98
+  • FunctionDef at lines 115–133
+  • For at lines 119–131
+  • FunctionDef at lines 136–166
+  • If at lines 139–141
+  • Try at lines 147–151
+  • If at lines 169–170
+  ⚠ Could not get suggestion for FunctionDef (lines 18–24): google-genai package not installed. Run: pip install google-genai
+  ⚠ Could not get suggestion for FunctionDef (lines 26–50): google-genai package not installed. Run: pip install google-genai
+  ⚠ Could not get suggestion for Try (lines 28–50): google-genai package not installed. Run: pip install google-genai
+  ⚠ Could not get suggestion for With (lines 31–32): google-genai package not installed. Run: pip install google-genai
+  ⚠ Could not get suggestion for FunctionDef (lines 74–113): google-genai package not installed. Run: pip install google-genai
+  ⚠ Could not get suggestion for Try (lines 76–113): google-genai package not installed. Run: pip install google-genai
+  ⚠ Could not get suggestion for If (lines 94–98): google-genai package not installed. Run: pip install google-genai
+  ⚠ Could not get suggestion for FunctionDef (lines 115–133): google-genai package not installed. Run: pip install google-genai
+  ⚠ Could not get suggestion for For (lines 119–131): google-genai package not installed. Run: pip install google-genai
+  ⚠ Could not get suggestion for FunctionDef (lines 136–166): google-genai package not installed. Run: pip install google-genai
+  ⚠ Could not get suggestion for If (lines 139–141): google-genai package not installed. Run: pip install google-genai
+  ⚠ Could not get suggestion for Try (lines 147–151): google-genai package not installed. Run: pip install google-genai
+  ⚠ Could not get suggestion for If (lines 169–170): google-genai package not installed. Run: pip install google-genai

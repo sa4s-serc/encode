@@ -1,0 +1,28 @@
+\section{Threats to Validity}
+\label{sec:threats}
+Our study is bounded by some validity concerns which we discuss following the established guidelines~\cite{10.5555/2349018}.
+
+\textbf{Internal validity.}  
+Data leakage was minimized by strict train–test separation and stratified 5-fold cross validation was employed. Amplification and Calibration steps assume linear scaling of energy consumption. Overfitting was monitored via cross-validation, with small observed gaps suggesting good generalization. For stability, execution was pinned to a single CPU core, but this limits our ability to capture multi-threading effects.
+
+\textbf{Construct validity.}  
+Our methodology does not model how energy scales with different user inputs, data sizes, or runtime states. Amplification factor (N=1000) may not be ideal for ultra small blocks.  RAPL readings are limited to CPU and DRAM , excluding I/O, network, or storage. Further, RAPL readings have inherent measurement errors. Our methodology does not model inter-thread interactions or distributed execution patterns.
+
+\textbf{External validity.}  
+ Though the dataset is representative, it does not cover the full spectrum of libraries, code styles, or domain specific. All experiments were conducted on a single CPU but energy characteristics may differ on other processors. Validation across languages and hardware is necessary to establish generality.
+
+% \textbf{Granularity and scope.}  
+% Our measurement protocol pins execution to a single CPU core to reduce scheduling noise and ensure consistent readings. While this improves stability, it also forces workloads into single-core execution, limiting our ability to capture the effects of multi-threading or multiprocessing. More broadly, our analysis is confined to block-level constructs such as functions, loops, and conditionals. We do not capture higher-level program behaviors such as inter-thread interactions, distributed execution, or application-level optimization strategies.
+
+
+% \medskip
+% In summary, our work establishes the feasibility of block-level energy prediction under controlled conditions. However, limitations in dataset coverage, hardware diversity, runtime modeling, and system-level energy attribution highlight the need for further research before generalizing to all software engineering contexts.
+
+\section{Conclusion and Future Work}
+\label{sec:conclusion}
+This paper introduced \textsc{EnCoDe}, a methodology for design-time, fine-grained energy estimation of code blocks, together with \textsc{PowerLens}. PowerLens enables consistent measurement of sub millisecond-scale code blocks. By shifting energy awareness from late-stage profiling to early design, this work supports treating energy as a first-class software quality attribute. A natural next step is to extend beyond Python to other programming languages, runtime environments and modelling techniques, enabling validation across programming paradigms and software stacks. Beyond traditional applications, the same block and component-level analysis can be applied to LLMs and machine learning systems, which consume a lot of energy. Moving from detection to actionable guidance and automated repair will make sustainability effective and accessible.  
+
+% Looking further ahead, Packaging \textsc{EnCoDe} as IDE-integrated tools and CI checks can make energy feedback as routine as performance or code-quality warnings, while block-level feedback can support hands-on teaching of green software engineering. At a larger scale, PowerLens datasets and structural insights can inform programming assistants and large language models to generate energy-efficient code and reason about energy trade-offs alongside correctness and performance, helping establish energy efficiency as a first-class software concern.\section{Conclusion and Future Work}
+
+
+

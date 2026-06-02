@@ -1,0 +1,108 @@
+
+% \begin{table*}[htbp]
+% \centering
+% \caption{Top 20 features ranked by correlation and model-based importance methods.}
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{c l c l c l c l c l c l c}
+% \hline
+% Rank & \multicolumn{2}{c}{Pearson ($r$)} & \multicolumn{2}{c}{Spearman ($\rho$)} & 
+% \multicolumn{2}{c}{Kendall ($\tau$)} & \multicolumn{2}{c}{Gradient Boost} & \multicolumn{2}{c}{XGBoost} & \multicolumn{2}{c}{Random Forest}\\
+% \cline{2-13}
+% & Feature & Value & Feature & Value & Feature & Value & Feature & Value & Feature & Value & Feature & Value\\
+% \hline
+% 1    & \cellcolor[HTML]{A0C3D5}functions count      & 0.704  & \cellcolor[HTML]{A0C3D5}functions count      & 0.616 & \cellcolor[HTML]{A0C3D5}functions count      & 0.503 & \cellcolor[HTML]{A0C3D5}functions count       & 0.620 & \cellcolor[HTML]{A0C3D5}functions count       & 0.410 & \cellcolor[HTML]{A0C3D5}functions count         & 0.273 \\
+% 2    & \cellcolor[HTML]{A0C3D5}node type entropy    & 0.434  & \cellcolor[HTML]{A0C3D5}node type entropy    & 0.393 & \cellcolor[HTML]{A0C3D5}node type entropy    & 0.263 & \cellcolor[HTML]{F8CBAD}depth variance        & 0.140 & \cellcolor[HTML]{D4E7C5 }leaves to nodes ratio & 0.062 & \cellcolor[HTML]{A0C3D5}node type entropy       & 0.097 \\
+% 3    & \cellcolor[HTML]{A0C3D5}unique node types    & 0.372  & \cellcolor[HTML]{A0C3D5}unique node types    & 0.347 & \cellcolor[HTML]{A0C3D5}unique node types    & 0.243 & \cellcolor[HTML]{D4E7C5 }leaves to nodes ratio & 0.096 & \cellcolor[HTML]{D4E7C5 }call density          & 0.061 & \cellcolor[HTML]{A0C3D5}unique node types       & 0.064 \\
+% 4    & \cellcolor[HTML]{F8CBAD}depth variance       & 0.222  & \cellcolor[HTML]{F8CBAD}depth variance       & 0.326 & \cellcolor[HTML]{F8CBAD}max branching factor & 0.243 & \cellcolor[HTML]{D4E7C5 }call density          & 0.087 & \cellcolor[HTML]{A0C3D5}node type entropy     & 0.057 & \cellcolor[HTML]{D4E7C5 }leaves to nodes ratio   & 0.035 \\
+% 5    & \cellcolor[HTML]{F8CBAD}max branching factor & 0.218  & \cellcolor[HTML]{F8CBAD}max branching factor & 0.317 & \cellcolor[HTML]{F8CBAD}depth variance       & 0.220 & \cellcolor[HTML]{F8CBAD}variable density      & 0.075 & \cellcolor[HTML]{F8CBAD}depth variance        & 0.049 & \cellcolor[HTML]{F8CBAD}depth variance          & 0.035 \\
+% 6    & max depth                                    & 0.192  & max depth                                    & 0.281 & max depth                                    & 0.206 & \cellcolor[HTML]{D4E7C5 }avg depth             & 0.067 & \cellcolor[HTML]{F8CBAD}variable density      & 0.040 & \cellcolor[HTML]{D4E7C5 }cyclomatic complexity   & 0.034 \\
+% 7    & \cellcolor[HTML]{D4E7C5 }avg depth            & 0.137  & \cellcolor[HTML]{D4E7C5 }avg depth            & 0.221 & \cellcolor[HTML]{D4E7C5 }avg depth            & 0.148 & \cellcolor[HTML]{A0C3D5}node type entropy     & 0.067 & \cellcolor[HTML]{A0C3D5}unique node types     & 0.037 & \cellcolor[HTML]{D4E7C5 }call density            & 0.033 \\
+% 8    & \cellcolor[HTML]{D4E7C5 }total nodes          & 0.114  & \cellcolor[HTML]{D4E7C5 }total nodes          & 0.181 & unique functions                             & 0.126 & \cellcolor[HTML]{D4E7C5 }operator density      & 0.050 & \cellcolor[HTML]{D4E7C5 }avg depth             & 0.035 & \cellcolor[HTML]{D4E7C5 }control flow complexity & 0.032 \\
+% 9    & program volume                               & 0.075  & \cellcolor[HTML]{D4E7C5 }avg branching factor & 0.181 & \cellcolor[HTML]{D4E7C5 }total nodes          & 0.125 & \cellcolor[HTML]{D4E7C5 }attribute density     & 0.047 & \cellcolor[HTML]{F8CBAD}max branching factor  & 0.034 & \cellcolor[HTML]{D4E7C5 }cognitive complexity    & 0.032 \\
+% 10   & \cellcolor[HTML]{D4E7C5 }avg branching factor & 0.073  & unique functions                             & 0.156 & \cellcolor[HTML]{D4E7C5 }avg branching factor & 0.125 & \cellcolor[HTML]{D4E7C5 }literal density       & 0.031 & \cellcolor[HTML]{D4E7C5 }cognitive complexity  & 0.022 & \cellcolor[HTML]{F8CBAD}max branching factor    & 0.031 \\
+% 11   & program length                               & 0.073  & vocabulary size                              & 0.142 & vocabulary size                              & 0.104 & \cellcolor[HTML]{A0C3D5}unique node types     & 0.026 & \cellcolor[HTML]{D4E7C5 }operator density      & 0.022 & \cellcolor[HTML]{F8CBAD}variable density        & 0.030 \\
+% 12   & unique operators                             & 0.070  & program volume                               & 0.136 & program volume                               & 0.095 & \cellcolor[HTML]{F8CBAD}max branching factor  & 0.022 & \cellcolor[HTML]{D4E7C5 }cyclomatic complexity & 0.018 & \cellcolor[HTML]{D4E7C5 }operator density        & 0.029 \\
+% 13   & operator entropy                             & 0.067  & program length                               & 0.128 & loops count                                  & 0.092 & variable entropy                              & 0.018 & \cellcolor[HTML]{D4E7C5 }literal density       & 0.017 & \cellcolor[HTML]{D4E7C5 }nesting complexity      & 0.025 \\
+% 14   & program difficulty                           & 0.061  & unique variables                             & 0.114 & program length                               & 0.091 & \cellcolor[HTML]{D4E7C5 }nesting complexity    & 0.017 & \cellcolor[HTML]{D4E7C5 }attribute density     & 0.016 & \cellcolor[HTML]{D4E7C5 }avg depth               & 0.025 \\
+% 15   & vocabulary size                              & 0.052  & variable entropy                             & 0.112 & unique variables                             & 0.090 & program difficulty                            & 0.016 & variable entropy                              & 0.014 & \cellcolor[HTML]{D4E7C5 }literal density         & 0.021 \\
+% 16   & program effort                               & 0.051  & loops count                                  & 0.110 & variable entropy                             & 0.083 & \cellcolor[HTML]{D4E7C5 }total nodes           & 0.015 & \cellcolor[HTML]{D4E7C5 }total nodes           & 0.014 & \cellcolor[HTML]{D4E7C5 }total nodes             & 0.020 \\
+% 17   & \cellcolor[HTML]{D4E7C5 }operator density     & 0.018  & program effort                               & 0.068 & program effort                               & 0.048 & conditionals count                            & 0.012 & \cellcolor[HTML]{D4E7C5 }nesting complexity    & 0.013 & \cellcolor[HTML]{D4E7C5 }avg branching factor    & 0.020 \\
+% 18   & \cellcolor[HTML]{D4E7C5 }attribute density    & 0.012  & \cellcolor[HTML]{D4E7C5 }literal density      & 0.047 & operator entropy                             & 0.032 & \cellcolor[HTML]{D4E7C5 }cyclomatic complexity & 0.011 & unique functions                              & 0.011 & \cellcolor[HTML]{D4E7C5 }attribute density       & 0.017 \\
+% 19   & unique variables                             & 0.008  & operator entropy                             & 0.043 & \cellcolor[HTML]{D4E7C5 }literal density      & 0.031 & program effort                                & 0.010 & program difficulty                            & 0.011 & variable entropy                                & 0.017 \\
+% 20   & try blocks count                             & -0.004 & unique operators                             & 0.022 & unique operators                             & 0.015 & unique functions                              & 0.008 & \cellcolor[HTML]{D4E7C5 }avg branching factor  & 0.010 & program difficulty                              & 0.016 \\
+% \hli 0ne
+% \end{tabular}
+% }
+% \label{tab:feature_ranking}
+% \end{table*}
+% \begin{table*}[htbp]
+% \centering
+% \caption{Top 20 features by Correlation and Feature Importance}
+% \resizebox{\textwidth}{!}{%
+% \begin{tabular}{c l c l c l c l c l c}
+% \hline
+% Rank & \multicolumn{2}{c}{Pearson ($r$)} & \multicolumn{2}{c}{Spearman ($\rho$)} & 
+% \multicolumn{2}{c}{Kendall ($\tau$)} & \multicolumn{2}{c}{ExtraTrees} & \multicolumn{2}{c}{Random Forest}\\
+% \cline{2-11}
+% & Feature & Value & Feature & Value & Feature & Value & Feature & Value & Feature & Value\\
+% \hline
+% 1    & \cellcolor[HTML]{FDB462}operator density          & 0.176  & unique functions                      & 0.392 & unique functions                      & 0.305 & \cellcolor[HTML]{FDB462}call density          & 0.137 & \cellcolor[HTML]{FDB462}call density          & 0.299 \\
+% 2    & operator entropy                                  & 0.139  & vocabulary size                       & 0.319 & unique variables                      & 0.230 & \cellcolor[HTML]{FDB462}operator density      & 0.069 & \cellcolor[HTML]{FDB462}program difficulty    & 0.174 \\
+% 3    & \cellcolor[HTML]{FDB462}literal density           & 0.122  & unique variables                      & 0.301 & vocabulary size                       & 0.227 & \cellcolor[HTML]{FDB462}depth variance        & 0.065 & \cellcolor[HTML]{FDB462}operator density      & 0.126 \\
+% 4    & unique operators                                  & 0.122  & \cellcolor[HTML]{FDB462}variable entropy                      & 0.291 & loops count                           & 0.223 & \cellcolor[HTML]{FDB462}literal density       & 0.061 & \cellcolor[HTML]{FDB462}variable entropy                      & 0.062 \\
+% 5    & conditionals count                                & 0.114  & \cellcolor[HTML]{FDB462}call density          & 0.281 & \cellcolor[HTML]{FDB462}variable entropy                      & 0.210 & \cellcolor[HTML]{FDB462}variable entropy                      & 0.059 & \cellcolor[HTML]{FDB462}node type entropy     & 0.038 \\
+% 6    & variable density                                  & 0.099  & program volume                        & 0.274 & \cellcolor[HTML]{FDB462}call density          & 0.199 & unique node types     & 0.042 & \cellcolor[HTML]{FDB462}depth variance        & 0.031 \\
+% 7    & \cellcolor[HTML]{FDB462}program difficulty        & 0.093  & loops count                           & 0.271 & max depth                             & 0.192 & leaves to nodes ratio & 0.041 & program effort                        & 0.026 \\
+% 8    & loops count                                       & 0.092  & max depth                             & 0.258 & program volume                        & 0.188 & variable density                      & 0.041 & unique node types     & 0.023 \\
+% 9    & \cellcolor[HTML]{FDB462}depth variance            & 0.091  & program length                        & 0.247 & cognitive complexity  & 0.173 & operator entropy                      & 0.040 & variable density                      & 0.021 \\
+% 10   & \cellcolor[HTML]{FDB462}variable entropy                                  & 0.084  & \cellcolor[HTML]{FDB462}depth variance        & 0.247 & program length                        & 0.173 & avg depth             & 0.040 & \cellcolor[HTML]{FDB462}literal density       & 0.018 \\
+% 11   & functions count           & 0.077  & avg depth             & 0.237 & control flow complexity & 0.168 & \cellcolor[HTML]{FDB462}program difficulty    & 0.038 & program length                        & 0.017 \\
+% 12   & unique variables                                  & 0.069  & cognitive complexity  & 0.226 & \cellcolor[HTML]{FDB462}depth variance        & 0.168 & unique functions                      & 0.037 & avg depth             & 0.017 \\
+% 13   & leaves to nodes ratio     & 0.062  & total nodes           & 0.224 & nesting complexity    & 0.168 & \cellcolor[HTML]{FDB462}node type entropy     & 0.032 & leaves to nodes ratio & 0.016 \\
+% 14   & avg depth                 & 0.062  & avg branching factor  & 0.224 & cyclomatic complexity & 0.168 & max depth                             & 0.030 & max depth                             & 0.015 \\
+% 15   & max depth                                         & 0.061  & cyclomatic complexity & 0.218 & max branching factor  & 0.164 & vocabulary size                       & 0.030 & vocabulary size                       & 0.014 \\
+% 16   & attribute density         & 0.056  & control flow complexity & 0.217 & avg depth             & 0.163 & unique variables                      & 0.027 & unique functions                      & 0.012 \\
+% 17   & \cellcolor[HTML]{FDB462}node type entropy         & 0.045  & nesting complexity    & 0.217 & total nodes           & 0.157 & loops count                           & 0.023 & unique variables                      & 0.012 \\
+% 18   & cognitive complexity      & 0.039  & max branching factor  & 0.210 & avg branching factor  & 0.157 & unique operators                      & 0.022 & program volume                        & 0.012 \\
+% 19   & nesting complexity        & 0.034  & \cellcolor[HTML]{FDB462}literal density       & 0.183 & \cellcolor[HTML]{FDB462}literal density       & 0.128 & program volume                        & 0.021 & total nodes           & 0.012 \\
+% 20   & avg branching factor      & 0.034  & unique node types     & 0.134 & unique node types     & 0.094 & avg branching factor  & 0.021 & avg branching factor  & 0.011 \\
+% \hline
+% \end{tabular}
+% }
+% \label{tab:feature_ranking}
+% \end{table*}
+
+
+\begin{table*}[htbp]
+\centering
+\caption{Top 20 features by Correlation and Feature Importance}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllllllllllll}
+\hline
+Rank & \multicolumn{2}{l}{Pearson ($|r|$)}          & \multicolumn{2}{l}{Spearman ($|\rho|$)}      & \multicolumn{2}{l}{Kendall (|$\tau$|)}       & \multicolumn{2}{l}{ExtraTrees}               & \multicolumn{2}{l}{Random Forest}            & \multicolumn{2}{l}{Gradient Boosting}        \\ \cline{2-13} 
+     & Feature                     & Value          & Feature                     & Value          & Feature                     & Value          & Feature                     & Value          & Feature                     & Value          & Feature                     & Value          \\ \hline
+1    & \textbf{operator density}   & \textbf{0.286} & \textit{functions count}    & \textit{0.621} & \textit{functions count}    & \textit{0.507} & \textbf{operator density}   & \textbf{0.086} & \textbf{operator density}   & \textbf{0.099} & \textbf{operator density}   & \textbf{0.102} \\
+2    & \textbf{operator entropy}   & \textbf{0.205} & node type entropy           & 0.294          & node type entropy           & 0.193          & \textbf{loops count}        & \textbf{0.063} & \textit{unique node types}  & \textit{0.075} & \textbf{program difficulty} & \textbf{0.056} \\
+3    & conditionals count          & 0.181          & \textit{conditionals count} & \textit{0.229} & \textit{conditionals count} & \textit{0.178} & \textit{functions count}    & \textit{0.061} & \textbf{program difficulty} & \textbf{0.073} & program effort              & 0.054          \\
+4    & unique operators            & 0.178          & cognitive complexity        & 0.225          & cognitive complexity        & 0.165          & \textbf{operator entropy}   & \textbf{0.054} & \textit{call density}       & \textit{0.072} & \textit{variable entropy}   & \textit{0.037} \\
+5    & \textit{literal density}    & \textit{0.174} & nesting complexity          & 0.215          & unique functions            & 0.165          & \textit{variable entropy}   & \textit{0.054} & \textit{variable entropy}   & \textit{0.061} & \textbf{loops count}        & \textbf{0.037} \\
+6    & functions count             & 0.166          & control flow complexity     & 0.210          & nesting complexity          & 0.160          & \textit{call density}       & \textit{0.053} & variable density            & 0.061          & \textit{unique node types}  & \textit{0.031} \\
+7    & \textbf{loops count}        & \textbf{0.156} & \textit{literal density}    & \textit{0.207} & control flow complexity     & 0.156          & \textbf{program difficulty} & \textbf{0.052} & leaves to nodes ratio       & 0.053          & \textit{call density}       & \textit{0.022} \\
+8    & \textit{variable entropy}   & \textit{0.145} & unique functions            & 0.205          & cyclomatic complexity       & 0.150          & depth variance              & 0.046          & depth variance              & 0.052          & \textit{literal density}    & \textit{0.016} \\
+9    & variable density            & 0.144          & cyclomatic complexity       & 0.203          & \textit{literal density}    & \textit{0.145} & unique variables            & 0.046          & \textit{literal density}    & \textit{0.051} & \textit{conditionals count} & \textit{0.014} \\
+10   & \textbf{program difficulty} & \textbf{0.129} & vocabulary size             & 0.199          & vocabulary size             & 0.141          & \textit{unique node types}  & \textit{0.043} & program effort              & 0.042          & \textbf{operator entropy}   & \textbf{0.011} \\
+11   & unique variables            & 0.122          & \textbf{operator density}   & \textbf{0.195} & \textbf{operator density}   & \textbf{0.138} & literal density             & 0.042          & \textbf{operator entropy}   & \textbf{0.037} & leaves to nodes ratio       & 0.010          \\
+12   & leaves to nodes ratio       & 0.117          & \textit{unique node types}  & \textit{0.191} & \textit{call density}       & \textit{0.133} & \textit{conditionals count} & \textit{0.036} & unique variables            & 0.032          & \textit{functions count}    & \textit{0.010} \\
+13   & depth variance              & 0.116          & \textit{call density}       & \textit{0.183} & \textit{unique node types}  & \textit{0.127} & variable density            & 0.035          & unique functions            & 0.030          & program length              & 0.009          \\
+14   & attribute density           & 0.080          & program volume              & 0.148          & unique variables            & 0.110          & unique operators            & 0.032          & \textbf{loops count}        & \textbf{0.030} & depth variance              & 0.009          \\
+15   & max branching factor        & 0.073          & \textit{variable entropy}   & \textit{0.139} & \textit{variable entropy}   & \textit{0.105} & unique functions            & 0.027          & total nodes                 & 0.028          & unique operators            & 0.008          \\
+% 16   & max depth                   & 0.072          & unique variables            & 0.138          & unique operators            & 0.103          & avg depth                   & 0.026          & avg depth                   & 0.026          & variable density            & 0.007          \\
+% 17   & avg depth                   & 0.071          & unique operators            & 0.138          & program volume              & 0.101          & avg branching factor        & 0.025          & node type entropy           & 0.025          & unique functions            & 0.005          \\
+% 18   & cognitive complexity        & 0.055          & program length              & 0.126          & \textbf{operator entropy}   & \textbf{0.094} & leaves to nodes ratio       & 0.023          & unique operators            & 0.024          & program volume              & 0.004          \\
+% 19   & node type entropy           & 0.048          & \textbf{operator entropy}   & \textbf{0.125} & program length              & 0.087          & max depth                   & 0.022          & program volume              & 0.023          & unique variables            & 0.004          \\
+% 20   & \textit{unique node types}  & \textit{0.047} & leaves to nodes ratio       & 0.118          & leaves to nodes ratio       & 0.080          & cognitive complexity        & 0.021          & program length              & 0.022          & node type entropy           & 0.003          \\
+\hline
+\end{tabular}
+}\footnotesize{ \textbf{Bold} = linear relation, \textit{italic} = non-linear relation}
+\label{tab:feature_ranking}
+\end{table*}

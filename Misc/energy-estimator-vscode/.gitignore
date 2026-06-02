@@ -1,0 +1,24 @@
+out
+node_modules
+.vscode-test
+*.vsix
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+python/models/*.joblib
+python/models/*.json
+
+# Data
+data/*.csv
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db

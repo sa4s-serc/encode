@@ -1,0 +1,86 @@
+## PR Bot
+
+**Concept.** A GitHub Actions workflow that runs on every pull request, analyses only the changed blocks (not the whole repo), and posts two separate, role-specific comments: one detailed comment for the developer, and one summarised approval-request comment for the assigned energy manager. The critical design constraint is that these are not the same comment — the developer sees feature-level drivers and raw numbers; the manager sees business impact and an actionable approve/reject interface.
+
+**What makes it different from the IDE view.** The VS Code extension is synchronous, per-file, and private to the developer — it's a linting aid. The PR bot is asynchronous, cross-file, diff-aware, and social — it creates a shared record visible to the whole team in the PR history. It computes the net delta (not just the current state), attaches costs, and triggers a governance workflow that the IDE never will.
+
+**Developer user flow.** Developer opens a PR. The GitHub Actions step checks out both the base and head commits, runs EnCoDe on all changed `.py` files at both revisions, diffs the block lists (matching by file path + start line), and posts the developer comment. The comment shows: a colour-coded impact banner (green if net improvement, red if regression), a block-level diff table with before/after tier and cost delta per block, the top feature drivers for any newly introduced High block, and — if manager approval is required — a blocking notice referencing `.wattwise.yml`. The status check is set to `failure` so the merge button is disabled.
+
+**Manager approval flow.** Separately, the bot posts a second comment (or edits an existing one) mentioning the manager handles listed in `.wattwise.yml`. This comment is visually distinct (purple bot-badge vs blue for developer comment). It shows only the business-level summary: annual cost impact, number of blocks introduced/improved, affected system description, CO₂ delta, and the author's name. The approve and reject actions are implemented as a slash-command system: a manager types `/wattwise approve` or `/wattwise reject [reason]` in a PR comment. A separate GitHub Actions workflow listening on `issue_comment` events picks this up, verifies the commenter is in the `managers` list, applies the `energy-approved` label (or `energy-changes-requested`), and re-runs the status check — this time returning `success`, which unblocks the merge. The bot then edits the manager comment to reflect the decision and notifies the developer.
+
+**Why this mechanism over GitHub Environments or CODEOWNERS.** Environments require GitHub Enterprise for private repos. CODEOWNERS applies to file ownership, not to computed properties of code. The label + slash-command approach works on any GitHub plan, is auditable (all decisions are in the PR comment history), and lets the same manager cover multiple repos without touching repo settings.
+
+**`.wattwise.yml` config format:**
+
+```yaml
+energy:
+  require_manager_approval: true
+  max_new_high_blocks: 0           # any new high block triggers approval
+  regression_threshold_cost: 50    # OR: net cost increase > $50/yr triggers approval
+  block_on_gate_failure: true      # false = warn-only mode
+
+managers:
+  - "@sarah.lee"
+  - "@james.park"
+
+cost:
+  aws_rate_kwh: 0.096              # $/kWh, AWS us-east-1
+  default_calls_per_day:
+    FunctionDef: 10000
+    For: 50000
+    While: 20000
+    If: 100000
+    Try: 5000
+    With: 10000
+```
+
+**GitHub Actions workflow files (two required):**
+
+`wattwise-pr.yml` — runs on PR open/sync, posts developer + manager comments, sets status check.
+
+`wattwise-approve.yml` — runs on `issue_comment` created, listens for `/wattwise approve` or `/wattwise reject`, validates commenter is a manager, applies label, re-runs or passes the status check.
+
+**Implementation spec for coding agents.** The bot is a self-contained Python package deployed as a Docker image used by the Actions step:
+
+```
+wattwise-bot/
+├── Dockerfile
+├── action.yml                   # GitHub Action metadata
+├── src/
+│   ├── main.py                  # entry point, reads event JSON
+│   ├── diff_analyser.py         # git diff → changed blocks → BlockDiff list
+│   ├── comment_builder.py       # renders developer and manager comment markdown
+│   ├── github_api.py            # posts/edits comments, sets status, applies labels
+│   ├── approval_handler.py      # slash command parser, label applicator
+│   ├── cost.py                  # same cost module as dashboard
+│   └── config.py                # loads .wattwise.yml
+```
+
+**`diff_analyser.py` — the core algorithm:**
+
+```python
+def analyse_pr(base_sha: str, head_sha: str, repo_path: str) -> list[BlockDiff]:
+    changed_files = get_changed_py_files(base_sha, head_sha)  # git diff --name-only
+    diffs = []
+    for f in changed_files:
+        base_blocks = run_wattwise(checkout(base_sha, f))  # returns list[BlockResult]
+        head_blocks = run_wattwise(checkout(head_sha, f))
+        diffs.extend(diff_block_lists(base_blocks, head_blocks, f))
+    return diffs
+
+def diff_block_lists(base, head, file_path) -> list[BlockDiff]:
+    # Match blocks by (block_type, start_line) with ±3 line tolerance for edits
+    # Classify each as: new | modified | removed | unchanged
+    # Only return new, modified, removed
+    ...
+```
+
+**`comment_builder.py` — key outputs:**
+
+The developer comment is rendered as a GitHub-flavoured markdown string with a colour-coded badge table (using emoji squares for tier: 🟢🟡🔴), a cost delta column, and a collapsible details block for feature drivers. The manager comment is a separate markdown string with a summary table and the slash-command instructions. Both are posted via `POST /repos/{owner}/{repo}/issues/{pr_number}/comments` using the GitHub token from the Actions environment.
+
+**Status check flow:**
+
+1. Bot runs analysis → if `new_high_blocks > max_new_high_blocks` OR `net_cost_delta > regression_threshold_cost`, call `POST /repos/{owner}/{repo}/statuses/{sha}` with `state: failure`, `context: wattwise/energy-gate`, `description: Regression detected — manager approval required`.
+2. Manager approves → `approval_handler.py` calls same endpoint with `state: success`.
+3. Branch protection rules in the repo must list `wattwise/energy-gate` as a required status check. This is a one-time repo setup step documented in the onboarding guide.

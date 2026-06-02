@@ -1,0 +1,44 @@
+% \begin{table}[t]
+% \centering
+% \caption{Leave-one-group-out ablation. Each row removes one feature group. $\Delta$ values are
+%          relative to the full model.}
+% \label{tab:ablation_lopo}
+% \small
+% \begin{tabular}{lrrrrrl}
+% \hline
+% \textbf{Removed Group}     & \textbf{\#Feat} & \textbf{Test $R^2$} & \textbf{$\Delta R^2$} & \textbf{Test Acc} & \textbf{$\Delta$Acc} & \textbf{} \\ \hline
+% \textit{None (Full model)} & 33              & 0.757               & ---                   & 80.6\%            & ---                  &           \\ \hline
+% Density                    & 28              & 0.755               & $-$0.002              & 77.8\%            & $-$2.8 pp       &           \\
+% Counts                     & 25              & 0.746               & $-$0.011              & 78.0\%            & $-$2.6 pp       &           \\
+% Halstead                   & 28              & 0.752               & $-$0.006              & 80.4\%            & $-$0.1 pp       &           \\
+% Complexity                 & 29              & 0.755               & $-$0.002              & 80.1\%            & $-$0.4 pp       &           \\
+% Entropy                    & 30              & 0.758               & $+$0.001              & 80.5\%            & $-$0.1 pp       &           \\
+% AST Structural             & 25              & 0.757               & $\sim$0               & 80.4\%            & $-$0.1 pp       &           \\ \hline
+% \end{tabular}
+% \end{table}
+
+% \begin{bluepar}
+    
+\begin{table}[t]
+\centering
+\caption{Feature group Ablations}
+\label{tab:ablation}
+\small
+\begin{tabular}{lrr rrr}
+\toprule
+& \multicolumn{2}{c}{\textit{Leave-One-Out}} 
+& \multicolumn{3}{c}{\textit{Group Only}} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-6}
+\textbf{Group} & $\Delta R^2$ & $\Delta$\textbf{Acc} 
+               & \textbf{\#Feat} & $R^2$ & \textbf{Acc} \\
+\midrule
+Density        & $-$0.002 & $-$2.8~pp & 5 & 0.700 & 71.1\% \\
+Counts         & $-$0.011 & $-$2.6~pp & 8 & 0.720 & 74.2\% \\
+Halstead       & $-$0.006 & $-$0.1~pp & 5 & 0.688 & 59.7\% \\
+Complexity     & $-$0.002 & $-$0.4~pp & 4 & 0.067 & 51.2\% \\
+Entropy        & $+$0.001 & $-$0.1~pp & 3 & 0.691 & 68.3\% \\
+AST Structural & $\sim$0  & $-$0.1~pp & 8 & 0.650 & 69.4\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+% \end{bluepar}

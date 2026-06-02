@@ -1,0 +1,126 @@
+Now the full spec for coding agents to implement both products.
+
+---
+
+## Repository Dashboard
+
+**Concept.** A web application (or VS Code webview panel) that runs EnCoDe analysis across an entire repo on demand and presents a continuously updated picture of the codebase's energy health. The core mental model is "energy debt" — the same category as technical debt, tracked, trended, and prioritised per sprint.
+
+**User flow.** A manager or tech lead opens the dashboard and selects a repo from a dropdown (connected via GitHub OAuth). They trigger a scan, which recursively finds all `.py` files, extracts blocks, runs the ML pipeline, and stores results. The treemap renders immediately with files coloured by aggregate energy tier (proportion of high blocks determines the shade — a file with 7/12 high blocks is deep red, a file with 1/9 is amber). The file tree on the left mirrors the directory structure with coloured dots and a count badge for high blocks. Clicking a tile in the treemap or a file in the tree drills into a file-level view showing every block, its tier, line range, key feature drivers, and individual cost estimate. The hotspot panel on the right is the primary action surface: it ranks blocks by annual cost (descending by default, sortable by tier or LOC), and clicking any hotspot opens a side drawer with the code snippet, feature breakdown, and a suggested optimisation strategy. The bottom cost bar translates everything into AWS dollars, kWh, and CO₂ so the numbers mean something outside engineering.
+
+**Features (priority order):**
+
+1. Repo-wide scan triggered on demand or scheduled (cron via GitHub Actions)
+2. Treemap where area ∝ LOC and colour = aggregate energy tier, with folder grouping
+3. File tree mirroring actual directory structure, with tier dot and high-block count per file
+4. Hotspot ranking table: sortable by cost, tier, or block type, with filter by file or module
+5. File drill-down view: all blocks in a file with inline tier badges, line references, and cost
+6. Energy debt score: integer from 0–100 derived from `(high_blocks / total_blocks) × 100`, tracked per commit and charted over time
+7. Historical trend: energy debt score and total cost per sprint/week as a sparkline
+8. Cost summary bar: total kWh/year, AWS cost/year, CO₂/year, potential saving if top 5 hotspots addressed
+9. Configurable call-rate assumptions per block type (editable in the UI, stored in `.wattwise.yml`)
+10. Export: PDF report and CSV of all block results for compliance/ESG reporting
+
+**Cost model.** The formula hardcoded in the backend:
+
+```python
+AWS_RATE_KWH = 0.096          # AWS us-east-1 effective electricity rate, $/kWh
+CO2_KG_PER_KWH = 0.4          # average grid carbon intensity, kg CO₂/kWh
+
+DEFAULT_CALLS_PER_DAY = {
+    "FunctionDef": 10_000,
+    "For":         50_000,
+    "While":       20_000,
+    "If":         100_000,
+    "Try":          5_000,
+    "With":        10_000,
+}
+
+def annual_cost_usd(energy_j: float, block_type: str, calls_per_day: int = None) -> float:
+    cpd = calls_per_day or DEFAULT_CALLS_PER_DAY[block_type]
+    annual_j = energy_j * cpd * 365
+    kwh = annual_j / 3_600_000
+    return kwh * AWS_RATE_KWH
+
+def annual_co2_kg(energy_j, block_type, calls_per_day=None):
+    cpd = calls_per_day or DEFAULT_CALLS_PER_DAY[block_type]
+    kwh = energy_j * cpd * 365 / 3_600_000
+    return kwh * CO2_KG_PER_KWH
+```
+
+**Implementation spec for coding agents.** The project splits into three packages:
+
+```
+wattwise-dashboard/
+├── backend/
+│   ├── main.py                  # FastAPI app, routes
+│   ├── scanner.py               # walks repo, calls WattWise pipeline per file
+│   ├── cost.py                  # annual_cost_usd, annual_co2_kg
+│   ├── db.py                    # SQLite via sqlite3, schema below
+│   ├── models.py                # dataclasses: BlockResult, FileResult, ScanResult
+│   ├── github_client.py         # PyGithub wrapper for repo tree, OAuth
+│   └── wattwise_bridge.py       # calls existing predict_energy.py subprocess
+├── frontend/
+│   ├── src/
+│   │   ├── App.tsx
+│   │   ├── components/
+│   │   │   ├── Treemap.tsx      # D3 squarified treemap
+│   │   │   ├── FileTree.tsx     # recursive file tree
+│   │   │   ├── HotspotList.tsx  # sortable hotspot table
+│   │   │   ├── CostBar.tsx      # 4-metric summary
+│   │   │   └── FileDetail.tsx   # per-file block list drawer
+│   │   └── api.ts               # typed fetch wrappers
+│   └── package.json
+└── .wattwise.yml                 # repo-level config
+```
+
+**SQLite schema:**
+
+```sql
+CREATE TABLE scans (
+    id INTEGER PRIMARY KEY,
+    repo_id TEXT,
+    commit_sha TEXT,
+    branch TEXT,
+    scanned_at TEXT,
+    total_high INTEGER,
+    total_medium INTEGER,
+    total_low INTEGER,
+    total_cost_usd REAL,
+    energy_debt_score INTEGER
+);
+
+CREATE TABLE block_results (
+    id INTEGER PRIMARY KEY,
+    scan_id INTEGER REFERENCES scans(id),
+    file_path TEXT,
+    block_type TEXT,
+    start_line INTEGER,
+    end_line INTEGER,
+    energy_j REAL,
+    tier TEXT,
+    confidence REAL,
+    calls_per_day INTEGER,
+    cost_per_year REAL,
+    co2_kg_per_year REAL,
+    features_json TEXT
+);
+```
+
+**Key API endpoints (FastAPI):**
+
+```
+POST /api/repos/{repo_id}/scan          → triggers async scan, returns scan_id
+GET  /api/repos/{repo_id}/scans/latest  → ScanResult with all files and blocks
+GET  /api/repos/{repo_id}/hotspots      → sorted list of BlockResult, query params: sort, limit
+GET  /api/repos/{repo_id}/history       → list of {date, energy_debt_score, cost_usd}
+GET  /api/repos/{repo_id}/files/{path}  → all blocks in a single file from latest scan
+PUT  /api/repos/{repo_id}/config        → update call rate assumptions, saves to .wattwise.yml
+```
+
+The `scanner.py` function walks the repo with `pathlib.Path.rglob("*.py")`, calls the existing `predict_energy.py` subprocess for each file (passing the file path as argument), parses the JSON output, runs `annual_cost_usd` on each block, and writes to the DB. For a 1,000-file repo this takes around 20–60 seconds depending on hardware, so it must run async and stream progress events via SSE.
+
+The D3 treemap in the frontend uses `d3.treemap().tile(d3.treemapSquarify)` with `value = d => d.loc`. Colour is a continuous scale from `#C0DD97` (low) through `#FAC775` (medium) to `#F09595` (high), driven by `high_count / total_blocks` ratio per file.
+
+---
+
