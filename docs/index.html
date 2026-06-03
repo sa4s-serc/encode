@@ -45,6 +45,7 @@
     .sec-white { background: #fff; }
     .inner { max-width: 960px; margin: 0 auto; }
     .inner-sm { max-width: 800px; margin: 0 auto; }
+    .inner-wide { max-width: 1100px; margin: 0 auto; }
 
     .sec-heading {
       font-size: 1.7rem; font-weight: 700; color: #1a202c;
@@ -62,7 +63,6 @@
 
     /* ── Abstract ── */
     .abstract-body { font-size: 1rem; line-height: 1.85; color: #374151; }
-    .abstract-body + .abstract-body { margin-top: 1rem; }
 
     /* ── Contribution cards ── */
     .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 1.25rem; margin-top: 0.5rem; }
@@ -91,14 +91,27 @@
     .metric-sub { font-size: 0.78rem; color: #6b7280; margin-top: 0.1rem; }
 
     /* ── Paper tables ── */
-    .paper-table { width: 100%; border-collapse: collapse; font-size: 0.83rem; margin-top: 0.5rem; }
-    .paper-table th { background: #1e3a5f; color: #fff; padding: 0.55rem 0.75rem; text-align: left; font-weight: 600; }
-    .paper-table td { padding: 0.45rem 0.75rem; border-bottom: 1px solid #e5e7eb; }
+    .paper-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 0.5rem; }
+    .paper-table th { background: #1e3a5f; color: #fff; padding: 0.55rem 0.75rem; text-align: left; font-weight: 600; white-space: nowrap; }
+    .paper-table td { padding: 0.45rem 0.75rem; border-bottom: 1px solid #e5e7eb; white-space: nowrap; }
     .paper-table tr:nth-child(even) td { background: #f8fafc; }
     .paper-table tr.top-row td { font-weight: 700; background: #dbeafe !important; }
+    .paper-table tr.top-row2 td { font-weight: 600; background: #eff6ff !important; }
     .paper-table tr.top-row-green td { font-weight: 700; background: #d1fae5 !important; }
+    .paper-table tr.top-row2-green td { font-weight: 600; background: #ecfdf5 !important; }
     .table-wrap { overflow-x: auto; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); margin-bottom: 0.5rem; }
     .table-note { font-size: 0.78rem; color: #6b7280; text-align: center; margin-top: 0.4rem; font-style: italic; }
+    .tbl-title { font-weight: 700; font-size: 1.05rem; text-align: center; margin-bottom: 0.6rem; }
+
+    /* ── Feature table highlights ── */
+    .ft-linear { font-weight: 700; }
+    .ft-nonlinear { font-style: italic; }
+
+    /* ── Ablation table columns ── */
+    .abl-table th, .abl-table td { text-align: center; }
+    .abl-table td:first-child { text-align: left; font-weight: 600; }
+    .abl-neg { color: #dc2626; }
+    .abl-pos { color: #059669; }
 
     /* ── Pipeline steps ── */
     .steps { display: flex; flex-direction: column; gap: 1rem; }
@@ -143,7 +156,6 @@
 
     @media(max-width:700px) {
       .paper-title { font-size: 1.55rem; }
-      .columns-2 { flex-direction: column; }
     }
   </style>
 </head>
@@ -192,7 +204,7 @@
   </div>
 </div>
 
-<!-- ══════════════ TEASER — Fig 2 ══════════════ -->
+<!-- ══════════════ TEASER — Fig 2 (EnCoDe.png) ══════════════ -->
 <div class="teaser-wrap">
   <div style="max-width:980px; margin:0 auto;">
     <img src="static/images/fig2_framework.png"
@@ -202,7 +214,7 @@
       <strong>Figure 2:</strong> Design Time Energy Estimation Methodology. The framework spans five phases:
       data construction via PowerLens measurement, feature extraction &amp; engineering, ML training,
       feature correlation profiling, and design-time inference — producing energy estimates and tier
-      classifications without code execution.
+      classifications without executing code.
     </p>
   </div>
 </div>
@@ -242,23 +254,23 @@
       <div class="contrib-card">
         <div class="contrib-icon">🔬</div>
         <h3>PowerLens Measurement</h3>
-        <p>A novel sub-millisecond energy measurement methodology that achieves reliable readings for
+        <p>A novel sub-millisecond energy measurement methodology achieving reliable readings for
         microsecond-scale code blocks through execution amplification, RAPL temporal synchronization,
-        calibrated subtraction, and IQR-based statistical aggregation across 10 trials.
-        Achieves &lt;10% variation on &gt;90% of blocks.</p>
+        calibrated subtraction, and IQR-based aggregation across 10 trials.
+        Over 90% of blocks show &lt;10% coefficient of variation.</p>
       </div>
       <div class="contrib-card">
         <div class="contrib-icon">📊</div>
         <h3>Fine-Grained Energy Dataset</h3>
-        <p>Extensive empirical study on executable code blocks from over <strong>18,000 Python programs</strong>,
-        yielding a first-of-its-kind fine-grained dataset annotated with 33 static AST features.
+        <p>Empirical study on executable code blocks from over <strong>18,000 Python programs</strong>,
+        yielding a first-of-its-kind dataset annotated with 33 static AST features.
         Energy spans six orders of magnitude (2.37×10⁻⁵ J – 7.48×10² J).</p>
       </div>
       <div class="contrib-card">
         <div class="contrib-icon">🤖</div>
         <h3>Predictive Modeling &amp; Validation</h3>
         <p>Classical ML models trained on static code features achieve <strong>R² = 0.755</strong>
-        for continuous energy regression and <strong>80.6% accuracy</strong> for Low/Medium/High
+        for continuous energy regression and <strong>80.6% accuracy</strong> for Low / Medium / High
         tier classification — enabling developers to identify energy hotspots early, without
         running the code.</p>
       </div>
@@ -270,18 +282,18 @@
 <section class="sec sec-white">
   <div class="inner">
     <h2 class="sec-heading">Motivation: RAPL Cannot Measure Short Code Blocks</h2>
-    <div class="columns" style="display:flex; gap:2.5rem; align-items:center; flex-wrap:wrap;">
+    <div style="display:flex; gap:2.5rem; align-items:center; flex-wrap:wrap;">
       <div style="flex:1; min-width:280px;">
         <p style="color:#374151; line-height:1.8; margin-bottom:1rem;">
           Intel's Running Average Power Limit (RAPL) is the de facto standard for software-based
-          energy measurement, but its counter updates at approximately <strong>1 ms granularity</strong>.
+          energy measurement, but its counters update at approximately <strong>1 ms granularity</strong>.
           Individual code blocks — functions, loops, conditionals — execute in <em>microseconds</em>,
           making them invisible to standard profilers.
         </p>
         <p style="color:#374151; line-height:1.8;">
           As Figure 1 demonstrates, workloads under 1 ms register <strong>more than 110% coefficient
           of variation</strong> and 4–5 runs out of 10 return zero readings. This fundamental limitation
-          is what motivated the development of <strong>PowerLens</strong>.
+          motivated the development of <strong>PowerLens</strong>.
         </p>
       </div>
       <div style="flex:1.2; min-width:300px;">
@@ -291,7 +303,7 @@
                onclick="lb(this.src)" />
           <p class="fig-caption">
             <strong>Figure 1:</strong> Quality of RAPL's Measurements over Execution Time of the Workload
-            (ms in Log scale). Workloads under 1 ms show &gt;110% CV and frequent zero readings.
+            (ms, log scale). Workloads under 1 ms show &gt;110% CV and frequent zero readings.
           </p>
         </div>
       </div>
@@ -304,9 +316,9 @@
   <div class="inner">
     <h2 class="sec-heading">Methodology</h2>
 
-    <div class="columns" style="display:flex; gap:2.5rem; flex-wrap:wrap; align-items:flex-start;">
+    <div style="display:flex; gap:2.5rem; flex-wrap:wrap; align-items:flex-start;">
       <div style="flex:1; min-width:260px;">
-        <h3 style="font-weight:700; font-size:1.05rem; margin-bottom:1rem;">Phase 1 – Data Construction</h3>
+        <h3 style="font-weight:700; font-size:1.05rem; margin-bottom:1rem;">Five-Phase Pipeline</h3>
         <div class="steps">
           <div class="step">
             <div class="step-num">1</div>
@@ -321,7 +333,7 @@
             <div class="step-num">2</div>
             <div class="step-body">
               <h4>PowerLens Measurement</h4>
-              <p>Each block measured using execution amplification (N=1000), temporal synchronization with
+              <p>Each block measured using execution amplification (N=1000+), temporal synchronization with
               RAPL boundaries, calibrated subtraction of loop overhead, and IQR-filtered mean over 10 trials.</p>
             </div>
           </div>
@@ -337,7 +349,7 @@
             <div class="step-num">4</div>
             <div class="step-body">
               <h4>ML Training</h4>
-              <p>Regression model (Mᵣ) predicts continuous energy in Joules; Classification model (Mc)
+              <p>Regression model (M<sub>r</sub>) predicts continuous energy in Joules; Classification model (M<sub>c</sub>)
               assigns Low / Medium / High tiers using equal-frequency binning. Stratified 5-fold CV.</p>
             </div>
           </div>
@@ -431,11 +443,10 @@
   <div class="inner">
     <h2 class="sec-heading">PowerLens: Sub-Millisecond Energy Measurement</h2>
 
-    <!-- Fig 4 -->
     <div class="fig-wrap">
       <img src="static/images/fig4_powerlens.png"
            alt="Figure 4: PowerLens Sub-Millisecond Energy Measurement Methodology"
-           onclick="lb(this.src)" style="max-height:560px;" />
+           onclick="lb(this.src)" style="max-height:480px;" />
       <p class="fig-caption">
         <strong>Figure 4:</strong> PowerLens — Sub-Millisecond Energy Measurement Methodology.
         (a) Baseline unmeasurable block; (b) Execution Amplification — block repeated N times to
@@ -445,16 +456,15 @@
       </p>
     </div>
 
-    <!-- Fig 6 -->
     <div class="fig-wrap" style="margin-top:2rem;">
-      <img src="static/images/powerlens_vs_pyrapl.png"
-           alt="Figure 6: Sum of Blocks measured by PowerLens vs PyRAPL"
-           onclick="lb(this.src)" style="max-height:360px;" />
+      <img src="static/images/fig6_validation.png"
+           alt="Figure 6: Validation — PowerLens vs Aggregate RAPL"
+           onclick="lb(this.src)" style="max-height:420px;" />
       <p class="fig-caption">
-        <strong>Figure 6:</strong> Sum of Blocks measured by PowerLens compared with overall measurement
-        by PyRAPL. For all six block types, aggregated PowerLens measurements closely match the
-        coarse-grained PyRAPL readings, while exhibiting substantially lower variance — validating
-        the accuracy of the fine-grained methodology.
+        <strong>Figure 6:</strong> Validation — Sum of block-level PowerLens measurements compared
+        against coarse-grained whole-program RAPL readings. For all six block types, the aggregated
+        PowerLens values closely match the PyRAPL baseline, validating the accuracy of the fine-grained
+        methodology while exhibiting substantially lower variance.
       </p>
     </div>
   </div>
@@ -464,7 +474,7 @@
 <section class="sec sec-alt">
   <div class="inner">
     <h2 class="sec-heading">Block-Level Energy Measurement</h2>
-    <div class="columns" style="display:flex; gap:2.5rem; flex-wrap:wrap; align-items:center;">
+    <div style="display:flex; gap:2.5rem; flex-wrap:wrap; align-items:center;">
       <div style="flex:1; min-width:280px;">
         <p style="color:#374151; line-height:1.8; margin-bottom:1rem;">
           Figure 5 illustrates block-level energy measurements for the running example
@@ -495,8 +505,62 @@
   </div>
 </section>
 
-<!-- ══════════════ RESULTS ══════════════ -->
+<!-- ══════════════ FEATURE ANALYSIS — Table 1 ══════════════ -->
 <section class="sec sec-white">
+  <div class="inner-wide">
+    <h2 class="sec-heading">Feature Analysis: Correlation &amp; Importance</h2>
+    <p style="text-align:center; color:#4b5563; max-width:720px; margin:0 auto 1.5rem; line-height:1.8; font-size:0.92rem;">
+      Top 15 features ranked by three correlation measures (Pearson |r|, Spearman |ρ|, Kendall |τ|)
+      and three model-based importance scores. <strong>Bold</strong> = linear relationship;
+      <em>italic</em> = non-linear relationship.
+    </p>
+    <div class="tbl-title">Table 1 — Top 15 Features by Correlation and Feature Importance</div>
+    <div class="table-wrap">
+      <table class="paper-table" style="min-width:900px;">
+        <thead>
+          <tr>
+            <th rowspan="2" style="vertical-align:bottom;">#</th>
+            <th colspan="2" style="text-align:center; border-right:1px solid #2d5986;">Pearson |r|</th>
+            <th colspan="2" style="text-align:center; border-right:1px solid #2d5986;">Spearman |ρ|</th>
+            <th colspan="2" style="text-align:center; border-right:1px solid #2d5986;">Kendall |τ|</th>
+            <th colspan="2" style="text-align:center; border-right:1px solid #2d5986;">Extra Trees</th>
+            <th colspan="2" style="text-align:center; border-right:1px solid #2d5986;">Random Forest</th>
+            <th colspan="2" style="text-align:center;">Gradient Boosting</th>
+          </tr>
+          <tr>
+            <th>Feature</th><th style="border-right:1px solid #2d5986;">Val</th>
+            <th>Feature</th><th style="border-right:1px solid #2d5986;">Val</th>
+            <th>Feature</th><th style="border-right:1px solid #2d5986;">Val</th>
+            <th>Feature</th><th style="border-right:1px solid #2d5986;">Val</th>
+            <th>Feature</th><th style="border-right:1px solid #2d5986;">Val</th>
+            <th>Feature</th><th>Val</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td class="ft-linear">operator density</td><td style="border-right:1px solid #e5e7eb;">0.286</td><td class="ft-nonlinear">functions count</td><td style="border-right:1px solid #e5e7eb;">0.621</td><td class="ft-nonlinear">functions count</td><td style="border-right:1px solid #e5e7eb;">0.507</td><td class="ft-linear">operator density</td><td style="border-right:1px solid #e5e7eb;">0.086</td><td class="ft-linear">operator density</td><td style="border-right:1px solid #e5e7eb;">0.099</td><td class="ft-linear">operator density</td><td>0.102</td></tr>
+          <tr><td>2</td><td class="ft-linear">operator entropy</td><td style="border-right:1px solid #e5e7eb;">0.205</td><td>node type entropy</td><td style="border-right:1px solid #e5e7eb;">0.294</td><td>node type entropy</td><td style="border-right:1px solid #e5e7eb;">0.193</td><td class="ft-linear">loops count</td><td style="border-right:1px solid #e5e7eb;">0.063</td><td class="ft-nonlinear">unique node types</td><td style="border-right:1px solid #e5e7eb;">0.075</td><td class="ft-linear">program difficulty</td><td>0.056</td></tr>
+          <tr><td>3</td><td>conditionals count</td><td style="border-right:1px solid #e5e7eb;">0.181</td><td class="ft-nonlinear">conditionals count</td><td style="border-right:1px solid #e5e7eb;">0.229</td><td class="ft-nonlinear">conditionals count</td><td style="border-right:1px solid #e5e7eb;">0.178</td><td class="ft-nonlinear">functions count</td><td style="border-right:1px solid #e5e7eb;">0.061</td><td class="ft-linear">program difficulty</td><td style="border-right:1px solid #e5e7eb;">0.073</td><td>program effort</td><td>0.054</td></tr>
+          <tr><td>4</td><td>unique operators</td><td style="border-right:1px solid #e5e7eb;">0.178</td><td>cognitive complexity</td><td style="border-right:1px solid #e5e7eb;">0.225</td><td>cognitive complexity</td><td style="border-right:1px solid #e5e7eb;">0.165</td><td class="ft-linear">operator entropy</td><td style="border-right:1px solid #e5e7eb;">0.054</td><td class="ft-nonlinear">call density</td><td style="border-right:1px solid #e5e7eb;">0.072</td><td class="ft-nonlinear">variable entropy</td><td>0.037</td></tr>
+          <tr><td>5</td><td class="ft-nonlinear">literal density</td><td style="border-right:1px solid #e5e7eb;">0.174</td><td>nesting complexity</td><td style="border-right:1px solid #e5e7eb;">0.215</td><td>unique functions</td><td style="border-right:1px solid #e5e7eb;">0.165</td><td class="ft-nonlinear">variable entropy</td><td style="border-right:1px solid #e5e7eb;">0.054</td><td class="ft-nonlinear">variable entropy</td><td style="border-right:1px solid #e5e7eb;">0.061</td><td class="ft-linear">loops count</td><td>0.037</td></tr>
+          <tr><td>6</td><td>functions count</td><td style="border-right:1px solid #e5e7eb;">0.166</td><td>control flow complexity</td><td style="border-right:1px solid #e5e7eb;">0.210</td><td>nesting complexity</td><td style="border-right:1px solid #e5e7eb;">0.160</td><td class="ft-nonlinear">call density</td><td style="border-right:1px solid #e5e7eb;">0.053</td><td>variable density</td><td style="border-right:1px solid #e5e7eb;">0.061</td><td class="ft-nonlinear">unique node types</td><td>0.031</td></tr>
+          <tr><td>7</td><td class="ft-linear">loops count</td><td style="border-right:1px solid #e5e7eb;">0.156</td><td class="ft-nonlinear">literal density</td><td style="border-right:1px solid #e5e7eb;">0.207</td><td>control flow complexity</td><td style="border-right:1px solid #e5e7eb;">0.156</td><td class="ft-linear">program difficulty</td><td style="border-right:1px solid #e5e7eb;">0.052</td><td>leaves to nodes ratio</td><td style="border-right:1px solid #e5e7eb;">0.053</td><td class="ft-nonlinear">call density</td><td>0.022</td></tr>
+          <tr><td>8</td><td class="ft-nonlinear">variable entropy</td><td style="border-right:1px solid #e5e7eb;">0.145</td><td>unique functions</td><td style="border-right:1px solid #e5e7eb;">0.205</td><td>cyclomatic complexity</td><td style="border-right:1px solid #e5e7eb;">0.150</td><td>depth variance</td><td style="border-right:1px solid #e5e7eb;">0.046</td><td>depth variance</td><td style="border-right:1px solid #e5e7eb;">0.052</td><td class="ft-nonlinear">literal density</td><td>0.016</td></tr>
+          <tr><td>9</td><td>variable density</td><td style="border-right:1px solid #e5e7eb;">0.144</td><td>cyclomatic complexity</td><td style="border-right:1px solid #e5e7eb;">0.203</td><td class="ft-nonlinear">literal density</td><td style="border-right:1px solid #e5e7eb;">0.145</td><td>unique variables</td><td style="border-right:1px solid #e5e7eb;">0.046</td><td class="ft-nonlinear">literal density</td><td style="border-right:1px solid #e5e7eb;">0.051</td><td class="ft-nonlinear">conditionals count</td><td>0.014</td></tr>
+          <tr><td>10</td><td class="ft-linear">program difficulty</td><td style="border-right:1px solid #e5e7eb;">0.129</td><td>vocabulary size</td><td style="border-right:1px solid #e5e7eb;">0.199</td><td>vocabulary size</td><td style="border-right:1px solid #e5e7eb;">0.141</td><td class="ft-nonlinear">unique node types</td><td style="border-right:1px solid #e5e7eb;">0.043</td><td>program effort</td><td style="border-right:1px solid #e5e7eb;">0.042</td><td class="ft-linear">operator entropy</td><td>0.011</td></tr>
+          <tr><td>11</td><td>unique variables</td><td style="border-right:1px solid #e5e7eb;">0.122</td><td class="ft-linear">operator density</td><td style="border-right:1px solid #e5e7eb;">0.195</td><td class="ft-linear">operator density</td><td style="border-right:1px solid #e5e7eb;">0.138</td><td>literal density</td><td style="border-right:1px solid #e5e7eb;">0.042</td><td class="ft-linear">operator entropy</td><td style="border-right:1px solid #e5e7eb;">0.037</td><td>leaves to nodes ratio</td><td>0.010</td></tr>
+          <tr><td>12</td><td>leaves to nodes ratio</td><td style="border-right:1px solid #e5e7eb;">0.117</td><td class="ft-nonlinear">unique node types</td><td style="border-right:1px solid #e5e7eb;">0.191</td><td class="ft-nonlinear">call density</td><td style="border-right:1px solid #e5e7eb;">0.133</td><td class="ft-nonlinear">conditionals count</td><td style="border-right:1px solid #e5e7eb;">0.036</td><td>unique variables</td><td style="border-right:1px solid #e5e7eb;">0.032</td><td class="ft-nonlinear">functions count</td><td>0.010</td></tr>
+          <tr><td>13</td><td>depth variance</td><td style="border-right:1px solid #e5e7eb;">0.116</td><td class="ft-nonlinear">call density</td><td style="border-right:1px solid #e5e7eb;">0.183</td><td class="ft-nonlinear">unique node types</td><td style="border-right:1px solid #e5e7eb;">0.127</td><td>variable density</td><td style="border-right:1px solid #e5e7eb;">0.035</td><td>unique functions</td><td style="border-right:1px solid #e5e7eb;">0.030</td><td>program length</td><td>0.009</td></tr>
+          <tr><td>14</td><td>attribute density</td><td style="border-right:1px solid #e5e7eb;">0.080</td><td>program volume</td><td style="border-right:1px solid #e5e7eb;">0.148</td><td>unique variables</td><td style="border-right:1px solid #e5e7eb;">0.110</td><td>unique operators</td><td style="border-right:1px solid #e5e7eb;">0.032</td><td class="ft-linear">loops count</td><td style="border-right:1px solid #e5e7eb;">0.030</td><td>depth variance</td><td>0.009</td></tr>
+          <tr><td>15</td><td>max branching factor</td><td style="border-right:1px solid #e5e7eb;">0.073</td><td class="ft-nonlinear">variable entropy</td><td style="border-right:1px solid #e5e7eb;">0.139</td><td class="ft-nonlinear">variable entropy</td><td style="border-right:1px solid #e5e7eb;">0.105</td><td>unique functions</td><td style="border-right:1px solid #e5e7eb;">0.027</td><td>total nodes</td><td style="border-right:1px solid #e5e7eb;">0.028</td><td>unique operators</td><td>0.008</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note"><strong>Bold</strong> = linear relation (appears in Pearson top-10); <em>Italic</em> = non-linear relation.</p>
+  </div>
+</section>
+
+<!-- ══════════════ RESULTS ══════════════ -->
+<section class="sec sec-alt">
   <div class="inner">
     <h2 class="sec-heading">Results</h2>
 
@@ -524,10 +588,8 @@
       </div>
     </div>
 
-    <!-- Table 2 -->
-    <h3 style="font-weight:700;font-size:1.05rem;text-align:center;margin-bottom:0.6rem;">
-      Table 2 — Regression Models with Log Transform on Target
-    </h3>
+    <!-- Table 2 — Regression -->
+    <p class="tbl-title">Table 2 — Regression Models with Log Transform on Target</p>
     <div class="table-wrap">
       <table class="paper-table">
         <thead>
@@ -537,23 +599,21 @@
         </thead>
         <tbody>
           <tr class="top-row"><td>XGBoost</td><td>0.755</td><td>0.811 ± 0.040</td><td>0.281</td><td>0.057</td><td>172.45</td><td>15.26</td></tr>
-          <tr><td>SVR</td><td>0.752</td><td>0.803 ± 0.039</td><td>0.283</td><td>0.091</td><td>182.27</td><td>15.47</td></tr>
-          <tr><td>Gradient Boosting</td><td>0.747</td><td>0.810 ± 0.040</td><td>0.285</td><td>0.058</td><td>171.83</td><td>13.56</td></tr>
+          <tr class="top-row2"><td>SVR</td><td>0.752</td><td>0.803 ± 0.039</td><td>0.283</td><td>0.091</td><td>182.27</td><td>15.47</td></tr>
+          <tr><td>Gradient Boosting</td><td>0.747</td><td>0.810 ± 0.040</td><td>0.286</td><td>0.058</td><td>171.83</td><td>13.56</td></tr>
           <tr><td>CatBoost</td><td>0.722</td><td>0.799 ± 0.043</td><td>0.300</td><td>0.058</td><td>166.35</td><td>22.97</td></tr>
-          <tr><td>Random Forest</td><td>0.719</td><td>0.793 ± 0.043</td><td>0.303</td><td>0.067</td><td>170.24</td><td>162.83</td></tr>
+          <tr><td>Random Forest</td><td>0.719</td><td>0.793 ± 0.047</td><td>0.302</td><td>0.060</td><td>162.83</td><td>258.01</td></tr>
           <tr><td>Extra Trees</td><td>0.682</td><td>0.737 ± 0.047</td><td>0.321</td><td>0.074</td><td>170.85</td><td>275.83</td></tr>
-          <tr><td>Decision Tree</td><td>0.648</td><td>0.722 ± 0.070</td><td>0.338</td><td>0.067</td><td>138.00</td><td>14.49</td></tr>
+          <tr><td>Decision Tree</td><td>0.648</td><td>0.722 ± 0.070</td><td>0.338</td><td>0.067</td><td>170.24</td><td>14.69</td></tr>
           <tr><td>KNN</td><td>0.645</td><td>0.684 ± 0.081</td><td>0.340</td><td>0.066</td><td>105.78</td><td>19.59</td></tr>
           <tr><td>AdaBoost</td><td>0.633</td><td>0.757 ± 0.051</td><td>0.345</td><td>0.092</td><td>171.81</td><td>20.04</td></tr>
         </tbody>
       </table>
     </div>
-    <p class="table-note">Shading indicates top two models by each metric. Energy column reports inference cost per prediction.</p>
+    <p class="table-note">Shading indicates top two models by each metric. Energy column reports inference cost per prediction (mJ).</p>
 
-    <!-- Table 3 -->
-    <h3 style="font-weight:700;font-size:1.05rem;text-align:center;margin:2rem 0 0.6rem;">
-      Table 3 — Energy Tier Classification Models
-    </h3>
+    <!-- Table 3 — Classification -->
+    <p class="tbl-title" style="margin-top:2rem;">Table 3 — Energy Tier Classification Models</p>
     <div class="table-wrap">
       <table class="paper-table">
         <thead>
@@ -563,7 +623,7 @@
         </thead>
         <tbody>
           <tr class="top-row-green"><td>XGBoost</td><td>0.806</td><td>0.793 ± 0.007</td><td>0.804</td><td>0.806</td><td>0.805</td><td>0.022</td></tr>
-          <tr><td>Random Forest</td><td>0.792</td><td>0.780 ± 0.007</td><td>0.789</td><td>0.792</td><td>0.789</td><td>—</td></tr>
+          <tr class="top-row2-green"><td>Random Forest</td><td>0.792</td><td>0.780 ± 0.007</td><td>0.789</td><td>0.792</td><td>0.789</td><td>0.373</td></tr>
           <tr><td>Gradient Boosting</td><td>0.788</td><td>0.794 ± 0.008</td><td>0.788</td><td>0.788</td><td>0.788</td><td>0.015</td></tr>
           <tr><td>K-NN</td><td>0.783</td><td>0.771 ± 0.005</td><td>0.780</td><td>0.783</td><td>0.780</td><td>0.027</td></tr>
           <tr><td>SVM</td><td>0.781</td><td>0.771 ± 0.009</td><td>0.780</td><td>0.781</td><td>0.778</td><td>0.022</td></tr>
@@ -571,16 +631,43 @@
           <tr><td>Decision Tree</td><td>0.749</td><td>0.736 ± 0.009</td><td>0.744</td><td>0.749</td><td>0.745</td><td>0.014</td></tr>
           <tr><td>Logistic Regression</td><td>0.735</td><td>0.726 ± 0.003</td><td>0.729</td><td>0.735</td><td>0.731</td><td>0.017</td></tr>
           <tr><td>SGD Classifier</td><td>0.729</td><td>0.713 ± 0.005</td><td>0.722</td><td>0.729</td><td>0.721</td><td>0.022</td></tr>
-          <tr><td>Gaussian NB</td><td>0.678</td><td>0.653 ± 0.013</td><td>0.680</td><td>0.678</td><td>0.669</td><td>0.022</td></tr>
         </tbody>
       </table>
     </div>
     <p class="table-note">Shading indicates top two models. XGBoost achieves best performance with stable cross-validation across all metrics.</p>
+
+    <!-- Table 4 — Ablation -->
+    <p class="tbl-title" style="margin-top:2rem;">Table 4 — Feature Group Ablations</p>
+    <div class="table-wrap">
+      <table class="paper-table abl-table">
+        <thead>
+          <tr>
+            <th rowspan="2" style="text-align:left; vertical-align:bottom;">Feature Group</th>
+            <th colspan="2" style="text-align:center; border-right:1px solid #2d5986;">Leave-One-Out</th>
+            <th colspan="3" style="text-align:center;">Group Only</th>
+          </tr>
+          <tr>
+            <th>ΔR²</th>
+            <th style="border-right:1px solid #2d5986;">ΔAcc</th>
+            <th>#Feat</th><th>R²</th><th>Acc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Density</td><td class="abl-neg">−0.002</td><td class="abl-neg" style="border-right:1px solid #e5e7eb;">−2.8 pp</td><td>5</td><td>0.700</td><td>71.1%</td></tr>
+          <tr><td>Counts</td><td class="abl-neg">−0.011</td><td class="abl-neg" style="border-right:1px solid #e5e7eb;">−2.6 pp</td><td>8</td><td>0.720</td><td>74.2%</td></tr>
+          <tr><td>Halstead</td><td class="abl-neg">−0.006</td><td class="abl-neg" style="border-right:1px solid #e5e7eb;">−0.1 pp</td><td>5</td><td>0.688</td><td>59.7%</td></tr>
+          <tr><td>Complexity</td><td class="abl-neg">−0.002</td><td class="abl-neg" style="border-right:1px solid #e5e7eb;">−0.4 pp</td><td>4</td><td>0.067</td><td>51.2%</td></tr>
+          <tr><td>Entropy</td><td class="abl-pos">+0.001</td><td class="abl-neg" style="border-right:1px solid #e5e7eb;">−0.1 pp</td><td>3</td><td>0.691</td><td>68.3%</td></tr>
+          <tr><td>AST Structural</td><td>~0</td><td class="abl-neg" style="border-right:1px solid #e5e7eb;">−0.1 pp</td><td>8</td><td>0.650</td><td>69.4%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">Leave-One-Out: Δ relative to full 33-feature model (R²=0.755, Acc=80.6%). Group Only: model trained on that group's features alone.</p>
   </div>
 </section>
 
 <!-- ══════════════ WATTWISE ══════════════ -->
-<section class="sec sec-alt">
+<section class="sec sec-white">
   <div class="inner">
     <h2 class="sec-heading">WattWise — VS Code Extension</h2>
     <p style="text-align:center;color:#4b5563;max-width:660px;margin:0 auto 2rem;line-height:1.8;">
@@ -656,7 +743,7 @@
 </section>
 
 <!-- ══════════════ BIBTEX ══════════════ -->
-<section class="sec sec-white">
+<section class="sec sec-alt">
   <div class="inner-sm">
     <h2 class="sec-heading">BibTeX</h2>
     <div class="bib-block"><span class="bk">@misc{</span>goyal2026encodeenergyestimationsource,
