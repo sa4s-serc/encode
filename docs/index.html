@@ -209,12 +209,12 @@
 <!-- ══════════════════════════════════════════════ TEASER ══════ -->
 <section class="teaser section" style="padding: 2.5rem 1.5rem;">
   <div class="container" style="max-width:900px; margin:0 auto; text-align:center;">
-    <img src="static/images/wattwise_screenshot.png" alt="WattWise VS Code Extension showing inline energy estimates"
+    <img src="static/images/pipeline.png" alt="EnCoDe design-time energy estimation pipeline"
          onclick="openLightbox(this.src)" />
     <p class="teaser-caption">
-      <strong>WattWise</strong> — the VS Code extension built on EnCoDe — shows inline energy estimates
-      (⚡ Low / Medium / High) for Python code blocks without running the code.
-      AI-powered suggestions via Gemini 2.5 Flash help developers fix high-energy hotspots at design time.
+      <strong>Fig. 2</strong> — Design-time energy estimation methodology. EnCoDe combines PowerLens
+      fine-grained measurement, static AST feature extraction, and ML-based prediction to estimate
+      block-level energy consumption without executing the code.
     </p>
   </div>
 </section>
@@ -334,14 +334,75 @@
 
     </div>
 
-    <!-- Feature importance figure -->
-    <div class="figure-container" style="margin-top:2.5rem;">
-      <img src="static/images/feature_importance.png" alt="Feature importance across models"
-           onclick="openLightbox(this.src)" />
-      <p class="figure-caption">
-        <strong>Figure:</strong> Feature importance across Gradient Boosting, Random Forest, and Extra Trees models.
-        Operator density, loops count, and Halstead effort metrics consistently rank highest.
-        No single feature dominates — energy emerges from compositional interactions.
+    <!-- Table 2: Regression results -->
+    <div style="margin-top:2.5rem;">
+      <h3 style="font-weight:700; font-size:1.1rem; color:#1a202c; margin-bottom:0.75rem; text-align:center;">
+        Table 2 — Regression Models (Log Transform of Target)
+      </h3>
+      <div style="overflow-x:auto;">
+        <table class="table is-bordered is-striped is-fullwidth" style="font-size:0.88rem; max-width:700px; margin:0 auto;">
+          <thead>
+            <tr style="background:#dbeafe;">
+              <th>Model</th><th>R²</th><th>RMSE</th><th>MAE</th><th>CV R² (mean ± std)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="font-weight:700; background:#eff6ff;">
+              <td>XGBoost</td><td>0.755</td><td>0.281</td><td>0.057</td><td>0.811 ± 0.040</td>
+            </tr>
+            <tr>
+              <td>SVR</td><td>0.752</td><td>0.283</td><td>0.062</td><td>0.803 ± 0.038</td>
+            </tr>
+            <tr>
+              <td>Gradient Boosting</td><td>0.747</td><td>0.285</td><td>0.060</td><td>0.808 ± 0.041</td>
+            </tr>
+            <tr>
+              <td>Random Forest</td><td>0.731</td><td>0.294</td><td>0.063</td><td>0.796 ± 0.044</td>
+            </tr>
+            <tr>
+              <td>Extra Trees</td><td>0.718</td><td>0.301</td><td>0.065</td><td>0.789 ± 0.046</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="text-align:center; color:#718096; font-size:0.82rem; margin-top:0.5rem;">
+        Ensemble models consistently outperform linear approaches, capturing non-linear feature interactions.
+      </p>
+    </div>
+
+    <!-- Table 3: Classification results -->
+    <div style="margin-top:2rem;">
+      <h3 style="font-weight:700; font-size:1.1rem; color:#1a202c; margin-bottom:0.75rem; text-align:center;">
+        Table 3 — Energy Tier Classification Models (Low / Medium / High)
+      </h3>
+      <div style="overflow-x:auto;">
+        <table class="table is-bordered is-striped is-fullwidth" style="font-size:0.88rem; max-width:700px; margin:0 auto;">
+          <thead>
+            <tr style="background:#d1fae5;">
+              <th>Model</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1</th><th>CV Acc (mean ± std)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="font-weight:700; background:#ecfdf5;">
+              <td>XGBoost</td><td>80.6%</td><td>0.804</td><td>0.806</td><td>0.805</td><td>0.793 ± 0.007</td>
+            </tr>
+            <tr>
+              <td>Random Forest</td><td>79.2%</td><td>0.791</td><td>0.792</td><td>0.791</td><td>0.781 ± 0.009</td>
+            </tr>
+            <tr>
+              <td>Gradient Boosting</td><td>78.8%</td><td>0.787</td><td>0.788</td><td>0.787</td><td>0.778 ± 0.010</td>
+            </tr>
+            <tr>
+              <td>Extra Trees</td><td>77.4%</td><td>0.773</td><td>0.774</td><td>0.773</td><td>0.765 ± 0.011</td>
+            </tr>
+            <tr>
+              <td>Logistic Regression</td><td>61.3%</td><td>0.610</td><td>0.613</td><td>0.609</td><td>0.608 ± 0.014</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="text-align:center; color:#718096; font-size:0.82rem; margin-top:0.5rem;">
+        XGBoost achieves the best classification across all metrics with stable cross-validation performance.
       </p>
     </div>
   </div>
@@ -613,6 +674,94 @@
       Full model outperforms size-only baseline by <strong>+23.3 pp</strong> in accuracy.
       Density metrics show the largest individual impact when removed.
     </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ WATTWISE ══════ -->
+<section class="section" style="background:#fff; padding:3rem 1.5rem;">
+  <div class="container" style="max-width:960px; margin:0 auto;">
+    <h2 class="section-title has-text-centered">WattWise — VS Code Extension</h2>
+
+    <p style="text-align:center; color:#4b5563; max-width:680px; margin:0 auto 2rem; line-height:1.75;">
+      EnCoDe is deployed as <strong>WattWise</strong>, a VS Code extension that brings design-time energy
+      awareness directly into the developer's IDE. Energy estimates appear as inline decorations alongside
+      every analysed code block — no profiler, no execution, no overhead.
+    </p>
+
+    <div class="columns is-vcentered">
+      <div class="column is-three-fifths">
+        <div class="figure-container" style="margin:0;">
+          <img src="static/images/wattwise_screenshot.png"
+               alt="WattWise VS Code extension showing inline energy estimates on Python code"
+               onclick="openLightbox(this.src)"
+               style="border-radius:10px; box-shadow:0 8px 32px rgba(0,0,0,0.15);" />
+          <p class="figure-caption" style="margin-top:0.75rem;">
+            WattWise annotates every <code>def</code>, <code>for</code>, <code>while</code>,
+            <code>if</code>, <code>try</code>, and <code>with</code> block with an energy estimate
+            and Low / Medium / High tier — powered by the EnCoDe ML models.
+          </p>
+        </div>
+      </div>
+
+      <div class="column is-two-fifths">
+        <div style="padding-left:1rem;">
+          <div style="margin-bottom:1.25rem;">
+            <div style="display:flex; align-items:flex-start; gap:0.75rem; margin-bottom:0.9rem;">
+              <span style="font-size:1.4rem; flex-shrink:0;">⚡</span>
+              <div>
+                <strong style="color:#1a202c;">Inline energy decorations</strong>
+                <p style="color:#4b5563; font-size:0.9rem; margin-top:0.15rem; line-height:1.55;">
+                  Energy in Joules and tier label shown at the end of every block — right where the code lives.
+                </p>
+              </div>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:0.75rem; margin-bottom:0.9rem;">
+              <span style="font-size:1.4rem; flex-shrink:0;">🤖</span>
+              <div>
+                <strong style="color:#1a202c;">AI-powered suggestions</strong>
+                <p style="color:#4b5563; font-size:0.9rem; margin-top:0.15rem; line-height:1.55;">
+                  Gemini 2.5 Flash explains <em>why</em> a High-energy block is expensive and proposes
+                  concrete rewrites — algorithmic improvements, vectorisation, data structure changes.
+                </p>
+              </div>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:0.75rem; margin-bottom:0.9rem;">
+              <span style="font-size:1.4rem; flex-shrink:0;">📊</span>
+              <div>
+                <strong style="color:#1a202c;">Repo-wide dashboard</strong>
+                <p style="color:#4b5563; font-size:0.9rem; margin-top:0.15rem; line-height:1.55;">
+                  FastAPI + React dashboard scans an entire repository, tracks energy trends over time,
+                  and estimates annual electricity cost.
+                </p>
+              </div>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:0.75rem;">
+              <span style="font-size:1.4rem; flex-shrink:0;">🔀</span>
+              <div>
+                <strong style="color:#1a202c;">GitHub PR bot</strong>
+                <p style="color:#4b5563; font-size:0.9rem; margin-top:0.15rem; line-height:1.55;">
+                  Automatically flags energy regressions on pull requests and requests manager approval
+                  when configurable thresholds are exceeded.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:0.75rem; flex-wrap:wrap; margin-top:1.25rem;">
+            <a href="https://github.com/sa4s-serc/encode/tree/main/WattWise-main"
+               class="button is-dark" target="_blank" style="border-radius:6px;">
+              <span class="icon"><i class="fab fa-github"></i></span>
+              <span>Source Code</span>
+            </a>
+            <a href="https://github.com/sa4s-serc/encode/blob/main/WattWise-main/README.md"
+               class="button is-info is-light" target="_blank" style="border-radius:6px;">
+              <span class="icon"><i class="fas fa-book"></i></span>
+              <span>Setup Guide</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
